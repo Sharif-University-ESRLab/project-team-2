@@ -28,6 +28,9 @@
 \usepackage{seqsplit}
 \usepackage{hhline}
 \usepackage{pgfgantt}
+\usepackage{graphicx}
+
+\graphicspath{ {./images/} }
 
 \renewcommand\theadalign{bc}
 \renewcommand\theadfont{\bfseries}
@@ -262,16 +265,41 @@
 \subsection{سنسورها}
 
 \subsubsection{دما و رطوبت}
-برای ثبت دما و رطوبت از سنسور \lr{KY-015} استفاده می‌کنیم که چیپست مورد استفاده در آن \lr{DHT11} است. پروتوکل ارتباطی این سنسور تک سیم است و مقادیر دما و رطوبت را به طور دیجیتال انتقال می‌دهد و نیاز به قطعه‌‌ی دیگری برای اتصال به رزبری ندارد. 
+برای ثبت دما و رطوبت از سنسور \lr{KY-015} استفاده می‌کنیم که چیپست مورد استفاده در آن \lr{DHT11} است. 
 
 دقت این سنسور برای دما $\pm2$ درجه سانتی‌گراد و دقت آن برای رطوبت $\pm 5\% \text{RH}$ است. نرخ نمونه‌برداری آن نیز هر $2$ ثانیه یک بار است. این دقت و این نرخ نمونه‌برداری نیازی که ما در این پروژه داریم را رفع می‌کند و برای همین نیازی به هزینه‌ی بیشتر برای سنسورهای با نرخ نمونه‌برداری یا دقت بیشتر نیست.
 
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=0.3\textwidth]{KY-015}
+	\end{center}
+	\caption{KY-015}
+\end{figure}
 
+
+پروتوکل ارتباطی این سنسور تک سیم است و مقادیر دما و رطوبت را به طور دیجیتال انتقال می‌دهد و نیاز به قطعه‌‌ی دیگری برای 
+اتصال به رزبری ندارد و به شکل زیر به رزبری متصل می‌شود:
+
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=0.3\textwidth]{KY-015-raspberry}
+	\end{center}
+	\caption{اتصال KY-015 به رزبری}
+\end{figure}
 
 
 \subsubsection{ECG}
 
 برای مانیتور وضعیت قلب از قطعه‌ی \lr{AD8232} استفاده می‌کنیم. این قطعه فعالیت الکتریکی قلب را اندازه‌گیری می‌کند و خروجی آن می‌تواند به صورت مقادیر آنالوگ یا برای رسم \lr{ECG} مورد استفاده قرار بگیرد. در نتیجه در کنار این قطعه نیاز به یک مبدل آنالوگ به دیجیتال داریم. 
+
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=0.3\textwidth]{AD8232}
+	\end{center}
+	\caption{AD8232}
+\end{figure}
 
 هم‌چنین برای استفاده و تست آن نیاز به سه الکترود و تعدادی پد برای اتصال به بدن داریم.
 
@@ -308,26 +336,43 @@ $65 \% \text{RH} \pm 5\%$
 		\begin{ganttchart}[
 			expand chart=1\textwidth,
 		    vrule label font=\tiny,
+			title label font=\tiny, 
 			bar label font=\tiny, 
-			y unit title=0.9cm,
+			y unit title=1cm,
 			y unit chart=0.8cm,
-			x unit=0.8cm,
+			x unit=1cm,
 			vgrid,hgrid, 
 			title label anchor/.style={below=-1.6ex},
-			title left shift=.05,
-			title right shift=-.05,
+			title left shift=0,
+			title right shift=0,
 			title height=1,
 			progress label text={},
 			bar height=0.6,
 			group right shift=0,
-			group top shift=.6,
-			group height=.3]{3}{16}
+			group top shift=.5,
+			group height=.2]{3}{16}
 			%labels
 			\gantttitle{اسفند}{2}
 			\gantttitle{فروردین}{4}
 			\gantttitle{اردی‌بهشت}{4}
 			\gantttitle{خرداد}{4}
-%			\gantttitle{۰۱}{1} 
+			\\
+
+			\gantttitle{\rl{هفته ۳}}{1} 			
+			\gantttitle{\rl{هفته ۴}}{1} 
+			\gantttitle{\rl{هفته ۱}}{1} 
+			\gantttitle{\rl{هفته ۲}}{1} 
+			\gantttitle{\rl{هفته ۳}}{1} 
+			\gantttitle{\rl{هفته ۴}}{1} 
+			\gantttitle{\rl{هفته ۱}}{1} 
+			\gantttitle{\rl{هفته ۲}}{1} 
+			\gantttitle{\rl{هفته ۳}}{1} 
+			\gantttitle{\rl{هفته ۴}}{1} 
+			\gantttitle{\rl{هفته ۱}}{1} 
+			\gantttitle{\rl{هفته ۲}}{1} 
+			\gantttitle{\rl{هفته ۳}}{1} 
+			\gantttitle{\rl{هفته ۴}}{1} 
+
 %			\gantttitle{۰۸}{1} 
 %			\gantttitle{۱۵}{1} 
 %			\gantttitle{۲۲}{1} 
