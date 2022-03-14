@@ -1,0 +1,282 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx,import}
+\usepackage{float}
+\usepackage[svgnames]{xcolor} 
+\usepackage{makecell}
+\usepackage{fancyhdr}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{cite}
+\usepackage[many]{tcolorbox}
+\usepackage{listings }
+\usepackage[a4paper, total={6in, 8in} , bottom = 25mm , top = 25mm, headheight = 1.25cm , includehead,includefoot,heightrounded ]{geometry}
+\usepackage{afterpage}
+\usepackage{amssymb}
+\usepackage{pdflscape}
+\usepackage{gensymb}
+\usepackage{textcomp}
+\usepackage{tikz,pgfplots}
+\usepackage{xecolor}
+\usepackage{rotating}
+\usepackage{pdfpages}
+\usepackage[Kashida]{xepersian}
+\usepackage[T1]{fontenc}
+\usepackage{tikz}
+\usepackage[utf8]{inputenc}
+\usepackage{PTSerif} 
+\usepackage{seqsplit}
+\usepackage{hhline}
+
+
+\renewcommand\theadalign{bc}
+\renewcommand\theadfont{\bfseries}
+\renewcommand\theadgape{\Gape[4pt]}
+\renewcommand\cellgape{\Gape[4pt]}
+
+\usepackage[edges]{forest}
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\hypersetup{
+	colorlinks   = true, %Colours links instead of ugly boxes
+	urlcolor     = blue, %Colour for external hyperlinks
+	linkcolor    = blue, %Colour of internal links
+	citecolor   = red %Colour of citations
+}
+ 
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+ 
+\NewDocumentCommand{\codeword}{v}{
+\texttt{\textcolor{blue}{#1}}
+}
+\lstset{language=java,keywordstyle={\bfseries \color{blue}}}
+
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\normalsize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\settextfont[Scale=1.2 ,BoldFont={Bahij Nazanin-Bold.ttf} , ItalicFont = {IRNazaninIranic.ttf}]{Bahij Nazanin-Regular.ttf}
+\setlatintextfont[Scale = 1.0]{Garamond}
+\DefaultMathsDigits 
+\DeclareMathSizes{11}{19}{13}{9} 
+%\DeclareMathSizes{12}{14.4}{8}{9}
+
+
+
+
+
+\newenvironment{changemargin}[2]{%
+\begin{list}{}{%
+\setlength{\topsep}{0pt}%
+\setlength{\leftmargin}{#1}%
+\setlength{\rightmargin}{#2}%
+\setlength{\listparindent}{\parindent}%
+\setlength{\itemindent}{\parindent}%
+\setlength{\parsep}{\parskip}%
+}%
+\item[]}{\end{list}}
+
+
+\definecolor{foldercolor}{RGB}{124,166,198}
+
+\tikzset{pics/folder/.style={code={%
+    \node[inner sep=0pt, minimum size=#1](-foldericon){};
+    \node[folder style, inner sep=0pt, minimum width=0.3*#1, minimum height=0.6*#1, above right, xshift=0.05*#1] at (-foldericon.west){};
+    \node[folder style, inner sep=0pt, minimum size=#1] at (-foldericon.center){};}
+    },
+    pics/folder/.default={20pt},
+    folder style/.style={draw=foldercolor!80!black,top color=foldercolor!40,bottom color=foldercolor}
+}
+
+\forestset{is file/.style={edge path'/.expanded={%
+        ([xshift=\forestregister{folder indent}]!u.parent anchor) |- (.child anchor)},
+        inner sep=1pt},
+    this folder size/.style={edge path'/.expanded={%
+        ([xshift=\forestregister{folder indent}]!u.parent anchor) |- (.child anchor) pic[solid]{folder=#1}}, inner xsep=0.6*#1},
+    folder tree indent/.style={before computing xy={l=#1}},
+    folder icons/.style={folder, this folder size=#1, folder tree indent=3*#1},
+    folder icons/.default={12pt},
+}
+
+\begin{document}
+
+
+%%% title pages
+\begin{titlepage}
+\begin{center}
+        
+\vspace*{0.7cm}
+
+\includegraphics[width=0.4\textwidth]{sharif1.png}\\
+\vspace{0.5cm}
+\textbf{ \Huge{\emph ‌آزمایشگاه سخت‌افزار} }\\
+\vspace{0.5cm}
+\textbf{ \Large{ پروپوزال پروژه} }
+\vspace{0.2cm}
+       
+ 
+      \large \textbf{دانشکده مهندسی کامپیوتر}\\\vspace{0.2cm}
+    \large   دانشگاه صنعتی شریف\\\vspace{0.2cm}
+       \large   ﻧﯿﻢ سال دوم 01-00 \\\vspace{0.2cm}
+      \noindent\rule[1ex]{\linewidth}{1pt}
+استاد:\\
+    \textbf{{جناب آقای دکتر اجلالی}}
+
+
+دستیار آموزشی:\\
+\textbf{{جناب آقای فصحتی}}
+
+    \vspace{0.25cm}
+    
+    موضوع پروژه:\\
+    
+    \textbf{{نمایشگر علائم حیاتی بیمار (پروژه شماره ۱۴)}}
+    
+    \vspace{0.35cm}
+    
+    
+        شماره گروه:
+    \textbf{{۲}}\\
+    
+اعضای گروه:\\
+
+    \textbf{{علیرضا تاج‌میرریاحی - 97101372}}
+    \\
+   
+     \textbf{{امیرمهدی نامجو - 97107212}}   
+   \\
+   
+    \textbf{{ صبا هاشمی  - 97100581}}
+\end{center}
+\end{titlepage}
+%%% title pages
+
+
+%%% header of pages
+\newpage
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\cfoot{\thepage}
+\chead{}
+\rhead{\includegraphics[width=0.1\textwidth]{sharif.png}}
+\lhead{پروپوزال پروژه}
+%%% header of pages
+
+\newfontfamily\terminal{Courier New Bold}
+
+\KashidaOff
+ \newcommand{\inlineLatin}[1]{
+	\small{\lr{{\terminal #1}}}
+}
+
+
+\section{مقدمه}
+
+
+هدف از این پروژه، طراحی سیستم نمایشگر هوشمند علائم حیاتی بیمار و شرایط محیطی است. هسته این سیستم که از رزبری پای تشکیل شده است، اطلاعات حیاتی بیمار شامل دمای بدن، فشار خون، ضربان قلب، اکسیژن خون و نوار قلب (\lr{ECG}) را از طریق سنسور‌های مربوطه از بیمار دریافت کرده و در کنار آن، اطلاعات محیطی نظیر دما،‌ رطوبت و میزان آلودگی هوا را هم از طریق سنسورهایی دیگر دریافت می‌کند.
+
+برای ارتباط برقرار کردن با این داده‌ها، رابط کاربری برای نمایشگر رزبری پای و همچنین رابط کاربری موبایل تهیه خواهد شد که پرستار یا پزشک از طریق آن بتوانند به داده‌های بیمار دسترسی پیدا کنند. همچنین این داده‌ها در فواصل زمانی معین به یک سرور ارسال شده و برای آنالیزهای بعدی و همچنین حفظ تاریخچه بیماران، در دیتابیس ذخیره می‌شوند.
+
+
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|} 
+		\hline
+		\makecell{\textbf{ردیف}} & \makecell{\textbf{ویژگی}}                                         & \makecell{\textbf{توضیحات}}                                                                                         \\ 
+		\hhline{|===|}
+		۱             & \makecell{\textbf{ثبت علائم حیاتی}}                               &
+		\makecell{
+		 علائم حیاتی کاربر شامل اکسیژن خون،\\ فشار خون، ضربان قلب و \lr{ECG} توسط سنسورها\\ دریافت و ثبت می‌شود.}           \\ 
+		\hline
+		۲             & \makecell{ \textbf{ثبت شرایط محیطی}    }                           & \makecell{
+		 شرایط محیطی کاربر شامل دما، رطوبت\\ و میزان آلودگی هوا توسط سنسورها\\ دریافت و ثبت می‌شود.}                   \\ 
+		\hline
+		
+		۳             & \makecell{\textbf{نمایش وضعیت کاربر و}\\  \textbf{ شرایط محیط روی صفحه نمایش}}
+		  &
+		 \makecell{
+		  علائم حیاتی کاربر و شرایط محیطی روی نمایشگر\\ به طور زنده نشان داده می‌شود.}                                \\ 
+		\hline
+		۴             &
+		 \makecell{\textbf{اتصال به اپلیکیشن}}                             &
+		\makecell{
+		 با استفاده از یک اپلیکیشن موبایل می‌توان\\ به دستگاه متصل شد و وضعیت کاربر\\ را از طریق موبایل مانیتور کرد.}  \\ 
+		\hline
+		۵             &
+		\makecell{\textbf{مشاهده ارتباط علائم حیاتی و} \\ \textbf{شرایط محیطی}}     &
+		\makecell{
+		 در اپلیکیشن موبایل می‌توان نمودارهای\\ وضعیت کاربر و شرایط محیطی را در کنار هم\\ مشاهده و بررسی کرد.}         \\ 
+		\hline
+		۶             & \makecell{\textbf{تاریخچه استفاده}}                               &
+		\makecell{
+		 امکان مشاهده‌ی تاریخچه‌ی مقادیر سنسورها\\ در اپلیکیشن یا پنل ادمین وجود دارد.}                              \\
+		\hline
+	\end{tabular}
+\caption{\label{features}جدول ویژگی‌های اصلی محصول}
+\end{table}
+
+
+
+\newpage
+\section{روش انجام پروژه}
+
+\subsection{بررسی کلی پروژه}
+در این پروژه از برد رزبری پای $3$ استفاده خواهد شد. سنسورهای مربوط به بدن و هم‌چنین سنسورهای محیطی به این برد متصل می‌شوند و از طریق رزبری اطلاعات آن‌ها پردازش و از طریق وای‌فای به سرور ارسال می‌شود. 
+
+سرور با استفاده از زبان پایتون و فریم‌ورک \lr{Django} زده می‌شود. وظیفه‌ی آن این است که اطلاعات را از رزبری دریافت و در دیتابیس ذخیره کند. دیتابیس مورداستفاده \lr{MySQL} خواهد بود. هم‌چنین سرور API های لازم برای دریافت اطلاعات را نیز در اختیار اپلیکیشن موبایل قرار می‌دهد.
+
+در اپلیکیشن موبایل علائم حیاتی کاربر و شرایط محیطی در لحظه‌ی فعلی و هم چنین در طول یک بازه 
+
+قابل مشاهده خواهد بود. برای پیاده‌سازی اپلیکیشن از فریم‌ورک \lr{React Native} استفاده می‌شود.
+
+هم چنین یک نمایشگر نیز به برد رزبری متصل خواهد بود و مقادیر ثبت شده توسط سنسورها را نشان می‌دهد. با توجه به \lr{Multiplatform} بودن فریم‌ورک 
+\lr{React Native}
+و امکان استفاده آن بر روی دسکتاپ و وب، برای رابط کاربری این قسمت نیز از همین فریم‌ورک استفاده خواهد شد.
+
+
+\subsection{سنسورها}
+
+\subsubsection{دما و رطوبت}
+برای ثبت دما و رطوبت از سنسور \lr{KY-015} استفاده می‌کنیم که چیپست مورد استفاده در آن \lr{DHT11} است. پروتوکل ارتباطی این سنسور تک سیم است و مقادیر دما و رطوبت را به طور دیجیتال انتقال می‌دهد و نیاز به قطعه‌‌ی دیگری برای اتصال به رزبری ندارد. 
+
+دقت این سنسور برای دما $\pm2$ درجه سانتی‌گراد و دقت آن برای رطوبت $\pm 5\% \text{RH}$ است. نرخ نمونه‌برداری آن نیز هر $2$ ثانیه یک بار است. این دقت و این نرخ نمونه‌برداری نیازی که ما در این پروژه داریم را رفع می‌کند و برای همین نیازی به هزینه‌ی بیشتر برای سنسورهای با نرخ نمونه‌برداری یا دقت بیشتر نیست.
+
+
+
+
+\subsubsection{ECG}
+
+برای مانیتور وضعیت قلب از قطعه‌ی \lr{AD8232} استفاده می‌کنیم. این قطعه فعالیت الکتریکی قلب را اندازه‌گیری می‌کند و خروجی آن می‌تواند به صورت مقادیر آنالوگ یا برای رسم \lr{ECG} مورد استفاده قرار بگیرد. در نتیجه در کنار این قطعه نیاز به یک مبدل آنالوگ به دیجیتال داریم. 
+
+هم‌چنین برای استفاده و تست آن نیاز به سه الکترود و تعدادی پد برای اتصال به بدن داریم.
+
+
+\end{document}
+
+
+
