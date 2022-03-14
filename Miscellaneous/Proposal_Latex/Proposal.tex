@@ -518,6 +518,9 @@ $(0.1^\circ C)$
 
 \newpage
 \section{زمان‌بندی}
+
+\subsection{چارت زمانی}
+
 \begin{figure}[H]
 	
 	\begin{center}
@@ -561,21 +564,6 @@ $(0.1^\circ C)$
 			\gantttitle{\rl{هفته ۳}}{1} 
 			\gantttitle{\rl{هفته ۴}}{1} 
 
-%			\gantttitle{۰۸}{1} 
-%			\gantttitle{۱۵}{1} 
-%			\gantttitle{۲۲}{1} 
-%			\gantttitle{۰۱}{1} 
-%			\gantttitle{۰۸}{1} 
-%			\gantttitle{۱۵}{1} 
-%			\gantttitle{۲۲}{1} 
-%			\gantttitle{۰۱}{1} 
-%			\gantttitle{۰۸}{1} 
-%			\gantttitle{۱۵}{1} 
-%			\gantttitle{۲۲}{1} 
-%			\gantttitle{۰۱}{1} 
-%			\gantttitle{۰۸}{1} 
-%			\gantttitle{۱۵}{1} 
-%			\gantttitle{۲۲}{1} 
 			%
 			\\
 			%tasks
@@ -583,6 +571,7 @@ $(0.1^\circ C)$
 			\ganttbar[progress=0]{\rl{تهیه‌ی قطعات}}{4}{6} \\
 			\ganttbar[progress=0]{\rl{آشنایی با رزبری}}{5}{6} \\
 			\ganttbar[progress=0]{\rl{تهیه معماری کامل سیستم}}{5}{6} \\
+			
 			\ganttgroup{\rl{سرور}}{6}{13} \\
 			\ganttbar[progress=0]{\rl{بیسیک سرور}}{6}{7} \\	
 			\ganttbar[progress=0]{\rl{اتصال رزبری و سرور}}{8}{9} \\
@@ -594,6 +583,7 @@ $(0.1^\circ C)$
 			\ganttbar[progress=0]{\rl{رسم نمودارها و قابلیت‌های اضافه}}{9}{13} \\
 
 			\ganttgroup{\rl{سخت‌افزار}}{7}{12} \\
+			\ganttbar[progress=0]{\rl{اتصال و تست صفحه نمایش}}{7}{8} \\
 			\ganttbar[progress=0]{\rl{اتصال و تست سنسورهای محیطی}}{7}{8} \\
 			\ganttbar[progress=0]{\rl{اتصال و تست سنسورهای بدن}}{9}{12} \\
 			
@@ -608,10 +598,10 @@ $(0.1^\circ C)$
 			\ganttlink{elem0}{elem8} 
 			\ganttlink{elem1}{elem12}
 			\ganttlink{elem3}{elem12} 			 
-			\ganttlink{elem4}{elem15} 
-			\ganttlink{elem8}{elem15}
-			\ganttlink{elem12}{elem15} 
-			\ganttlink{elem15}{elem16} 
+			\ganttlink{elem4}{elem16} 
+			\ganttlink{elem8}{elem16}
+			\ganttlink{elem12}{elem16} 
+			\ganttlink{elem17}{elem17} 
 			
 			\ganttlink{elem5}{elem6} 
 			\ganttlink{elem6}{elem7} 
@@ -634,9 +624,56 @@ vrule offset=1
 	\end{center}
 	\caption{گانت چارت پروژه}
 	
-
 \end{figure}
+	
 
+\newpage
+	\subsection{فعالیت‌های انجام شده در انتهای هر فاز}
+	
+	\subsubsection{فاز اول - ۱۷ فروردین ۱۴۰۱}
+	
+	\begin{itemize}
+		\item تهیه قطعات
+		\item  ارائه معماری سیستم
+	\end{itemize}
+	
+	\subsubsection{فاز دوم - ۳۱ فروردین ۱۴۰۱}
+	
+	\begin{itemize}
+		\item  اتصال و تست صفحه نمایش
+		\item  اتصال و تست سنسورهای محیطی
+	\end{itemize}
+	
+	\subsubsection{فاز سوم - ۱۴ اردی‌بهشت ۱۴۰۱}
+	
+	\begin{itemize}
+		\item ورژن اولیه سرور
+		\item ورژن اولیه اپلیکیشن موبایل
+		\item  اتصال سرور، موبایل و رزبری به یک دیگر
+	\end{itemize}
+	
+	\subsubsection{فاز چهارم - ۲۸ اردی‌بهشت ۱۴۰۱}
+	
+		
+	\begin{itemize}
+		\item اتصال و تست سنسورهای بدن انسان 
+	\end{itemize}
+
+	\subsubsection{فاز پنجم - ۱۱ خرداد ۱۴۰۱}
+	
+		
+	\begin{itemize}
+		\item ورژن نهایی سرور
+		\item ورژن نهایی اپلیکیشن موبایل
+		\item  تست نهایی سیستم
+	\end{itemize}
+	
+	\subsubsection{فاز ششم - ۱۸ خرداد ۱۴۰۱}
+	
+			
+	\begin{itemize}
+		\item رفع مشکلات ذکر شده در بازخورد 
+	\end{itemize}
 
 \end{document}
 
