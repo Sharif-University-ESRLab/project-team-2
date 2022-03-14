@@ -273,7 +273,7 @@
 	\begin{center}
 		\includegraphics[width=0.3\textwidth]{KY-015}
 	\end{center}
-	\caption{KY-015}
+	\caption{\lr{KY-015}}
 \end{figure}
 
 
@@ -285,7 +285,7 @@
 	\begin{center}
 		\includegraphics[width=0.3\textwidth]{KY-015-raspberry}
 	\end{center}
-	\caption{اتصال KY-015 به رزبری}
+	\caption{اتصال \lr{KY-015} به رزبری}
 \end{figure}
 
 
@@ -298,7 +298,7 @@
 	\begin{center}
 		\includegraphics[width=0.3\textwidth]{AD8232}
 	\end{center}
-	\caption{AD8232}
+	\caption{\lr{AD8232}}
 \end{figure}
 
 هم‌چنین برای استفاده و تست آن نیاز به سه الکترود و تعدادی پد برای اتصال به بدن داریم.
@@ -309,22 +309,149 @@
 
 برای ثبت آلودگی هوا، از سنسور \lr{MQ135} استفاده می‌کنیم. این سنسور برای تشخیص گازهای آمونیاک، اکسید‌های نیتروژن، الکل، کربن‌ دی‌اکسید، بنزن و دود حاصل از سوختن در هوا استفاده می‌شود. حساسیت این سنسور از طریق پتانسیومتری که روی آن تعبیه شده است قابل اندازه گیری است. این قطعه دو خروجی دیجیتال و آنالوگ دارد. خروجی دیجیتال آن صرفا در صورتی که یکی از این گاز‌ها از حد خاصی بیش‌تر بشود،‌ به حالت فعال و در غیر این صورت به حالت غیرفعال در می‌آید. خروجی آنالوگ آن بسته به مقاومت تنظیم شده و مطابق نمودار مشخصی، ولتاژی را متناسب با سطح گازهای موجود در هوا گزارش می‌کند. برای استفاده از این قطعه به مبدل آنالوگ به دیجیتال نیاز داریم.
 
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=0.3\textwidth]{mq-135}
+	\end{center}
+	\caption{\lr{MQ135}}
+\end{figure}
+
 لازم به ذکر است که این قطعه در محدوده دمایی $-10$ تا $45$ درجه سانتی‌گراد و تا حداکثر سطح رطوبت 
 $95 \% \text{RH}$
 کارایی دارد. با این حال باید توجه کرد که نمودار‌های مربوط به آن برای دمای $20 \pm 2$ درجه و سطح رطوبت
 $65 \% \text{RH} \pm 5\%$
 تهیه شده است و در صورت استفاده در شرایط دیگر،‌ نیاز به اندکی محاسبات برای جلوگیری از کاهش دقت وجود دارد.
 
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=0.3\textwidth]{mq-135-raspberry.png}
+	\end{center}
+	\caption{اتصال \lr{MQ135} به رزبری}
+\end{figure}
+
+
+
 
 \subsubsection{ضربان قلب و اکسیژن خون}
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=0.3\textwidth]{max30102}
+	\end{center}
+	\caption{\lr{MAX30102}}
+\end{figure}
+
 برای اندازه‌گیری ضربان قلب و اکسیژن خون، از سنسور 
 \lr{MAX30102}
 استفاده خواهیم کرد. این قطعه متناسب استفاده در دستگاه‌های پوشیدنی نظیر مچ‌بند‌های ورزشی و همچنین اسمارت‌فون‌ها طراحی شده است و در نتیجه از دقت قابل قبولی برخوردار است. این سنسور از طریق پروتکل 
 \lr{I2C}
 امکان ارتباط با میکروکنترلرها و همچنین پردازنده‌های ARM از جمله رزبری‌پای را دارد و از این لحاظ برای کار ما مناسب است.
 
+
+
 دقت مبدل آنالوگ به دیجیتال این قطعه $18$ بیت بوده که دقت مناسبی است. بازه دمایی قابل استفاده آن هم $-40$ تا $85$ درجه سانتی‌گراد است.
 
+
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=0.3\textwidth]{max30102-raspberry}
+	\end{center}
+	\caption{اتصال \lr{MAX30102} به رزبری}
+\end{figure}
+
+
+\newpage
+\subsection{معماری سیستم}
+
+نمودار معماری سیستم در شکل زیر آورده شده است.
+
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=0.9\textwidth,trim={0 10cm 0 0},clip]{drawio}
+	\end{center}
+	\caption{معماری سیستم}
+\end{figure}
+\newpage
+\section{جدول هزینه‌ها}
+
+در زیر جدول هزینه‌های تخمینی پروژه آورده شده است.
+
+
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|c|} 
+		\hline
+		\textbf{ردیف} & \textbf{قطعه}  &
+		\makecell{
+			\textbf{فی}\\
+		 \textbf{ (هزارتومان)}
+	} & \textbf{تعداد} & 
+		\makecell{
+			\textbf{قیمت کل}\\
+		\textbf{ (هزارتومان)} 
+	}
+		& \makecell{\makecell{\textbf{لینک} \\ \textbf{ فروشنده}}}  \\ 
+		\hhline{|======:b|}
+		
+		1             &
+		\makecell{
+		 سنسور کیفیت\\ و آلودگی هوا \lr{MQ-135}      
+		}
+		  & \lr{38.3}                    & \lr{1}              &                \lr{38.3}              &         \href{https://thecaferobot.com/store/mq-135-air-quality-sensor-module-1}{\textcolor{blue}{\underline{{لینک}}}}                                    \\ 
+		\hline
+		2             & 
+		\makecell{
+		سنسور اندازه گیری\\ فشار خون \lr{MPS20N0040D}
+	}
+		 & \lr{26.5}                    & \lr{1}              &             \lr{26.5}                 &        \href{https://thecaferobot.com/store/pressure-meter-mps20n0040d}{\textcolor{blue}{\underline{{لینک}}}}                                      \\ 
+		\hline
+		3             & سنسور دما و رطوبت هوا \lr{KY-015}           & \lr{45}                       & 
+		\lr{1}              &              \lr{45}           &          
+		\makecell{\href{https://www.google.com}{\textcolor{blue}{\underline{{لینک}}}} \\ \href{https://thecaferobot.com/store/temprature-sensor-dht11-dfrobot-1}{\textcolor{blue}{\underline{{محصول}}}} \\ \href{https://thecaferobot.com/store/temprature-sensor-dht11-dfrobot-1}{\textcolor{blue}{\underline{{مشابه}}}}}
+		\\ 
+		\hline
+		4             & سنسور دمای بدن \lr{MAX30205} &
+		 \lr{290.9}                   & \lr{1}              &          \lr{290.9}                   &       \href{https://shop.aftabrayaneh.com/cjmcu_max30205_human_body_temperature_sensor-aftab.html}{\textcolor{blue}{\underline{{لینک}}}}                                       \\ 
+		\hline
+		5             & سنسور \lr{ECG} ضربان قلب~ \lr{AD8232}            &
+		 \lr{128.0}                   & \lr{1}              &                  \lr{128.0}           &    \href{https://thecaferobot.com/store/heart-rate-monitor-ad8232-ecg}{\textcolor{blue}{\underline{{لینک}}}}                                          \\ 
+		\hline
+		6             & الکترود \lr{ECG} 
+		                           &\lr{ 96.0}                    & \lr{1}              &     \lr{96}                         &\href{https://thecaferobot.com/store/ecg-heart-rate-ekg-muscle-electric-emg-sensor-accessories-headphone-plug-cable}{\textcolor{blue}{\underline{{لینک}}}}                                              \\ 
+		\hline
+		7             & ماژول اکسیمتر \lr{MAX30102}                 & 
+		\lr{163.3}                   & \lr{1}              &            \lr{163.3}                  &     \href{https://daneshjookit.com/module/sensor/%D8%A8%DB%8C%D9%88%D9%85%D8%AA%D8%B1%DB%8C%DA%A9/3574-pulse-oximeter-max30102-module.html}{\textcolor{blue}{\underline{{لینک}}}}  
+			                                       \\ 
+		\hline
+		8             & صفحه نمایش \lr{LCD} رزبری‌پای               & \lr{1480}                       & \lr{1}              &               \lr{1480}               &                                              \href{https://www.digikala.com/product/dkp-7886676/%D9%85%D8%A7%DA%98%D9%88%D9%84-%D9%86%D9%85%D8%A7%DB%8C%D8%B4%DA%AF%D8%B1-%D9%84%D9%85%D8%B3%DB%8C-%D8%B1%D8%B2%D8%A8%D8%B1%DB%8C-%D9%BE%D8%A7%DB%8C-%D9%85%D8%AF%D9%84-hdmi-%DA%A9%D8%AF-5/}{\textcolor{blue}{\underline{{لینک}}}} \\ 
+		\hline
+		9             & رزبری پای \lr{3b}                            & \lr{3000}                       & 
+		\lr{1}              &                      \lr{3000}        
+		&\href{https://www.digikala.com/product/dkp-288904/%D8%A8%D8%B1%D8%AF-%D8%B1%D8%B3%D9%BE%D8%A8%D8%B1%DB%8C-%D9%BE%D8%A7%DB%8C3-%D9%85%D8%AF%D9%84-b/}{\textcolor{blue}{\underline{{لینک}}}}  
+		                                            \\ 
+		\hline
+		10            & بردبورد                                & \lr{23.75}                       & \lr{2}              &                     \lr{47.5}        &                                             \href{https://www.digikala.com/product/dkp-7199135/%D8%A8%D8%B1%D8%AF-%D8%A8%D9%88%D8%B1%D8%AF-%D9%85%D8%AF%D9%84-400s-%D8%A8%D8%B3%D8%AA%D9%87-2-%D8%B9%D8%AF%D8%AF%DB%8C/}{\textcolor{blue}{\underline{{لینک}}}} \\ 
+		\hline
+		11            & سیم جامپر                              & \lr{1}                       & \lr{100}            &                              \lr{100}&        
+		                                      \href{https://www.digikala.com/product/dkp-4548386/%D8%B3%DB%8C%D9%85-%D8%AC%D8%A7%D9%85%D9%BE%D8%B1-%D9%85%D8%AF%D9%84ff30-%D8%A8%D8%B3%D8%AA%D9%87-40-%D8%B9%D8%AF%D8%AF%DB%8C/}{\textcolor{blue}{\underline{{لینک}}}} \\ 
+		\hline
+		12            & مقاومت                                 & \lr{0.14}                       & \lr{50}             &                 \lr{7}             &       \href{https://www.digikala.com/product/dkp-2299913/%D9%85%D9%82%D8%A7%D9%88%D9%85%D8%AA-10-%DA%A9%DB%8C%D9%84%D9%88-%D8%A7%D9%87%D9%85-%DA%A9%D8%AF-10k-%D8%A8%D8%B3%D8%AA%D9%87-50-%D8%B9%D8%AF%D8%AF%DB%8C/}{\textcolor{blue}{\underline{{لینک}}}}        
+		                               \\ 
+		\hline
+		13            & 
+		 مبدل آنالوگ به دیجیتال \lr{ADS1115}         & \lr{154.0}                   & \lr{1}              &                              \lr{154}&                              \href{https://daneshjookit.com/module/useful/%D9%85%D8%A8%D8%AF%D9%84-%D9%88-%D8%B1%DA%AF%D9%88%D9%84%D8%A7%D8%AA%D9%88%D8%B1/2136-adc-module-ads1115.html}{\textcolor{blue}{\underline{{لینک}}}}                \\ 
+		\hline
+		14            & پد \lr{ECG}        
+		                         & \lr{2}                       & \lr{6}              & \lr{12}                           & \href{https://thecaferobot.com/store/ecg-and-emg-accessories-electrode-sheet}{\textcolor{blue}{\underline{{لینک}}}}                                             \\ 
+		\hline
+		& \textbf{مجموع}                         &                         &                &      \lr{5588.5}                        &                                              \\
+		\hline
+	\end{tabular}
+\caption{برآورد هزینه‌ها}
+\end{table}
 
 
 
