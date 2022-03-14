@@ -27,7 +27,7 @@
 \usepackage{PTSerif} 
 \usepackage{seqsplit}
 \usepackage{hhline}
-
+\usepackage{pgfgantt}
 
 \renewcommand\theadalign{bc}
 \renewcommand\theadfont{\bfseries}
@@ -274,6 +274,83 @@
 برای مانیتور وضعیت قلب از قطعه‌ی \lr{AD8232} استفاده می‌کنیم. این قطعه فعالیت الکتریکی قلب را اندازه‌گیری می‌کند و خروجی آن می‌تواند به صورت مقادیر آنالوگ یا برای رسم \lr{ECG} مورد استفاده قرار بگیرد. در نتیجه در کنار این قطعه نیاز به یک مبدل آنالوگ به دیجیتال داریم. 
 
 هم‌چنین برای استفاده و تست آن نیاز به سه الکترود و تعدادی پد برای اتصال به بدن داریم.
+
+
+
+
+
+\newpage
+\section{زمان‌بندی}
+\begin{figure}[tbp]
+	\begin{center}
+		
+		\begin{ganttchart}[y unit title=0.4cm,
+			y unit chart=0.8cm,
+			vgrid,hgrid, 
+			title label anchor/.style={below=-1.6ex},
+			title left shift=.05,
+			title right shift=-.05,
+			title height=1,
+			progress label text={},
+			bar height=0.6,
+			group right shift=0,
+			group top shift=.6,
+			group height=.3]{1}{16}
+			%labels
+			\gantttitle{اسفند}{4}
+			\gantttitle{فروردین}{4}
+			\gantttitle{اردی‌بهشت}{4}
+			\gantttitle{خرداد}{4}
+			 \\
+%			\gantttitle{۰۱}{1} 
+%			\gantttitle{۰۸}{1} 
+%			\gantttitle{۱۵}{1} 
+%			\gantttitle{۲۲}{1} 
+%			\gantttitle{۰۱}{1} 
+%			\gantttitle{۰۸}{1} 
+%			\gantttitle{۱۵}{1} 
+%			\gantttitle{۲۲}{1} 
+%			\gantttitle{۰۱}{1} 
+%			\gantttitle{۰۸}{1} 
+%			\gantttitle{۱۵}{1} 
+%			\gantttitle{۲۲}{1} 
+%			\gantttitle{۰۱}{1} 
+%			\gantttitle{۰۸}{1} 
+%			\gantttitle{۱۵}{1} 
+%			\gantttitle{۲۲}{1} 
+			%
+			\\
+			%tasks
+			\ganttbar[progress=0]{\rl{نهایی کردن پروپوزال}}{3}{4} \\
+			\ganttbar[progress=0]{\rl{تهیه‌ی قطعات}}{4}{6} \\
+			\ganttbar[progress=0]{\rl{آشنایی با رزبری}}{5}{6} \\
+			\ganttbar[progress=0]{\rl{تهیه معماری کامل سیستم}}{5}{6} \\
+			\ganttbar[progress=0]{\rl{سرور و اتصال رزبری به آن}}{6}{13} \\
+			\ganttbar[progress=0]{\rl{اپلیکیشن موبایل و اتصال به سرور}}{6}{13} \\
+			\ganttbar[progress=0]{\rl{اتصال و تست سنسورهای محیطی}}{7}{8} \\
+			\ganttbar[progress=0]{\rl{اتصال و تست سنسورهای بدن}}{9}{12} \\
+			\ganttbar[progress=0]{\rl{تست کلی سیستم}}{13}{14} \\
+			\ganttbar[progress=0]{\rl{بررسی بازخوردها}}{15}{15}
+			
+			%relations 
+			\ganttlink{elem0}{elem1} 
+			\ganttlink{elem0}{elem3} 
+			\ganttlink{elem0}{elem4} 
+			\ganttlink{elem0}{elem5} 
+			\ganttlink{elem1}{elem6}
+			\ganttlink{elem1}{elem7} 
+			\ganttlink{elem3}{elem6} 			
+			\ganttlink{elem3}{elem7} 
+			\ganttlink{elem4}{elem8} 
+			\ganttlink{elem5}{elem8}
+			\ganttlink{elem6}{elem8} 
+			\ganttlink{elem7}{elem8}
+			\ganttlink{elem8}{elem9} 
+		\end{ganttchart}
+	\end{center}
+	\caption{گانت چارت پروژه}
+	
+\end{figure}
 
 
 \end{document}
