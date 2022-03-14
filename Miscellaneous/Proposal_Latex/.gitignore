@@ -26,6 +26,11 @@
 # *.eps
 *.pdf
 
+
+Miscellaneous/Proposal_Latex/Proposal.pdf
+**/Proposal.pdf
+Proposal.pdf
+
 ## Generated if empty string is given at "Please type another file name for output:"
 .pdf
 
