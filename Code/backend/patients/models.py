@@ -12,7 +12,7 @@ class Patient(models.Model):
     last_name = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=20, null=True)
     email = models.EmailField(null=True)
-    gender = models.CharField(max_length=4, choices=GENDER.choices, default=GENDER.WOMAN)
+    gender = models.CharField(max_length=1, choices=GENDER.choices, default=GENDER.WOMAN)
     height = models.DecimalField(max_digits=3, decimal_places=2)
     weight = models.DecimalField(max_digits=6, decimal_places=3)
     created_at = models.DateTimeField(auto_now_add=True)
