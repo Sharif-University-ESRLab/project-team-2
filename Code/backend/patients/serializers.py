@@ -1,9 +1,11 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework import serializers
 
 from patients.models import Patient
 
 
-class PatientSerializer(ModelSerializer):
+class PatientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
-        fields = ['__all__']
+        bmi = serializers.ReadOnlyField(source='bmi')
+
+        fields = ('first_name', 'last_name', 'phone', 'email', 'gender', 'height', 'mass', 'bmi')

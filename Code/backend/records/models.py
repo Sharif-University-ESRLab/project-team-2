@@ -33,4 +33,4 @@ class Record(models.Model):
 
     # other data
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(default=timezone.now())
+    timestamp = models.DateTimeField(default=timezone.now)

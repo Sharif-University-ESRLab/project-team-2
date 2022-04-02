@@ -72,10 +72,9 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware'
 ]
 
-ROOT_URLCONF = 'health.urls'
-
 CORS_ALLOW_ALL_ORIGINS = True
 
+ROOT_URLCONF = 'health.urls'
 
 TEMPLATES = [
     {
