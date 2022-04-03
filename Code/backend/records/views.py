@@ -1,12 +1,15 @@
 import datetime
 from datetime import timedelta
 
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import viewsets, status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from records import serializers
 from records.models import Record
+from records.openapi import day_param, hour_param, minute_param, second_param, latest_data_response, \
+    latest_time_data_response, patient_param, to_param, from_param, sensors_param, filter_data_response
 
 
 class RecordViewSet(viewsets.ModelViewSet):
@@ -20,12 +23,15 @@ class RecordFullViewSet(viewsets.ModelViewSet):
     http_method_names = ['get']
 
 
+@swagger_auto_schema(method='get', responses={200: latest_data_response})
 @api_view(['GET'])
 def get_latest_data(request):
     serializer = serializers.RecordFullSerializer(Record.objects.latest('timestamp'))
     return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
+@swagger_auto_schema(method='get', manual_parameters=[day_param, hour_param, minute_param, second_param],
+                     responses={200: latest_time_data_response})
 @api_view(['GET'])
 def get_latest_time_data(request):
     """
@@ -46,6 +52,8 @@ def get_latest_time_data(request):
     return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
+@swagger_auto_schema(method='get', manual_parameters=[patient_param, from_param, to_param, sensors_param],
+                     responses={200: filter_data_response})
 @api_view(['GET'])
 def get_by_filter(request):
     """

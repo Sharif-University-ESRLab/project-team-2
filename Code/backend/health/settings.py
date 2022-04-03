@@ -31,7 +31,6 @@ environ.Env.read_env(env_file=".env")
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config("SECRET_KEY", default="django-insecure-d5l3og$n4$siwro0^^(ew2umf$+(l4t-a*)u$yp7lrtcz*672h")
 
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG")
 
@@ -41,8 +40,6 @@ ALLOWED_HOSTS = [
     config("SERVER", default="127.0.0.1"),
     ".herokuapp.com",
 ]
-
-
 
 # Application definition
 
@@ -57,6 +54,7 @@ INSTALLED_APPS = [
     'django_filters',
     'corsheaders',
     'rest_framework',
+    'drf_yasg',
     'patients',
     'records'
 ]
@@ -94,7 +92,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'health.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -108,8 +105,6 @@ DATABASES = {
         'PORT': env('MYSQL_PORT'),
     }
 }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -129,7 +124,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -142,7 +136,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
