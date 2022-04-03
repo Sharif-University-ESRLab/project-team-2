@@ -8,4 +8,4 @@ class PatientSerializer(serializers.ModelSerializer):
         model = Patient
         bmi = serializers.ReadOnlyField(source='bmi')
 
-        fields = ('first_name', 'last_name', 'phone', 'email', 'gender', 'height', 'mass', 'bmi')
+        fields = ('id', 'first_name', 'last_name', 'phone', 'email', 'gender', 'height', 'mass', 'bmi')
