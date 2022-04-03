@@ -1,4 +1,3 @@
-import datetime
 from datetime import timedelta
 
 from drf_yasg.utils import swagger_auto_schema
@@ -26,6 +25,8 @@ class RecordFullViewSet(viewsets.ModelViewSet):
 @swagger_auto_schema(method='get', responses={200: latest_data_response})
 @api_view(['GET'])
 def get_latest_data(request):
+    if not Record.objects.all().exists():
+        return Response(status=status.HTTP_404_NOT_FOUND)
     serializer = serializers.RecordFullSerializer(Record.objects.latest('timestamp'))
     return Response(data=serializer.data, status=status.HTTP_200_OK)
 
@@ -38,6 +39,8 @@ def get_latest_time_data(request):
     Get the latest data specified by query params. By default, it finds last 1-minute data.
     It finds data based on latest (by timestamp) entry and not by datatime.now().
     """
+    if not Record.objects.all().exists():
+        return Response(status=status.HTTP_404_NOT_FOUND)
     last_record: Record = Record.objects.latest('timestamp')
     days = request.GET.get('day', 0)
     minutes = request.GET.get('minute', 1)
@@ -77,6 +80,8 @@ def get_by_filter(request):
         queryset = queryset.filter(timestamp__gte=from_time)
     if to_time:
         queryset = queryset.filter(timestamp__lte=to_time)
+    if not queryset.exists():
+        return Response(status=status.HTTP_404_NOT_FOUND)
     if sensors:
         serializer = serializers.RecordDefaultSerializer(queryset, many=True, fields=['id', 'timestamp'] + sensors)
     else:
