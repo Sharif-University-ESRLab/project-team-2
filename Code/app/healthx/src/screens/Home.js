@@ -2,37 +2,17 @@ import React from "react";
 import { View, Linking } from "react-native";
 import {
   Layout,
-  TopNav,
   Text,
   Button,
   Section,
   SectionContent,
-  useTheme,
-  themeColor,
 } from "react-native-rapi-ui";
-import { Ionicons } from "@expo/vector-icons";
+import Navbar  from "../components/Navbar";
 
 export default function ({ navigation }) {
-  const { isDarkmode, setTheme } = useTheme();
   return (
     <Layout>
-      <TopNav
-        middleContent="Home"
-        rightContent={
-          <Ionicons
-            name={isDarkmode ? "sunny" : "moon"}
-            size={20}
-            color={isDarkmode ? themeColor.white100 : themeColor.dark}
-          />
-        }
-        rightAction={() => {
-          if (isDarkmode) {
-            setTheme("light");
-          } else {
-            setTheme("dark");
-          }
-        }}
-      />
+      <Navbar navigation={navigation} pageName="Home" backOption={false}/>
       <View
         style={{
           flex: 1,
@@ -55,6 +35,15 @@ export default function ({ navigation }) {
               text="Go to second screen"
               onPress={() => {
                 navigation.navigate("SecondScreen");
+              }}
+              style={{
+                marginTop: 10,
+              }}
+            />
+            <Button
+              text="Patients"
+              onPress={() => {
+                navigation.navigate("Patients");
               }}
               style={{
                 marginTop: 10,
