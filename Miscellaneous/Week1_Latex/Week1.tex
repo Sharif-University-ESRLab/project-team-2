@@ -281,46 +281,58 @@ TODO
 	\item در صورت مشاهده‌ی مقادیر غیر عادی به کاربر هشدار دهد.
 \end{itemize}
 
-\subsubsection{معماری سرور}
-سرور با زبان \lr{Python} و تحت چارچوب \lr{Django} توسعه داده خواهد شد. از سرور برای دریافت و ذخیره‌ی اطلاعات از برد رزبری و همچنین فراهم کردن رابط برنامه‌نویسی کاربردی \lr{(API)} مناسب برای اپلیکیشن موبایل جهت دریافت اطلاعات استفاده خواهیم کرد. \lr{API} سرور شامل اندپوینت‌های زیر خواهد بود:
-
-\begin{table}[H]
-	\centering
-	\begin{tabular}{|c|l|l|} 
-		\hline
-		\makecell{\textbf{ردیف}} & \makecell{\textbf{وظیفه}}    & \makecell{\textbf{مسیر}}
-		\\
-		\hhline{|===|}
-		1  & \makecell{دریافت آخرین اطلاعات ثبت شده برای کاربر}  & \makecell{\lr{GET /api/data}} \\ 
-		\hline
-		2  & \makecell{ارسال داده به‌همراه برچسب زمانی و نام کاربری}  & \makecell{\lr{POST /api/log/}} \\ 
-		\hline
-		3  & \makecell{دریافت کل داده‌ی مربوط به یک کاربر}  & \makecell{\lr{GET /api/data/report}} \\ 
-		\hline
-		4  & \makecell{دریافت داده‌ی دقیقه‌ی آخر}  & \makecell{\lr{GET /api/data/minute}} \\ 
-		\hline
-		5  & \makecell{دریافت داده‌ی یک بازه‌ی مشخص}  & \makecell{\lr{GET /api/data/interval}} \\ 
-		\hline
-		6  & \makecell{دریافات اطلاعات یک سنسور در یک بازه}  & \makecell{\lr{GET /api/data/interval/<sensor-Id>}} \\ 
-		\hline
-		7  & \makecell{دریافت لیست کاربران}  & \makecell{\lr{GET /api/users}} \\ 
-		\hline
-	\end{tabular}
-\caption{\label{api}جدول API سرور}
-\end{table}
-
 \subsubsection{شمای کلی}
-
+اجزای سیستم و نحوه‌ی ارتباط آن‌ها در تصویر زیر مشخص شده است:
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=\textwidth,trim={1cm 4cm 1cm 4cm},clip]{project_architecture}
+	\end{center}
+	\caption{شمای کلی سیستم}
+\end{figure}
 
 \subsection{طراحی بیسیک سرور}
+نسخه‌ی اولیه‌ی سرور با کمک فریم‌ورک \lr{Django} ایجاد شده و به‌وسیله‌ی ابزار Docker استقرار می‌یابد. همچنین با کمک \lr{docker compose} و یک تصویر از دیتابیس \lr{MySQL}، اتصال سرور به دیتابیس برقرار می‌شود. 
+
+در حال حاضر دو مدل \lr{Record} و \lr{Patient} در سرور تعریف شده که برای ذخیره‌ی اطلاعات کاربران و داده‌ی سنسورها مورد استفاده قرار خواهد گرفت.
+
+همچنین مستندسازی \lr{API} سرور با شمای \lr{Redoc} و \lr{Swagger} فراهم شده که پس از اجرای سرور به‌ترتیب در مسیر \codeword{/redoc} و \codeword{/swagger} قابل مشاهده خواهد بود. تصویر بخشی از مستند در صفحه‌ی \lr{redoc} در شکل \ref{redoc} نشان داده شده است.
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=\textwidth]{redoc}
+	\end{center}
+	\caption{نمونه‌ی مستندات \lr{API} سرور}
+	\label{redoc}
+\end{figure}
+
+کد برنامه در مخزن پروژه در 
+\href{https://github.com/Sharif-University-ESRLab/project-team-2/tree/main/Code/backend}{این مسیر}
+قرار گرفته است.
+
 \subsection{طراحی بیسیک اپ موبایل}
-%
-%\begin{figure}[h]
-%	\begin{center}
-%		\includegraphics[width=0.3\textwidth]{MAX30205}
-%	\end{center}
-%	\caption{\lr{MAX30205}}
-%\end{figure}
+نسخه‌ی اولیه‌ی اپ موبایل با کمک ابزار \lr{React Native} ایجاد شده است و در حال حاضر قابلیت مشاهده‌ی لیست بیماران با اتصال به سرور فراهم شده است.
+در شکل
+ \ref{app_screenshots}
+، تصاویری از محیط برنامه به کمک \lr{Expo} اجرا شده قابل مشاهده است.
+
+\begin{figure}[H]
+	\begin{center}
+		\begin{subfigure}{.45\textwidth}
+			\includegraphics[width=.9\linewidth]{app_home}
+			\caption{صفحه اصلی}
+		\end{subfigure}
+		\begin{subfigure}{.45\textwidth}
+			\includegraphics[width=.9\linewidth]{app_patients}
+			\caption{لیست بیماران ثبت شده}
+		\end{subfigure}
+		\caption{تصاویری از محیط اپ موبایل}
+		\label{app_screenshots}
+	\end{center}
+\end{figure}
+
+کد برنامه و نحوه‌ی نصب و راه‌اندازی آن در 
+\href{https://github.com/Sharif-University-ESRLab/project-team-2/tree/main/Code/app}{این مسیر}
+قرار گرفته است.
 
 \newpage
 \section{زمان‌بندی} \label{gantt}
