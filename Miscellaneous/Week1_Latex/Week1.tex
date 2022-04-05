@@ -7,7 +7,6 @@
 \usepackage{subcaption}
 \usepackage{hyperref}
 \usepackage{enumitem}
-\usepackage{cite}
 \usepackage[many]{tcolorbox}
 \usepackage{listings }
 \usepackage[a4paper, total={6in, 8in} , bottom = 25mm , top = 25mm, headheight = 1.25cm , includehead,includefoot,heightrounded ]{geometry}
@@ -29,8 +28,13 @@
 \usepackage{hhline}
 \usepackage{pgfgantt}
 \usepackage{graphicx}
+\usepackage{filecontents}
+\usepackage{url} % for "\url" macro
+\usepackage{babel}
+\usepackage[backend=bibtex, style=numeric]{biblatex}
 
- 
+\addbibresource{refs.bib}
+
 \graphicspath{ {./images/} }
 
 \renewcommand\theadalign{bc}
@@ -200,7 +204,7 @@
 
 \tableofcontents
 \listoffigures
-% \listoftables
+\listoftables
 
 \newpage
 \section{مقدمه}
@@ -251,13 +255,88 @@
 قطعاتی که کنار قیمت نهایی آن‌ها علامت * وجود دارد، به علت موجود بودن خریداری نشده‌اند و قیمت نهایی آن‌ها همان قیمت تخمینی آن‌هاست و قیمت نهایی برای مقایسه‌ی هزینه نهایی پروژه با هزینه‌ی تخمین‌زده شده آورده شده‌ است.
 
 
-هزینه‌ی تخمین‌زده شده‌ی ما از این پروژه ۵ میلیون و ۵۸۸ هزار تومان بوده است و هزینه‌ی نهایی برابر ۵ میلیون و ۴۹۲ هزار تومان شد. از این مقدار قطعاتی به ارزش تخمینی ۴ میلیون و ۷۵۰ هزار تومان از آزمایشگاه تهیه شد و سایر قطعات به قیمت ۷۴۰ هزار تومان جداگانه خریداری شد.
-
-در زیر تصویر قطعات تهیه شده قابل مشاهده است:
-TODO
+هزینه‌ی تخمین‌زده شده‌ی ما از این پروژه ۵ میلیون و ۵۸۸ هزار تومان بوده است و هزینه‌ی نهایی برابر ۵ میلیون و ۴۹۲ هزار تومان شد. از این مقدار قطعاتی به ارزش تخمینی ۴ میلیون و ۸۶۰ هزار تومان از آزمایشگاه تهیه شد و سایر قطعات به ارزش ۶۳۰ هزار تومان جداگانه خریداری شد.
 
 
-\subsection{آشنایی با رزبری}
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=.63\textwidth]{pic1} % left bottom right top
+	\end{center}
+	\caption{رزبری و صفحه‌ی نمایش}
+\end{figure}
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=.63\textwidth,trim={0 0.5cm 0 1cm},clip]{pic2} % left bottom right top
+	\end{center}
+	\caption{سنسورها}
+\end{figure}
+
+
+\subsection{آشنایی با رزبری‌پای}
+
+\subsubsection{معرفی رزبری‌پای }
+
+رزبری‌پای یک کامپیوتر کوچک است که قابلیت اتصال به مانیتور، کیبورد، ماوس و غیره را دارد.
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=.70\textwidth]{pi-labelled-names} % left bottom right top
+	\end{center}
+	\caption{قسمت‌های مختلف رزبری \cite{1}}
+\end{figure}
+
+
+
+قسمت‌های مختلف رزبری شامل موارد زیر می‌شود:
+
+\begin{itemize}
+	\item 
+	پورت‌های \lr{USB}:  جهت اتصال ماوس، کیبورد، درایو USB و ...
+	\item 
+	
+	جایگاه \lr{SD card}: محل قرارگیری کارت SD که شامل سیستم‌عامل و سایر فایل‌ها می‌شود.
+	\item 
+	
+	پورت اترنت: جهت اتصال رزبری به شبکه
+	
+	\item 
+	جک صدا: جهت اتصال هندزفری و ...
+	\item 
+	
+	پورت\lr{HDMI}:  جهت اتصال به مانیتور
+	\item 
+رابط منبع تغذیه: جهت اتصال رزبری به منبع تغذیه
+	
+	\item
+	پین‌های\lr{GPIO}: 
+	 ۴۰ پین ورودی/خروجی همه منظوره که با استفاده از این پین‌ها می‌توان قطعات مختلف الکترونیکی مانند سنسورها و موتورها را به رزبری متصل کرد. \cite{2}
+\end{itemize}
+
+
+
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=.70\textwidth]{pi3_5F00_gpio} % left bottom right top
+	\end{center}
+	\caption{پین‌های GPIO رزبری‌پای ۳ \cite{3}}
+\end{figure}
+
+
+
+\subsubsection{‌راه‌اندازی رزبری‌پای}
+
+برای شروع به کار با رزبری می‌توانیم از اتصال آن به صفحه نمایش تلویزیون استفاده کنیم و با استفاده از ماوس و کیبورد آن را کنترل کنیم.
+
+برای این که بتوانیم با رزبری کار کنیم نیاز به یک سیستم عامل بر روی آن داریم. برای این کار MicroSD را داخل لپ‌تاپ قرار می‌دهیم و سپس با استفاده از برنامه‌ی \lr{Rassberry Pi Imager}، \lr{ Rassberry Pi OS } را روی کارت رایت می‌کنیم.
+
+پس از اتمام رایت، MicroSD را از لپ‌تاپ خارج کرده و درون رزبری قرار می‌دهیم. پس از آن ماوس و کیبورد را از طریق پورت USB به رزبری متصل کرده و با استفاده از کابل HDMI آن را به تلویزیون وصل می‌کنیم. در نهایت رزبری را از طریق رابط تغذیه به برق متصل می‌کنیم.
+
+در صورت درست بودن اتصال منبع تغذیه، چراغ قرمز رزبری به صورت ثابت روشن می‌شود. اگر این چراغ چشمک بزند یعنی مشکلی در تغذیه‌ی رزبری وجود دارد (مثلا کافی نبودن ولتاژ). هم چنین در صورتی که سیستم عامل به درستی روی کارت حافظه قرار گرفته باشد، هنگام بوت شدن سیستم عامل، چراغ سبز رزبری به صورت نامنظم روشن می‌شود و می‌توانیم در صفحه‌ی تلویزیون دسکتاپ رزبری را مشاهده کنیم و با استفاده از ماوس و کیبورد با آن کار کنیم.
+
+
+\newpage
 \subsection{معماری سیستم}
 معماری اولیه شامل ساختار کلی و سطح بالای سیستم و معرفی ابزارها و نحوه‌ی اتصال آن‌ها که در پروپوزال پروژه معرفی شد مطابق زیر است:
 \begin{figure}[h]
@@ -290,6 +369,8 @@ TODO
 	\caption{شمای کلی سیستم}
 \end{figure}
 
+\newpage
+
 \subsection{طراحی بیسیک سرور}
 نسخه‌ی اولیه‌ی سرور با کمک فریم‌ورک \lr{Django} ایجاد شده و به‌وسیله‌ی ابزار Docker استقرار می‌یابد. همچنین با کمک \lr{docker compose} و یک تصویر از دیتابیس \lr{MySQL}، اتصال سرور به دیتابیس برقرار می‌شود. 
 
@@ -309,11 +390,13 @@ TODO
 \href{https://github.com/Sharif-University-ESRLab/project-team-2/tree/main/Code/backend}{این مسیر}
 قرار گرفته است.
 
+\newpage
+
 \subsection{طراحی بیسیک اپ موبایل}
 نسخه‌ی اولیه‌ی اپ موبایل با کمک ابزار \lr{React Native} ایجاد شده است و در حال حاضر قابلیت مشاهده‌ی لیست بیماران با اتصال به سرور فراهم شده است.
 در شکل
  \ref{app_screenshots}
-، تصاویری از محیط برنامه به کمک \lr{Expo} اجرا شده قابل مشاهده است.
+، تصاویری از محیط برنامه که به کمک \lr{Expo} اجرا شده قابل مشاهده است.
 
 \begin{figure}[H]
 	\begin{center}
@@ -435,16 +518,22 @@ TODO
 			\ganttvrule[vrule/.append style={blue, thin},vrule offset=1]{\rl{گزارش سوم}}{10}
 			\ganttvrule[vrule/.append style={blue, thin},vrule offset=1]{\rl{گزارش چهارم}}{12}	
 			\ganttvrule[vrule/.append style={blue, thin},vrule offset=1]{\rl{گزارش اولیه}}{14}
-			\ganttvrule[vrule/.append style={blue, thin},
-vrule offset=1
-]{\rl{گزارش نهایی}}{15}
+			\ganttvrule[vrule/.append style={blue, thin},vrule offset=1]{\rl{گزارش نهایی}}{15}
 		\end{ganttchart}
 	\end{center}
 	\caption{گانت چارت پروژه}
 	
 \end{figure}
-	
+
+
+\newpage
+\section{مراجع‌}
+
+\nocite{*}
+\begin{latin}
+ \printbibliography[heading=none]
+\end{latin}
+
+
 \end{document}
-
-
 
