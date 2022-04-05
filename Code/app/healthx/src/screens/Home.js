@@ -6,8 +6,10 @@ import {
   Button,
   Section,
   SectionContent,
+  themeColor,
 } from "react-native-rapi-ui";
 import Navbar  from "../components/Navbar";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function ({ navigation }) {
   return (
@@ -23,22 +25,24 @@ export default function ({ navigation }) {
         <Section>
           <SectionContent>
             <Text fontWeight="bold" style={{ textAlign: "center" }}>
-              These UI components provided by Rapi UI
+              Hardware Lab - Group 2
+            </Text>
+            <Text style={{ textAlign: "center" }}>
+              Spring 2022
             </Text>
             <Button
               style={{ marginTop: 10 }}
-              text="Rapi UI Documentation"
+              text="Project source code"
+              leftContent={
+                <Ionicons
+                  name="logo-github"
+                  size={20}
+                  color={themeColor.white}
+                />
+              }
               status="info"
-              onPress={() => Linking.openURL("https://rapi-ui.kikiding.space/")}
-            />
-            <Button
-              text="Go to second screen"
-              onPress={() => {
-                navigation.navigate("SecondScreen");
-              }}
-              style={{
-                marginTop: 10,
-              }}
+              onPress={() => Linking.openURL("https://github.com/Sharif-University-ESRLab/project-team-2")}
+              type="TouchableOpacity"
             />
             <Button
               text="Patients"
