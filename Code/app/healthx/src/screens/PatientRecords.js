@@ -70,11 +70,12 @@ class PatientRecords extends Component {
 									this.props.isDarkmode ? themeColor.white100 : themeColor.dark
 								}
 							/>
-							<View>
-								<Text style={styles.lightText}>{`Heart Rate: ${data.item.heart_rate}BPM`}</Text>
+							<View style={styles.recordRow}>
+								<Text style={styles.lightText}>Heart Rate:</Text>
+								<Text style={styles.lightText}>{data.item.heart_rate}BPM</Text>
 							</View>
 						</View>
-						
+
 						<View style={styles.card}>
 							<Ionicons
 								name={"thermometer-outline"}
@@ -83,11 +84,12 @@ class PatientRecords extends Component {
 									this.props.isDarkmode ? themeColor.white100 : themeColor.dark
 								}
 							/>
-							<View>
-								<Text style={styles.lightText}>{`Body Temperature: ${data.item.body_temperature}°C`}</Text>
+							<View style={styles.recordRow}>
+								<Text style={styles.lightText}>Body Temperature:</Text>
+								<Text style={styles.lightText}>{data.item.body_temperature}°C</Text>
 							</View>
 						</View>
-						
+
 						<View style={styles.card}>
 							<Ionicons
 								name={"speedometer-outline"}
@@ -96,13 +98,12 @@ class PatientRecords extends Component {
 									this.props.isDarkmode ? themeColor.white100 : themeColor.dark
 								}
 							/>
-							<View>
-								<Text style={styles.lightText}>
-									{`Blood Pressure: ${data.item.systolic_blood_pressure} over ${data.item.diastolic_blood_pressure}`}
-								</Text>
+							<View style={styles.recordRow}>
+								<Text style={styles.lightText}>Blood Pressure:</Text>
+								<Text style={styles.lightText}>{data.item.systolic_blood_pressure} / {data.item.diastolic_blood_pressure}</Text>
 							</View>
 						</View>
-						
+
 						<View style={styles.card}>
 							<Ionicons
 								name={"pulse-outline"}
@@ -111,11 +112,12 @@ class PatientRecords extends Component {
 									this.props.isDarkmode ? themeColor.white100 : themeColor.dark
 								}
 							/>
-							<View>
-								<Text style={styles.lightText}>{`ECG: ${data.item.ecg}`}</Text>
+							<View style={styles.recordRow}>
+								<Text style={styles.lightText}>ECG:</Text>
+								<Text style={styles.lightText}>{data.item.ecg}</Text>
 							</View>
 						</View>
-						
+
 						<View style={styles.card}>
 							<Ionicons
 								name={"heart-circle-outline"}
@@ -124,11 +126,12 @@ class PatientRecords extends Component {
 									this.props.isDarkmode ? themeColor.white100 : themeColor.dark
 								}
 							/>
-							<View>
-								<Text style={styles.lightText}>{`Oxygen Saturation: ${data.item.oxygen_saturation}`}</Text>
+							<View style={styles.recordRow}>
+								<Text style={styles.lightText}>Oxygen Saturation:</Text>
+								<Text style={styles.lightText}>{data.item.oxygen_saturation}</Text>
 							</View>
 						</View>
-						
+
 						<View style={styles.card}>
 							<Ionicons
 								name={"calendar-outline"}
@@ -137,9 +140,13 @@ class PatientRecords extends Component {
 									this.props.isDarkmode ? themeColor.white100 : themeColor.dark
 								}
 							/>
-							<View>
+							<View style={styles.recordRow}>
+								<Text style={styles.lightText}>Timestamp:</Text>
 								<Text style={styles.lightText}>
-									{`Timestamp: ${(new Date(data.item.timestamp).toString())}`}
+									{
+										`${new Date(data.item.timestamp).toLocaleDateString('fa-IR')} `
+										+ `${new Date(data.item.timestamp).toLocaleTimeString('fa-IR')}`
+									}
 								</Text>
 							</View>
 						</View>
@@ -211,4 +218,9 @@ const styles = {
 		alignContent: "center",
 		marginBottom: 10,
 	},
+	recordRow: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		flex: 1,
+	}
 };
