@@ -1,4 +1,7 @@
 import serial
-dev = serial.Serial('/dev/ttyUSB1')
-print(dev.readline())
-dev.close()
+dev = serial.Serial('/dev/ttyUSB0')
+try:
+    while True:
+        print(dev.readline())
+except Exception:
+    dev.close()
