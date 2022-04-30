@@ -1,0 +1,491 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx,import}
+\usepackage{float}
+\usepackage[svgnames]{xcolor} 
+\usepackage{makecell}
+\usepackage{fancyhdr}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage[many]{tcolorbox}
+\usepackage{listings }
+\usepackage[a4paper, total={6in, 8in} , bottom = 25mm , top = 25mm, headheight = 1.25cm , includehead,includefoot,heightrounded ]{geometry}
+\usepackage{afterpage}
+\usepackage{amssymb}
+\usepackage{pdflscape}
+\usepackage{gensymb}
+\usepackage{textcomp}
+\usepackage{tikz,pgfplots}
+\usepackage{xecolor}
+\usepackage{rotating}
+\usepackage{pdfpages}
+\usepackage[Kashida]{xepersian}
+\usepackage[T1]{fontenc}
+\usepackage{tikz}
+\usepackage[utf8]{inputenc}
+\usepackage{PTSerif} 
+\usepackage{seqsplit}
+\usepackage{hhline}
+\usepackage{pgfgantt}
+\usepackage{graphicx}
+\usepackage{filecontents}
+\usepackage{url} % for "\url" macro
+\usepackage{babel}
+\usepackage[backend=bibtex, style=numeric]{biblatex}
+
+
+\graphicspath{ {./images/} }
+
+\renewcommand\theadalign{bc}
+\renewcommand\theadfont{\bfseries}
+\renewcommand\theadgape{\Gape[4pt]}
+\renewcommand\cellgape{\Gape[4pt]}
+
+\usepackage[edges]{forest}
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\hypersetup{
+	colorlinks   = true, %Colours links instead of ugly boxes
+	urlcolor     = blue, %Colour for external hyperlinks
+	linkcolor    = blue, %Colour of internal links
+	citecolor   = red %Colour of citations
+}
+ 
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+ 
+\NewDocumentCommand{\codeword}{v}{
+\texttt{\textcolor{blue}{#1}}
+}
+\lstset{language=java,keywordstyle={\bfseries \color{blue}}}
+
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\normalsize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\settextfont[Scale=1.2 ,BoldFont={Bahij Nazanin-Bold} , ItalicFont = {IRNazanin}]{Bahij Nazanin-Regular}
+\setlatintextfont[Scale = 1.0]{Garamond}
+\DefaultMathsDigits 
+\DeclareMathSizes{11}{19}{13}{9} 
+%\DeclareMathSizes{12}{14.4}{8}{9}
+
+
+
+
+
+\newenvironment{changemargin}[2]{%
+\begin{list}{}{%
+\setlength{\topsep}{0pt}%
+\setlength{\leftmargin}{#1}%
+\setlength{\rightmargin}{#2}%
+\setlength{\listparindent}{\parindent}%
+\setlength{\itemindent}{\parindent}%
+\setlength{\parsep}{\parskip}%
+}%
+\item[]}{\end{list}}
+
+
+\definecolor{foldercolor}{RGB}{124,166,198}
+
+\tikzset{pics/folder/.style={code={%
+    \node[inner sep=0pt, minimum size=#1](-foldericon){};
+    \node[folder style, inner sep=0pt, minimum width=0.3*#1, minimum height=0.6*#1, above right, xshift=0.05*#1] at (-foldericon.west){};
+    \node[folder style, inner sep=0pt, minimum size=#1] at (-foldericon.center){};}
+    },
+    pics/folder/.default={20pt},
+    folder style/.style={draw=foldercolor!80!black,top color=foldercolor!40,bottom color=foldercolor}
+}
+
+\forestset{is file/.style={edge path'/.expanded={%
+        ([xshift=\forestregister{folder indent}]!u.parent anchor) |- (.child anchor)},
+        inner sep=1pt},
+    this folder size/.style={edge path'/.expanded={%
+        ([xshift=\forestregister{folder indent}]!u.parent anchor) |- (.child anchor) pic[solid]{folder=#1}}, inner xsep=0.6*#1},
+    folder tree indent/.style={before computing xy={l=#1}},
+    folder icons/.style={folder, this folder size=#1, folder tree indent=3*#1},
+    folder icons/.default={12pt},
+}
+
+\begin{document}
+
+
+%%% title pages
+\begin{titlepage}
+\begin{center}
+        
+\vspace*{0.7cm}
+
+\includegraphics[width=0.4\textwidth]{sharif1.png}\\
+\vspace{0.5cm}
+\textbf{ \Huge{\emph ‌آزمایشگاه سخت‌افزار} }\\
+\vspace{0.5cm}
+\textbf{ \Large{گزارش فاز دوم} }
+\vspace{0.2cm}
+       
+ 
+      \large \textbf{دانشکده مهندسی کامپیوتر}\\\vspace{0.2cm}
+    \large   دانشگاه صنعتی شریف\\\vspace{0.2cm}
+       \large   ﻧﯿﻢ سال دوم 01-00 \\\vspace{0.2cm}
+      \noindent\rule[1ex]{\linewidth}{1pt}
+استاد:\\
+    \textbf{{جناب آقای دکتر اجلالی}}
+
+
+دستیار آموزشی:\\
+\textbf{{جناب آقای دکتر فصحتی}}
+
+    \vspace{0.25cm}
+    
+    موضوع پروژه:\\
+    
+    \textbf{{نمایشگر علائم حیاتی بیمار (پروژه شماره ۱۴)}}
+    
+    \vspace{0.35cm}
+    
+    
+        شماره گروه:
+    \textbf{{۲}}\\
+    
+اعضای گروه:\\
+
+    \textbf{{علیرضا تاج‌میرریاحی - 97101372}}
+    \\
+   
+     \textbf{{امیرمهدی نامجو - 97107212}}   
+   \\
+   
+    \textbf{{ صبا هاشمی - 97100581}}
+\end{center}
+\end{titlepage}
+%%% title pages
+
+
+%%% header of pages
+\newpage
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\cfoot{\thepage}
+\chead{}
+\rhead{\includegraphics[width=0.1\textwidth]{sharif.png}}
+\lhead{گزارش فاز دوم}
+%%% header of pages
+
+\newfontfamily\terminal{Courier New Bold}
+
+\KashidaOff
+ \newcommand{\inlineLatin}[1]{
+	\small{\lr{{\terminal #1}}}
+}
+
+
+\tableofcontents
+\listoffigures
+
+\newpage
+\section{مقدمه}
+
+
+محصول نهایی این پروژه، یک سیستم نمایشگر هوشمند علائم حیاتی بیمار و شرایط محیطی است. هسته این سیستم که از رزبری پای تشکیل شده است، اطلاعات حیاتی بیمار شامل دمای بدن، فشار خون، ضربان قلب، اکسیژن خون و نوار قلب (\lr{ECG}) را از طریق سنسور‌های مربوطه از بیمار دریافت کرده و در کنار آن، اطلاعات محیطی نظیر دما،‌ رطوبت و میزان آلودگی هوا را هم از طریق سنسورهایی دیگر دریافت می‌کند.
+
+طبق زمان‌بندی ارائه شده در بخش \ref{gantt}، اقدامات مربوط به فاز دوم پروژه عبارت‌اند از اتصال و تست صفحه نمایش، اتصال و تست سنسورهای محیطی و اتصال اپ موبایل به سرور. همچنین اتصال رزبری به سرور را به دلیل این که نیاز به کامل‌تر شدن اتصال سایر سنسورها دارد،‌ از این فاز به فاز بعد منتقل کردیم.
+در ادامه به ارائه گزارش هریک از اقدامات فوق و نتایج آن‌ها خواهیم پرداخت.
+
+\section{گزارش انجام پروژه}
+\subsection{سخت‌افزار}
+
+در این بخش، به پیشرفت‌ها و چالش‌های زمینه راه‌اندازی قسمت‌های سخت‌افزاری پروژه، شامل اتصال و تست صفحه‌نمایش در قسمت \ref{display} و همچنین اتصال و تست سنسور‌های محیطی در قسمت \ref{environ} می‌پردازیم. 
+
+\subsubsection{اتصال و تست صفحه نمایش} \label{display}
+
+برای اتصال و تست صفحه‌نمایش، ابتدا سعی کردیم صفحه نمایش داده شده توسط دانشگاه را راه‌اندازی کنیم ولی مشکلاتی وجود داشت که در نهایت از آن استفاده نکردیم. مشکل اول نصب شدن این صفحه نمایش روی خود رزبری‌پای و اتصال آن به تعداد زیادی از \lr{GPIO} ها بود که عملا بخش زیادی از آن‌ها را غیرقابل استفاده می‌کرد. مشکل دوم و اصلی‌تر این بود که حتی با وجود نصب آن، تنها صفحه‌ای سفید به نمایش در می‌آمد و با وجود جست‌وجوی فراوان موفق به تنظیم آن به شکلی که تصویر درستی خروجی داده بشود نشدیم. همچنین این صفحه نمایش را روی یک رزبری‌پای دیگر هم تست کردیم و نتیجه تفاوتی نداشت.
+
+به همین دلیل، تصمیم گرفتیم یک صفحه‌نمایش جداگانه لمسی که از طریق HDMI قابلیت اتصال به رزبری را داشته باشد را تهیه کنیم.
+ در  
+ \href{https://www.waveshare.com/wiki/7inch_HDMI_LCD_(B)}{این لینک}
+ اطلاعات بیش‌تری در مورد این صفحه نمایش را مشاهده می‌کنید.
+ 
+در ابتدا امکان استفاده از این صفحه نمایش به صورت تمام صفحه مهیا نبود، اما با انجام تغییراتی در تنظیمات رزبری، این امکان مهیا شد.
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=.70\textwidth]{images/lcd.jpg}
+	\end{center}
+	\caption{اتصال رزبری‌پای به صفحه نمایش لمسی ۷ اینچ}
+\end{figure}
+
+
+
+
+
+\subsubsection{اتصال و تست سنسورهای محیطی} \label{environ}
+
+برای این پروژه دو سنسور محیطی اصلی داریم:
+
+\begin{enumerate}
+	\item
+ سنسور \lr{DHT11}: این سنسور،‌ هم دما و هم رطوبت هوا را اندازه‌گیری می‌کند.
+
+
+	\item 
+سنسور \lr{MQ135}: این سنسور برای اندازه‌گیری آلودگی هوا است.
+
+\end{enumerate}
+
+هر کدام از این سنسورها چالش خاصی برای راه‌اندازی داشتند.
+
+\begin{itemize}
+	\item \lr{\textbf{DHT11}}:
+	
+	این سنسور،‌ از قابلیت انتقال داده به صورت دیجیتال پشتیبانی می‌کند و در نتیجه به راحتی از طریق رزبری‌پای قابل استفاده است. 
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[width=.70\textwidth]{images/dht11.jpg}
+		\end{center}
+		\caption{اتصال سنسور \lr{DHT11}  به رزبری پای}
+	\end{figure}
+	
+	\item \lr{\textbf{MQ135}}:
+	چالش اصلی که در مورد این سنسور با آن مواجه شدیم، این است که این سنسور خروجی اصلی خود را فقط به صورت آنالوگ می‌دهد و حتی رابط \lr{I2C} هم ندارد. این سنسور یک خروجی دیجیتال دارد که تنها به صورت صفر و یکی، عبور یا عدم عبور میزان آلودگی از حدی که با پتانسیومتر برای آن مشخص شده است را اطلاع می‌دهد اما این خروجی قابلیت انتقال مقدار دقیق را ندارد.
+	
+	چالش اصلی که در این قسمت با آن مواجه شدیم، اتصال مبدل آنالوگ به دیجیتال بود. این مبدل به صورت یک شیلد روی رزبری نصب می‌شود و تعداد زیادی از \lr{GPIO} ‌ها را درگیر می‌کند. مشکل دیگری هم این بود که بعد از چند ساعت کار با آن، در نهایت به خروجی مطلوبی از ترکیب مبدل آنالوگ به دیجیتال و این سنسور نرسیدیم.
+	
+	به همین علت از آن جایی که دسترسی به آردوینو \lr{UNO} داشتیم، تصمیم گرفتیم که از قابلیت‌های آردوینو برای گرفتن داده‌های آنالوگ و انتقال آن به رزبری استفاده کنیم. ضمن این که اگر حتی از نظر قیمت‌ نهایی هم بررسی کنیم، آردوینو اندکی از این مبدل آنالوگ به دیجیتال گران‌تر است ولی تفاوت در مجموع قیمت نهایی خیلی چشمگیر نیست و در نتیجه با توجه به این که استفاده ترکیبی از آردوینو در کنار رزبری‌پای از نظر زمانی به صرفه‌تر بود، سراغ این گزینه رفتیم.
+	
+	بدین ترتیب این سنسور به آردوینو متصل شده و آردوینو هم از طریق اتصال \lr{USB} به رزبری متصل می‌شود. رزبری کد لازم برای دریافت داده را به آردوینو منتقل کرده و در نهایت داده را از آن دریافت می‌کند.
+	
+		نکته‌ای که در مورد سنسور \lr{MQ135} قابل‌توجه است، این است که این سنسور به دود کبریت واکنش چندانی نشان نداد ولی نسبت به بخار الکل به شدت حساس بود و به محض نزدیک شدن دست آغشته به الکل به سرعت مقادیر گزارش شده توسط آن بالا می‌رفت. در ادامه باید بررسی کنیم که آیا راهی برای افزایش حساسیت این سنسور به سایر آلاینده‌ها وجود دارد یا نیاز به سنسور دیگری داریم.
+	
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[width=.6\textwidth]{images/mq135-graph.png}
+		\end{center}
+		\caption{نمودار خروجی سنسور آلودگی هوا}
+	\end{figure}
+
+	
+	در زیر تصویری از اتصال هر دو سنسور و دریافت خروجی روی صفحه نمایش را مشاهده می‌کنید:
+	
+	
+	
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[width=.70\textwidth]{images/dhtmq1.jpg} 
+		\end{center}
+		\caption{اتصال سنسور \lr{DHT11}   به رزبری‌پای و \lr{MQ135} به آردوینوی متصل به رزبری}
+	\end{figure}
+	
+	
+		\begin{figure}[H]
+		\begin{center}
+			\includegraphics[width=.70\textwidth]{images/dhtmq2.jpg}
+		\end{center}
+		\caption{اتصال سنسور \lr{DHT11}   به رزبری‌پای و \lr{MQ135} به آردوینوی متصل به رزبری}
+	\end{figure}
+	
+
+	
+	در ادامه تصویری از خروجی هر دو سنسور بر روی رزبری‌پای را مشاهده می‌کنید:
+	
+	
+		
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[width=.70\textwidth]{images/envsensor.png}
+		\end{center}
+		\caption{خروجی هر دو سنسور \lr{DHT11} و \lr{MQ135} شامل دما، درصد رطوبت‌هوا و آلودگی}
+	\end{figure}
+
+	
+	
+
+	
+	
+	
+\end{itemize}
+
+\subsubsection{سایر نکات}
+
+در هنگام بررسی اتصال قطعات، متوجه شدیم سنسور اکسی‌متر که برای فازهای بعدی لازم است، بر روی رزبری‌پای مدل \lr{3B} که توسط دانشگاه به ما داده شده است، به خوبی کار نمی‌کند و کتابخانه‌های آن مشکلاتی دارند و خروجی مناسبی نمی‌دهند. خوشبختانه ما خودمان رزبری‌پای \lr{4} هم داشتیم و با جست‌وجو در اینترنت و تست آن، متوجه شدیم که این قطعه با رزبری‌پای \lr{4} به خوبی کار می‌کند و سایر قطعاتی که با رزبری \lr{3B} هماهنگی دارند، با رزبری‌پای \lr{4} هم بدون مشکل کار می‌کنند، برای همین همه مراحل را با رزبری‌پای \lr{4} انجام دادیم.
+
+\subsection{نرم‌افزار موبایل}
+
+در دو هفته گذشته، نرم‌افزار موبایل هم کامل‌تر شده است و اتصال آن با سرور برقرار شد. اکنون قابلیت مشخص کردن هر یک از بیماران و دریافت داده‌های ثبت شده مربوط به سلامتی آنان وجود دارد.
+
+در رابط کاربری طراحی شده، در قسمت بالای صفحه آخرین داده دریافتی نمایش داده می‌شود و هر ۶۰ ثانیه یک بار، از طریق ارتباط با سرور، داده‌های جدید دریافت می‌شوند. علاوه بر این گزینه‌ای هم برای نمایش داده‌های قدیمی‌تر قرار داده شده است.
+
+رابط کاربری طراحی شده به صورتی است که علاوه بر موبایل، قابلیت استفاده بر روی نمایشگری که برای رزبری قرار داده‌ایم هم دارد.
+
+در زیر تصاویری از نرم‌افزار طراحی شده را مشاهده می‌کنید:
+
+		
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=.6\textwidth]{images/mobile-app.png}
+	\end{center}
+	\caption{داده‌های کاربر (بیمار) در موبایل}
+\end{figure}
+
+		
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=.55\textwidth]{images/app1.png}
+	\end{center}
+	\caption{لیست کاربران (بیماران) در رزبری‌پای}
+\end{figure}
+
+		
+		
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=.55\textwidth]{images/app2.png}
+	\end{center}
+	\caption{ داده‌های کاربر در رزبری‌پای }
+\end{figure}
+
+		
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=.55\textwidth]{images/raspberry-mobile.png}
+	\end{center}
+	\caption{اجرای برنامه روی صفحه نمایش متصل به رزبری‌پای}
+\end{figure}
+
+
+
+\newpage
+\section{زمان‌بندی} \label{gantt}
+
+\subsection{چارت زمانی}
+
+\begin{figure}[H]
+	
+	\begin{center}
+		\begin{ganttchart}[
+			expand chart=1\textwidth,
+		    vrule label font=\tiny,
+			title label font=\tiny, 
+			bar label font=\tiny, 
+			y unit title=1cm,
+			y unit chart=0.8cm,
+			x unit=1cm,
+			vgrid,hgrid, 
+			title label anchor/.style={below=-1.6ex},
+			title left shift=0,
+			title right shift=0,
+			title height=1,
+			progress label text={},
+			bar height=0.6,
+			group right shift=0,
+			group top shift=.5,
+			group height=.2]{3}{16}
+			%labels
+			\gantttitle{اسفند}{2}
+			\gantttitle{فروردین}{4}
+			\gantttitle{اردی‌بهشت}{4}
+			\gantttitle{خرداد}{4}
+			\\
+
+			\gantttitle{\rl{هفته ۳}}{1} 			
+			\gantttitle{\rl{هفته ۴}}{1} 
+			\gantttitle{\rl{هفته ۱}}{1} 
+			\gantttitle{\rl{هفته ۲}}{1} 
+			\gantttitle{\rl{هفته ۳}}{1} 
+			\gantttitle{\rl{هفته ۴}}{1} 
+			\gantttitle{\rl{هفته ۱}}{1} 
+			\gantttitle{\rl{هفته ۲}}{1} 
+			\gantttitle{\rl{هفته ۳}}{1} 
+			\gantttitle{\rl{هفته ۴}}{1} 
+			\gantttitle{\rl{هفته ۱}}{1} 
+			\gantttitle{\rl{هفته ۲}}{1} 
+			\gantttitle{\rl{هفته ۳}}{1} 
+			\gantttitle{\rl{هفته ۴}}{1} 
+
+			%
+			\\
+			%tasks
+			\ganttbar[progress=100]{\rl{نهایی کردن پروپوزال}}{3}{4} \\
+			\ganttbar[progress=100]{\rl{تهیه‌ی قطعات}}{4}{6} \\
+			\ganttbar[progress=100]{\rl{آشنایی با رزبری}}{5}{6} \\
+			\ganttbar[progress=100]{\rl{تهیه معماری کامل سیستم}}{5}{6} \\
+			
+			\ganttgroup{\rl{سرور}}{6}{13} \\
+			\ganttbar[progress=100]{\rl{بیسیک سرور}}{6}{7} \\	
+			\ganttbar[progress=0]{\rl{اتصال رزبری و سرور}}{9}{10} \\
+			\ganttbar[progress=0]{\rl{تکمیل سرور}}{10}{13} \\
+			
+			\ganttgroup{\rl{اپ موبایل}}{6}{13} \\
+			\ganttbar[progress=100]{\rl{بیسیک اپ موبایل}}{6}{7} \\
+			\ganttbar[progress=100]{\rl{اتصال اپ موبایل به سرور}}{8}{8} \\
+			\ganttbar[progress=0]{\rl{رسم نمودارها و قابلیت‌های اضافه}}{9}{13} \\
+
+			\ganttgroup{\rl{سخت‌افزار}}{7}{12} \\
+			\ganttbar[progress=100]{\rl{اتصال و تست صفحه نمایش}}{7}{8} \\
+			\ganttbar[progress=100]{\rl{اتصال و تست سنسورهای محیطی}}{7}{8} \\
+			\ganttbar[progress=0]{\rl{اتصال و تست سنسورهای بدن}}{9}{12} \\
+			
+			\ganttbar[progress=0]{\rl{تست کلی سیستم}}{13}{14} \\
+			
+			\ganttbar[progress=0]{\rl{بررسی بازخوردها}}{15}{15}
+			
+			%relations 
+			\ganttlink{elem0}{elem1} 
+			\ganttlink{elem0}{elem3} 
+			\ganttlink{elem0}{elem4} 
+			\ganttlink{elem0}{elem8} 
+			\ganttlink{elem1}{elem12}
+			\ganttlink{elem3}{elem12} 			 
+			\ganttlink{elem4}{elem16} 
+			\ganttlink{elem8}{elem16}
+			\ganttlink{elem12}{elem16} 
+			\ganttlink{elem16}{elem17} 
+			
+			\ganttlink{elem5}{elem6} 
+			\ganttlink{elem6}{elem7} 
+
+			\ganttlink{elem5}{elem10}	
+			
+			\ganttlink{elem9}{elem10}	
+			\ganttlink{elem10}{elem11} 
+ 
+			\ganttvrule[vrule/.append style={blue, thin},vrule offset=1]{\rl{پروپوزال}}{4}
+			\ganttvrule[vrule/.append style={blue, thin},vrule offset=1]{\rl{گزارش اول}}{6}
+			\ganttvrule[vrule/.append style={blue, thin},vrule offset=1]{\rl{گزارش دوم}}{8}
+			\ganttvrule[vrule/.append style={blue, thin},vrule offset=1]{\rl{گزارش سوم}}{10}
+			\ganttvrule[vrule/.append style={blue, thin},vrule offset=1]{\rl{گزارش چهارم}}{12}	
+			\ganttvrule[vrule/.append style={blue, thin},vrule offset=1]{\rl{گزارش اولیه}}{14}
+			\ganttvrule[vrule/.append style={blue, thin},vrule offset=1]{\rl{گزارش نهایی}}{15}
+		\end{ganttchart}
+	\end{center}
+	\caption{گانت چارت پروژه}
+	
+\end{figure}
+
+
+
+
+
+\end{document}
+

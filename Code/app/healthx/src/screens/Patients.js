@@ -35,7 +35,6 @@ class Patients extends Component {
       fromFetch: false,
       loading: true,
     });
-    console.log(patientsURL);
 
     axios
       .get(patientsURL)
@@ -46,7 +45,7 @@ class Patients extends Component {
             loading: false,
             patientsData: response.data,
           });
-        }, 5000);
+        }, 1000);
       })
       .catch((error) => {
         console.log(error);
@@ -62,7 +61,8 @@ class Patients extends Component {
       <TouchableOpacity>
         <Section borderRadius={20} style={styles.list}>
           <SectionContent>
-            <View style={styles.card}>
+            <TouchableOpacity style={styles.card}
+              onPress={() => {this.props.navigation.navigate("PatientRecords", {patient: data.item});}}>
               <Ionicons
                 name={
                   data.item.gender === "W" ? "woman-outline" : "man-outline"
@@ -78,7 +78,7 @@ class Patients extends Component {
                 </Text>
                 <Text style={styles.lightText}>{data.item.phone}</Text>
               </View>
-            </View>
+            </TouchableOpacity>
           </SectionContent>
         </Section>
       </TouchableOpacity>
