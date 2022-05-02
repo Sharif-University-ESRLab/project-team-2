@@ -1,1 +1,0 @@
-https://registry.platformio.org/libraries/closedcube/ClosedCube%20MAX30205/installation
