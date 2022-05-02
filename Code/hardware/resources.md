@@ -59,6 +59,10 @@ https://how2electronics.com/ecg-monitoring-with-ad8232-ecg-sensor-arduino/
 
 https://cdn.sparkfun.com/datasheets/Sensors/Biometric/AD8232.pdf
 
+https://learn.sparkfun.com/tutorials/ad8232-heart-rate-monitor-hookup-guide/connecting-the-hardware
+
+https://github.com/eclipse/upm/blob/master/examples/python/ad8232.py
+
 ## ads1115
 
 https://wiki.52pi.com/index.php?title=EP-0076
