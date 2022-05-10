@@ -1,0 +1,388 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx,import}
+\usepackage{float}
+\usepackage[svgnames]{xcolor} 
+\usepackage{makecell}
+\usepackage{fancyhdr}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage[many]{tcolorbox}
+\usepackage{listings }
+\usepackage[a4paper, total={6in, 8in} , bottom = 25mm , top = 25mm, headheight = 1.25cm , includehead,includefoot,heightrounded ]{geometry}
+\usepackage{afterpage}
+\usepackage{amssymb}
+\usepackage{pdflscape}
+\usepackage{gensymb}
+\usepackage{textcomp}
+\usepackage{tikz,pgfplots}
+\usepackage{xecolor}
+\usepackage{rotating}
+\usepackage{pdfpages}
+\usepackage[Kashida]{xepersian}
+\usepackage[T1]{fontenc}
+\usepackage{tikz}
+\usepackage[utf8]{inputenc}
+\usepackage{PTSerif} 
+\usepackage{seqsplit}
+\usepackage{hhline}
+\usepackage{pgfgantt}
+\usepackage{graphicx}
+\usepackage{filecontents}
+\usepackage{url} % for "\url" macro
+\usepackage{babel}
+\usepackage[backend=bibtex, style=numeric]{biblatex}
+
+
+\graphicspath{ {./images/} }
+
+\renewcommand\theadalign{bc}
+\renewcommand\theadfont{\bfseries}
+\renewcommand\theadgape{\Gape[4pt]}
+\renewcommand\cellgape{\Gape[4pt]}
+
+\usepackage[edges]{forest}
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\hypersetup{
+	colorlinks   = true, %Colours links instead of ugly boxes
+	urlcolor     = blue, %Colour for external hyperlinks
+	linkcolor    = blue, %Colour of internal links
+	citecolor   = red %Colour of citations
+}
+ 
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+ 
+\NewDocumentCommand{\codeword}{v}{
+\texttt{\textcolor{blue}{#1}}
+}
+\lstset{language=java,keywordstyle={\bfseries \color{blue}}}
+
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\normalsize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\settextfont[Scale=1.2 ,BoldFont={Bahij Nazanin-Bold} , ItalicFont = {IRNazanin}]{Bahij Nazanin-Regular}
+\setlatintextfont[Scale = 1.0]{Garamond}
+\DefaultMathsDigits 
+\DeclareMathSizes{11}{19}{13}{9} 
+%\DeclareMathSizes{12}{14.4}{8}{9}
+
+
+
+
+
+\newenvironment{changemargin}[2]{%
+\begin{list}{}{%
+\setlength{\topsep}{0pt}%
+\setlength{\leftmargin}{#1}%
+\setlength{\rightmargin}{#2}%
+\setlength{\listparindent}{\parindent}%
+\setlength{\itemindent}{\parindent}%
+\setlength{\parsep}{\parskip}%
+}%
+\item[]}{\end{list}}
+
+
+\definecolor{foldercolor}{RGB}{124,166,198}
+
+\tikzset{pics/folder/.style={code={%
+    \node[inner sep=0pt, minimum size=#1](-foldericon){};
+    \node[folder style, inner sep=0pt, minimum width=0.3*#1, minimum height=0.6*#1, above right, xshift=0.05*#1] at (-foldericon.west){};
+    \node[folder style, inner sep=0pt, minimum size=#1] at (-foldericon.center){};}
+    },
+    pics/folder/.default={20pt},
+    folder style/.style={draw=foldercolor!80!black,top color=foldercolor!40,bottom color=foldercolor}
+}
+
+\forestset{is file/.style={edge path'/.expanded={%
+        ([xshift=\forestregister{folder indent}]!u.parent anchor) |- (.child anchor)},
+        inner sep=1pt},
+    this folder size/.style={edge path'/.expanded={%
+        ([xshift=\forestregister{folder indent}]!u.parent anchor) |- (.child anchor) pic[solid]{folder=#1}}, inner xsep=0.6*#1},
+    folder tree indent/.style={before computing xy={l=#1}},
+    folder icons/.style={folder, this folder size=#1, folder tree indent=3*#1},
+    folder icons/.default={12pt},
+}
+
+\begin{document}
+
+
+%%% title pages
+\begin{titlepage}
+\begin{center}
+        
+\vspace*{0.7cm}
+
+\includegraphics[width=0.4\textwidth]{sharif1.png}\\
+\vspace{0.5cm}
+\textbf{ \Huge{\emph ‌آزمایشگاه سخت‌افزار} }\\
+\vspace{0.5cm}
+\textbf{ \Large{گزارش فاز سوم} }
+\vspace{0.2cm}
+       
+ 
+      \large \textbf{دانشکده مهندسی کامپیوتر}\\\vspace{0.2cm}
+    \large   دانشگاه صنعتی شریف\\\vspace{0.2cm}
+       \large   ﻧﯿﻢ سال دوم 01-00 \\\vspace{0.2cm}
+      \noindent\rule[1ex]{\linewidth}{1pt}
+استاد:\\
+    \textbf{{جناب آقای دکتر اجلالی}}
+
+
+دستیار آموزشی:\\
+\textbf{{جناب آقای دکتر فصحتی}}
+
+    \vspace{0.25cm}
+    
+    موضوع پروژه:\\
+    
+    \textbf{{نمایشگر علائم حیاتی بیمار (پروژه شماره ۱۴)}}
+    
+    \vspace{0.35cm}
+    
+    
+        شماره گروه:
+    \textbf{{۲}}\\
+    
+اعضای گروه:\\
+
+    \textbf{{علیرضا تاج‌میرریاحی - 97101372}}
+    \\
+   
+     \textbf{{امیرمهدی نامجو - 97107212}}   
+   \\
+   
+    \textbf{{ صبا هاشمی - 97100581}}
+\end{center}
+\end{titlepage}
+%%% title pages
+
+
+%%% header of pages
+\newpage
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\cfoot{\thepage}
+\chead{}
+\rhead{\includegraphics[width=0.1\textwidth]{sharif.png}}
+\lhead{گزارش فاز سوم}
+%%% header of pages
+
+\newfontfamily\terminal{Courier New Bold}
+
+\KashidaOff
+ \newcommand{\inlineLatin}[1]{
+	\small{\lr{{\terminal #1}}}
+}
+
+
+\tableofcontents
+\listoffigures
+
+\newpage
+\section{مقدمه}
+
+
+محصول نهایی این پروژه، یک سیستم نمایشگر هوشمند علائم حیاتی بیمار و شرایط محیطی است. هسته این سیستم که از رزبری پای تشکیل شده است، اطلاعات حیاتی بیمار شامل دمای بدن، فشار خون، ضربان قلب، اکسیژن خون و نوار قلب (\lr{ECG}) را از طریق سنسور‌های مربوطه از بیمار دریافت کرده و در کنار آن، اطلاعات محیطی نظیر دما،‌ رطوبت و میزان آلودگی هوا را هم از طریق سنسورهایی دیگر دریافت می‌کند.
+
+طبق زمان‌بندی ارائه شده در بخش \ref{gantt}، اقدامات مربوط به فاز سوم پروژه عبارت‌اند از اتصال و تست بخشی از سنسورهای بدن، اتصال رزبری به سرور، تکمیل بخشی از سرور و تکمیل بخشی از اپلیکیشن و اضافه کردن تمودارها و امکانات جانبی به آن. برای قسمت تکمیل سرور از آن جایی که بخش عمده آن در همان فازهای قبل تکمیل شده بود و در شرایط فعلی نیازی به قابلیت اضافه‌ای نداشتیم،‌ کار‌ی انجام نشد.
+
+
+
+
+\section{گزارش انجام پروژه}
+\subsection{سخت‌افزار}
+
+در این بخش، به پیشرفت‌ها و چالش‌های زمینه راه‌اندازی قسمت‌های سخت‌افزاری پروژه، شامل اتصال و تست سنسورهای بدن \ref{body} می‌پردازیم.
+
+\subsubsection{اتصال و تست سنسورهای بدن} \label{body}
+
+برای سنسورهای مربوط به بدن، در این فاز سه سنسور زیر را راه‌اندازی کردیم.
+
+\begin{enumerate}
+	\item 
+	سنسور \lr{Max30102}: این سنسور برای سنجش اکسیژن خون و ضربان قلب است.
+	
+	\item 
+	سنسور \lr{MAX30205}: این سنسور برای سنجش دمای بدن استفاده می‌شود.
+	
+	\item 
+	سنسور \lr{Ad8232}: این سنسور برای ECG استفاده می‌شود.
+	
+	
+	
+\end{enumerate}
+
+
+
+
+
+\begin{itemize}
+	\item \lr{\textbf{Max30102}}:
+	
+این سنسور با کمک دو چراغ کوچک قرمز و مادون قرمز، ضربان قلب و درصد اشباع اکسیژن در خون (\lr{SpO2}) را اندازه‌گیری می‌کند.
+
+این سنسور بدون مشکل از طریق \lr{I2C} به رزبری‌پای متصل می‌شود. البته توجه کنید که همان‌طور که در گزارش قبلی گفته شد، این سنسور با رزبری‌پای \lr{3B} به خوبی کار نمی‌کند و در نتیجه از رزبری‌پای \lr{4} استفاده کردیم. 
+
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[width=.60\textwidth]{images/max30102-1.jpg}
+		\end{center}
+		\caption{اتصال سنسور \lr{Max30102}  به رزبری پای}
+	\end{figure}
+
+در زیر تصویری از خروجی آن را مشاهده می‌کنید:
+	\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=.60\textwidth]{images/max30102-2.png}
+	\end{center}
+	\caption{خروجی سنسور \lr{Max30102}}
+\end{figure}
+
+\end{itemize}
+
+
+\subsection{نرم‌افزار موبایل}
+
+
+
+
+\newpage
+\section{زمان‌بندی} \label{gantt}
+
+\subsection{چارت زمانی}
+
+\begin{figure}[H]
+	
+	\begin{center}
+		\begin{ganttchart}[
+			expand chart=1\textwidth,
+		    vrule label font=\tiny,
+			title label font=\tiny, 
+			bar label font=\tiny, 
+			y unit title=1cm,
+			y unit chart=0.8cm,
+			x unit=1cm,
+			vgrid,hgrid, 
+			title label anchor/.style={below=-1.6ex},
+			title left shift=0,
+			title right shift=0,
+			title height=1,
+			progress label text={},
+			bar height=0.6,
+			group right shift=0,
+			group top shift=.5,
+			group height=.2]{3}{16}
+			%labels
+			\gantttitle{اسفند}{2}
+			\gantttitle{فروردین}{4}
+			\gantttitle{اردی‌بهشت}{4}
+			\gantttitle{خرداد}{4}
+			\\
+
+			\gantttitle{\rl{هفته ۳}}{1} 			
+			\gantttitle{\rl{هفته ۴}}{1} 
+			\gantttitle{\rl{هفته ۱}}{1} 
+			\gantttitle{\rl{هفته ۲}}{1} 
+			\gantttitle{\rl{هفته ۳}}{1} 
+			\gantttitle{\rl{هفته ۴}}{1} 
+			\gantttitle{\rl{هفته ۱}}{1} 
+			\gantttitle{\rl{هفته ۲}}{1} 
+			\gantttitle{\rl{هفته ۳}}{1} 
+			\gantttitle{\rl{هفته ۴}}{1} 
+			\gantttitle{\rl{هفته ۱}}{1} 
+			\gantttitle{\rl{هفته ۲}}{1} 
+			\gantttitle{\rl{هفته ۳}}{1} 
+			\gantttitle{\rl{هفته ۴}}{1} 
+
+			%
+			\\
+			%tasks
+			\ganttbar[progress=100]{\rl{نهایی کردن پروپوزال}}{3}{4} \\
+			\ganttbar[progress=100]{\rl{تهیه‌ی قطعات}}{4}{6} \\
+			\ganttbar[progress=100]{\rl{آشنایی با رزبری}}{5}{6} \\
+			\ganttbar[progress=100]{\rl{تهیه معماری کامل سیستم}}{5}{6} \\
+			
+			\ganttgroup{\rl{سرور}}{6}{13} \\
+			\ganttbar[progress=100]{\rl{بیسیک سرور}}{6}{7} \\	
+			\ganttbar[progress=0]{\rl{اتصال رزبری و سرور}}{9}{10} \\
+			\ganttbar[progress=0]{\rl{تکمیل سرور}}{10}{13} \\
+			
+			\ganttgroup{\rl{اپ موبایل}}{6}{13} \\
+			\ganttbar[progress=100]{\rl{بیسیک اپ موبایل}}{6}{7} \\
+			\ganttbar[progress=100]{\rl{اتصال اپ موبایل به سرور}}{8}{8} \\
+			\ganttbar[progress=0]{\rl{رسم نمودارها و قابلیت‌های اضافه}}{9}{13} \\
+
+			\ganttgroup{\rl{سخت‌افزار}}{7}{12} \\
+			\ganttbar[progress=100]{\rl{اتصال و تست صفحه نمایش}}{7}{8} \\
+			\ganttbar[progress=100]{\rl{اتصال و تست سنسورهای محیطی}}{7}{8} \\
+			\ganttbar[progress=0]{\rl{اتصال و تست سنسورهای بدن}}{9}{12} \\
+			
+			\ganttbar[progress=0]{\rl{تست کلی سیستم}}{13}{14} \\
+			
+			\ganttbar[progress=0]{\rl{بررسی بازخوردها}}{15}{15}
+			
+			%relations 
+			\ganttlink{elem0}{elem1} 
+			\ganttlink{elem0}{elem3} 
+			\ganttlink{elem0}{elem4} 
+			\ganttlink{elem0}{elem8} 
+			\ganttlink{elem1}{elem12}
+			\ganttlink{elem3}{elem12} 			 
+			\ganttlink{elem4}{elem16} 
+			\ganttlink{elem8}{elem16}
+			\ganttlink{elem12}{elem16} 
+			\ganttlink{elem16}{elem17} 
+			
+			\ganttlink{elem5}{elem6} 
+			\ganttlink{elem6}{elem7} 
+
+			\ganttlink{elem5}{elem10}	
+			
+			\ganttlink{elem9}{elem10}	
+			\ganttlink{elem10}{elem11} 
+ 
+			\ganttvrule[vrule/.append style={blue, thin},vrule offset=1]{\rl{پروپوزال}}{4}
+			\ganttvrule[vrule/.append style={blue, thin},vrule offset=1]{\rl{گزارش اول}}{6}
+			\ganttvrule[vrule/.append style={blue, thin},vrule offset=1]{\rl{گزارش دوم}}{8}
+			\ganttvrule[vrule/.append style={blue, thin},vrule offset=1]{\rl{گزارش سوم}}{10}
+			\ganttvrule[vrule/.append style={blue, thin},vrule offset=1]{\rl{گزارش چهارم}}{12}	
+			\ganttvrule[vrule/.append style={blue, thin},vrule offset=1]{\rl{گزارش اولیه}}{14}
+			\ganttvrule[vrule/.append style={blue, thin},vrule offset=1]{\rl{گزارش نهایی}}{15}
+		\end{ganttchart}
+	\end{center}
+	\caption{گانت چارت پروژه}
+	
+\end{figure}
+
+
+
+
+
+\end{document}
+
