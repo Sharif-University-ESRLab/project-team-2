@@ -287,7 +287,7 @@
 
 \begin{figure}[H]
 	\begin{center}
-		\includegraphics[width=.60\textwidth]{images/ecg-1.jpg}
+		\includegraphics[width=.45\textwidth]{images/ecg-1.jpg}
 	\end{center}
 	\caption{استفاده از سنسور \lr{Ad8232} برای بدست آوردن \lr{ECG} }
 \end{figure}
@@ -296,14 +296,39 @@
 
 \begin{figure}[H]
 	\begin{center}
-		\includegraphics[width=.60\textwidth]{images/ecg-2.png}
+		\includegraphics[width=.50\textwidth]{images/ecg-2.png}
 	\end{center}
 	\caption{\lr{ECG} بدست آمده از خروجی سنسور. \lr{Peak}‌ های موجود در شکل درست هستند ولی سایر بخش‌ها مقداری نویز دارند. }
 \end{figure}
 
 
+\subsubsection{سایر نکات}
+
+علاوه بر قسمت‌های بالا، اتصال کلی تمامی قطعات سنسور‌های بدن (به جز فشارخون) به رزبری و آردوینو را هم بررسی کردیم که در شکل زیر قابل مشاهده است:
 
 
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=.45\textwidth]{images/all.jpg}
+	\end{center}
+	\caption{اتصال سنسورهای مختلف بدن به رزبری و آردوینو}
+\end{figure}
+
+
+
+
+\subsection{سرور}
+
+برای قسمت سرور، در برنامه زمانی، دو قسمت اتصال رزبری و سرور و تکمیل سرور را داشتیم. برای تکمیل سرور، نیاز به قابلیت اضافه‌ای در وضعیت فعلی احساس نشد و کار ویژه‌ای انجام نشد. برای اتصال رزبری به سرور، بخش اصلی کد آن زده شده و با سنسور‌های بدن که در همین مرحله داشتیم بررسی شده است.
+
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=.60\textwidth]{images/server.png}
+	\end{center}
+	\caption{ارسال اطلاعات از رزبری به سرور}
+\end{figure}
 
 
 
@@ -375,18 +400,18 @@
 			
 			\ganttgroup{\rl{سرور}}{6}{13} \\
 			\ganttbar[progress=100]{\rl{بیسیک سرور}}{6}{7} \\	
-			\ganttbar[progress=0]{\rl{اتصال رزبری و سرور}}{9}{10} \\
-			\ganttbar[progress=0]{\rl{تکمیل سرور}}{10}{13} \\
+			\ganttbar[progress=100]{\rl{اتصال رزبری و سرور}}{9}{10} \\
+			\ganttbar[progress=25]{\rl{تکمیل سرور}}{10}{13} \\
 			
 			\ganttgroup{\rl{اپ موبایل}}{6}{13} \\
 			\ganttbar[progress=100]{\rl{بیسیک اپ موبایل}}{6}{7} \\
 			\ganttbar[progress=100]{\rl{اتصال اپ موبایل به سرور}}{8}{8} \\
-			\ganttbar[progress=0]{\rl{رسم نمودارها و قابلیت‌های اضافه}}{9}{13} \\
+			\ganttbar[progress=40]{\rl{رسم نمودارها و قابلیت‌های اضافه}}{9}{13} \\
 
 			\ganttgroup{\rl{سخت‌افزار}}{7}{12} \\
 			\ganttbar[progress=100]{\rl{اتصال و تست صفحه نمایش}}{7}{8} \\
 			\ganttbar[progress=100]{\rl{اتصال و تست سنسورهای محیطی}}{7}{8} \\
-			\ganttbar[progress=0]{\rl{اتصال و تست سنسورهای بدن}}{9}{12} \\
+			\ganttbar[progress=50]{\rl{اتصال و تست سنسورهای بدن}}{9}{12} \\
 			
 			\ganttbar[progress=0]{\rl{تست کلی سیستم}}{13}{14} \\
 			
