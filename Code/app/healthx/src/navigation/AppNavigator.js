@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "../screens/Home";
 import Patients from "../screens/Patients";
 import PatientRecords from "../screens/PatientRecords";
+import ChartsScreen from "../screens/ChartsScreen";
 
 const MainStack = createNativeStackNavigator();
 
@@ -18,6 +19,7 @@ const Main = () => {
       <MainStack.Screen name="Home" component={Home} />
       <MainStack.Screen name="Patients" component={Patients} />
       <MainStack.Screen name="PatientRecords" component={PatientRecords} />
+      <MainStack.Screen name="ChartsScreen" component={ChartsScreen} />
     </MainStack.Navigator>
   );
 };

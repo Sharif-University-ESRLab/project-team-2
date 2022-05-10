@@ -57,7 +57,7 @@ class PatientRecords extends Component {
 		this.getData();
 
 		const refreshRate = 60 * 1000;
-		setInterval(() => {this.getData()}, refreshRate);
+		setInterval(() => { this.getData() }, refreshRate);
 	}
 
 	renderItem = (data) => {
@@ -175,6 +175,20 @@ class PatientRecords extends Component {
 								data={[patientData.slice().reverse()[0]]}
 								renderItem={(item) => this.renderItem(item)}
 								keyExtractor={(item) => item.id.toString()}
+							/>
+							<Button
+								style={{ marginTop: 10 }}
+								text="View Charts"
+								leftContent={
+									<Ionicons
+										name="stats-chart"
+										size={20}
+										color={themeColor["warning700"]} />
+								}
+								status="warning700"
+								type="TouchableOpacity"
+								onPress={() => { this.props.navigation.navigate("ChartsScreen", { patient }) }}
+								outline
 							/>
 							<Button
 								style={{ marginTop: 10 }}
