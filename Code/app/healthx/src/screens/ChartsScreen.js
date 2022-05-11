@@ -1,18 +1,16 @@
 import React, { Component } from "react";
-import { Layout, Text, Picker } from "react-native-rapi-ui";
+import { Layout, Text, Picker, Section, SectionContent } from "react-native-rapi-ui";
 import Navbar from "../components/Navbar";
 import {
 	View,
-	FlatList,
 	ActivityIndicator,
 	Dimensions,
 } from "react-native";
 import axios from "axios";
-import { Section, SectionContent } from "react-native-rapi-ui";
 import { patientRecordsURL } from "../api/base";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme, themeColor } from "react-native-rapi-ui";
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
+import { AreaChart, Area, LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 
 const { width: deviceWidth, height: deviceHeight } = Dimensions.get("screen");
 const chartWidthRatio = 0.8
@@ -23,15 +21,6 @@ function withThemeHook(Component) {
 		return <Component {...props} isDarkmode={isDarkmode} />;
 	};
 }
-
-const basicData = [
-	{ name: 'Page A', uv: 402, pv: 2400, amt: 2400 },
-	{ name: 'Page B', uv: 450, pv: 2400, amt: 2400 },
-	{ name: 'Page C', uv: 540, pv: 2400, amt: 2400 },
-	{ name: 'Page D', uv: 423, pv: 2400, amt: 2400 },
-	{ name: 'Page E', uv: 400, pv: 2400, amt: 2400 },
-	{ name: 'Page F', uv: 401, pv: 2400, amt: 2400 },
-];
 
 const timeOptions = [
 	{ label: "All time", value: "A" },
@@ -44,67 +33,104 @@ class ChartsScreen extends Component {
 		super(props);
 		this.state = {
 			loading: true,
-			patientData: null,
+			chartsData: null,
 			patient: props.route.params.patient,
 			value: null,
 		};
 	}
 
-	getData = () => {
+	getISODate = (date) => {
+		return date.toISOString().slice(0, 10);
+	}
+
+	loadDataByTimePeriod = (timeChar) => {
+		let timeFilter = "";
+
+		let date = new Date();
+		switch (timeChar) {
+			case "M":
+				date.setMonth(date.getMonth() - 1);
+				timeFilter = `&from=${this.getISODate(date)}`;
+				break;
+			case "W":
+				date.setDate(date.getDate() - 7);
+				timeFilter = `&from=${this.getISODate(date)}`;
+				break;
+			default: // A or null
+				break;
+		}
+		this.getData(timeFilter);
+	}
+
+	getData = (timeFilter) => {
 		this.setState({
 			fromFetch: false,
 			loading: true,
 		});
 
+		let recordsUrl = patientRecordsURL(this.state.patient.id);
+		if (!!timeFilter) {
+			recordsUrl += timeFilter;
+		}
+
 		axios
-			.get(patientRecordsURL(this.state.patient.id))
+			.get(recordsUrl)
 			.then((response) => {
 				console.log("getting data from axios", response.data);
 				setTimeout(() => {
 					this.setState({
 						loading: false,
-						patientData: response.data,
+						chartsData: this.cleanData(response.data),
 					});
-				}, 1000);
+				}, 100);
 			})
 			.catch((error) => {
 				console.log(error);
+				this.setState({
+					loading: false,
+					chartsData: [],
+				});
 			});
 	};
 
-	componentDidMount() {
-		this.getData();
-
-		const refreshRate = 60 * 1000;
-		setInterval(() => { this.getData() }, refreshRate);
-	}
-
-	loadDataByTimePeriod = (timeChar) => {
-		switch (timeChar) {
-			case "M":
-
-				break;
-			case "W":
-
-				break;
-			case "A":
-
-				break;
-		}
+	cleanData = (data) => {
+		return data;
 	}
 
 	renderLineChart = (data) => (
 		<LineChart width={deviceWidth * chartWidthRatio} height={300} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-			<Line type="monotone" dataKey="uv" stroke="#8884d8" />
+			<Line type="monotone" dataKey="oxygen_saturation" stroke="#8884d8" />
 			<CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-			<XAxis dataKey="name" />
+			<XAxis dataKey="timestamp" />
 			<YAxis />
 			<Tooltip />
 		</LineChart>
 	);
 
+	renderAreaChart = (data) => (
+		<AreaChart width={deviceWidth * chartWidthRatio} height={300} data={data}
+			margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+			<defs>
+				<linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+					<stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
+					<stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+				</linearGradient>
+				<linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+					<stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
+					<stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
+				</linearGradient>
+			</defs>
+			<XAxis dataKey="timestamp" />
+			<YAxis />
+			<CartesianGrid strokeDasharray="3 3" />
+			<Tooltip />
+			<Area type="monotone" dataKey="body_temperature" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
+			<Area type="monotone" dataKey="environment_temperature" stroke="#82ca9d" fillOpacity={1} fill="url(#colorPv)" />
+		</AreaChart>
+	);
+
 	render() {
-		const { loading, patientData, patient, value } = this.state;
+		const { loading, patient, value } = this.state;
 		return (
 			<Layout>
 				<Navbar
@@ -136,9 +162,20 @@ class ChartsScreen extends Component {
 									}}
 								/>
 							</View>
-							<View style={[styles.card, {justifyContent: "center"}]}>
-								{this.renderLineChart(basicData)}
-							</View>
+							{loading && !!this.state.chartsData ? (
+								<ActivityIndicator size="large" color="#0c9" />
+							) : (
+								<View>
+									<View style={[styles.card, { justifyContent: "center" }]}>
+										<Text>Oxygen Saturation</Text>
+										{this.renderLineChart(this.state.chartsData)}
+									</View>
+									<View style={[styles.card, { justifyContent: "center" }]}>
+										<Text>Body and Environment Temperature</Text>
+										{this.renderAreaChart(this.state.chartsData)}
+									</View>
+								</View>
+							)}
 						</SectionContent>
 					</Section>
 				</View>
