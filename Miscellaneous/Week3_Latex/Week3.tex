@@ -301,11 +301,11 @@
 	\caption{\lr{ECG} بدست آمده از خروجی سنسور. \lr{Peak}‌ های موجود در شکل درست هستند ولی سایر بخش‌ها مقداری نویز دارند. }
 \end{figure}
 
+\end{itemize}
 
 \subsubsection{سایر نکات}
 
 علاوه بر قسمت‌های بالا، اتصال کلی تمامی قطعات سنسور‌های بدن (به جز فشارخون) به رزبری و آردوینو را هم بررسی کردیم که در شکل زیر قابل مشاهده است:
-
 
 
 \begin{figure}[H]
@@ -314,8 +314,6 @@
 	\end{center}
 	\caption{اتصال سنسورهای مختلف بدن به رزبری و آردوینو}
 \end{figure}
-
-
 
 
 \subsection{سرور}
@@ -331,16 +329,33 @@
 \end{figure}
 
 
-
-\end{itemize}
-
-
-
-
 \subsection{نرم‌افزار موبایل}
+در این فاز در راستای مصورسازی داده‌ها با استفاده از کتاب‌خانه‌ی \lr{Recharts} صفحه‌ای برای هر بیمار به نرم‌افزار اضافه شد که با در کنار هم قرار دادن اطلاعات سنسورها در طول زمان، امکان استخراج اطلاعات مفیدی به‌دست آید. این صفحه از طریق صفحه‌ی اطلاعات بیمار (تصویر \ref{patients_screen}) قابل دسترسی می‌باشد. نمودارهای نمایش داده شده در تصویر
+\ref{initial_charts}
+به‌ترتیب، اطلاعات مربوط به میزان اکسیژن خون، و بررسی توأم دمای بدن و محیط را مصور می‌کنند. همچنین امکان انتخاب بازه‌ی زمانی برای داده‌های نمودارها از طریق یک منو (قابل مشاهده در تصویر \ref{time_picker}) فراهم شده است. طبق این منو، کاربر می‌تواند اطلاعات هفته‌ی اخیر، ماه اخیر یا کل رکوردها را روی نمودارها مشاهده کند.
 
 
-
+\begin{figure} % [H]
+	\begin{center}
+		\begin{subfigure}{.3\textwidth}
+			\includegraphics[width=.9\linewidth]{app1_patient}
+			\caption{صفحه بیمار}
+			\label{patients_screen}
+		\end{subfigure}
+		\begin{subfigure}{.3\textwidth}
+			\includegraphics[width=.9\linewidth]{app3_charts}
+			\caption{نمودارهای مرتبط}
+			\label{initial_charts}
+		\end{subfigure}
+		\begin{subfigure}{.3\textwidth}
+			\includegraphics[width=.9\linewidth]{app2_period}
+			\caption{انتخاب بازه زمانی}
+			\label{time_picker}
+		\end{subfigure}
+		\caption{تصاویری از محیط نرم‌افزار موبایل}
+		\label{app_screenshots}
+	\end{center}
+\end{figure}
 
 \newpage
 \section{زمان‌بندی} \label{gantt}
