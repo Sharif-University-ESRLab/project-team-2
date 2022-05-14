@@ -33,21 +33,23 @@ def get_temperature_and_humidity(sensor):
     humidity = sensor.humidity
     return temp, humidity
 
-def get_pollution(sensor):
-    p = int(sensor.readline().decode().strip())
+def get_pollution():
+    with open('values/pollution', 'r') as f:
+        p = f.readline()
+        print(p)
+    
+    # p = int(sensor.readline().decode().strip())
     return p
 
-if __name__ == "__main__":
-                             
+if __name__ == "__main__":   
     dht11_sensor = adafruit_dht.DHT11(board.D23)
-    mq135_sensor = serial.Serial('/dev/ttyUSB0')
     
     while True:
         try:
             temperature, humidity = get_temperature_and_humidity(dht11_sensor)
-            pollution = get_pollution(mq135_sensor)
+            pollution = get_pollution()
  
-            print(f"Temperature: {temperature}*C   Humidity: {humidity} Pollution: {pollution}")
+            print(f"Temperature: {temperature}*C \tHumidity: {humidity} \tPollution: {pollution}")
 
             data = {
                 'air_pollution': pollution,

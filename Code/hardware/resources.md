@@ -33,6 +33,10 @@ https://www.hackster.io/kutluhan-aktar/raspberry-pi-adjustable-air-quality-detec
 
 ## ky-0125 دما رطوبت هوا
 
+https://sensorkit.joy-it.net/en/sensors/ky-015
+
+https://learn.adafruit.com/dht-humidity-sensing-on-raspberry-pi-with-gdocs-logging/python-setup
+
 https://www.circuito.io/app?components=9443,10167,200000
 
 https://www.freva.com/dht11-temperature-and-humidity-sensor-on-raspberry-pi/

@@ -19,8 +19,6 @@ void loop()
 {
   // read the analog in value:
   sensorValue = analogRead(analogInPin);            
-
-  Serial.print("A0 = " );                       
   Serial.print(sensorValue);    
   Serial.print("\tA1 = " );                       
   Serial.print( analogRead(A1));  
