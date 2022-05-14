@@ -33,21 +33,20 @@ def get_temperature_and_humidity(sensor):
     humidity = sensor.humidity
     return temp, humidity
 
-def get_pollution():
-    with open('values/pollution', 'r') as f:
-        p = f.readline()
-        print(p)
+def get_pollution(f):
+    p = f.readline()
+    print(p)
     
     # p = int(sensor.readline().decode().strip())
     return p
 
 if __name__ == "__main__":   
     dht11_sensor = adafruit_dht.DHT11(board.D23)
-    
+    pol_file = open('values/pollution', 'r')  
     while True:
         try:
             temperature, humidity = get_temperature_and_humidity(dht11_sensor)
-            pollution = get_pollution()
+            pollution = get_pollution(pol_file) 
  
             print(f"Temperature: {temperature}*C \tHumidity: {humidity} \tPollution: {pollution}")
 
@@ -65,6 +64,7 @@ if __name__ == "__main__":
         except Exception as error:
             dht11_sensor.exit()
             mq135_sensor.close()
+            pol_file.close()
             raise error
 
         time.sleep(1.0)

@@ -47,19 +47,19 @@ void setup() {
 
   // AD8232
   pinMode(10, INPUT);
-  pinMode(11, OUTPUT;
+  pinMode(11, OUTPUT);
 }
 
 void loop() {
 	float temp = tempSensor.getTemperature(); // read temperature for every 100ms
-  Serial.print("temp,")
+  Serial.print("temp,");
   Serial.println(temp ,2);
 
   int pollution = analogRead(A0);
-  Serial.print("pollution,")
-  Serial.println(sensorValue);
+  Serial.print("pollution,");
+  Serial.println(pollution);
 	
-  Serial.print("ecg,")
+  Serial.print("ecg,");
   if(digitalRead(10) == 1 || digitalRead(11) == 1) {
     Serial.println('!');
   }
