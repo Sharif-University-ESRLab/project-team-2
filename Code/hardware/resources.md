@@ -66,3 +66,22 @@ https://github.com/eclipse/upm/blob/master/examples/python/ad8232.py
 ## ads1115
 
 https://wiki.52pi.com/index.php?title=EP-0076
+
+
+## Pressure sensor
+
+http://langster1980.blogspot.com/2014/11/how-to-use-pressure-sensor-with.html
+
+https://cdn.sparkfun.com/assets/home_page_posts/1/9/0/2/Pressure_Sensor.pdf
+
+https://www.ti.com/lit/ds/symlink/lm358-n.pdf?ts=1652463087006&ref_url=https%253A%252F%252Fwww.ti.com%252Fproduct%252FLM358-N
+
+## Datasets
+
+https://outbox.eait.uq.edu.au/uqdliu3/uqvitalsignsdataset/download.html
+
+https://physionet.org/content/mimicdb/1.0.0/
+
+https://mimic.mit.edu/docs/gettingstarted/
+
+https://github.com/MLforHealth/MIMIC_Extract
