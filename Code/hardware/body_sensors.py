@@ -30,25 +30,26 @@ def send_post_data_to_server(path, data):
     except Exception as e:
         print("failed to send data", e)
 
-def get_temperature(sensor):
-    a = sensor.readline()
-    print(a)
-    p = float(a.decode().strip())
-    return p
+
+def get_temperature(f):
+    t, p = f.readline().split(',')
+    print(t, p)
+    return float(p)
+
 
 if __name__ == "__main__":
                              
     hrm = HeartRateMonitor(print_raw=False, print_result=False)
     hrm.start_sensor()
 
-    temp_sensor = serial.Serial('/dev/ttyUSB0')
-
+    temp_file = open('values/temp', 'r')  
+    
     while True:
         try:
             bpm = hrm.bpm
             spo2 = hrm.spo2
-  #          temp = get_temperature(temp_sensor)
-            temp = 37 
+            temp = get_temperature(temp_file)
+            # temp = 37 
  
             print(f"bpm: {bpm}   spo2: {spo2}    temp: {temp}")
 

@@ -34,11 +34,11 @@ def get_temperature_and_humidity(sensor):
     return temp, humidity
 
 def get_pollution(f):
-    p = f.readline()
-    print(p)
+    t, p = f.readline().split(',')
+    print(t, p)
     
     # p = int(sensor.readline().decode().strip())
-    return p
+    return int(p)
 
 if __name__ == "__main__":   
     dht11_sensor = adafruit_dht.DHT11(board.D23)
