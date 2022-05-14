@@ -64,7 +64,8 @@ void loop() {
     Serial.println('!');
   }
   else {
-    Serial.println(analogRead(A1));
+    int ecg = analogRead(A1);
+    Serial.println(ecg);
   }
 
 	delay(100);
