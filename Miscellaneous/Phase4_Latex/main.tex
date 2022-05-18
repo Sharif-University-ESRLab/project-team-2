@@ -310,6 +310,37 @@
 در حال حاضر آردویینو در بازه‌ها‌ی زمانی مشخص و کوتاه مدت اطلاعات را از سنسورهای متصل به خودش جمع‌آوری می‌کند. یک پردازه روی رزبری این اطلاعات را می‌خواند و اطلاعات مربوط به هر سنسور را در فایل مربوط به خودش ذخیره می‌کند. پس از آن پردازه‌ی دیگری این اطلاعات را از روی فایل‌ها و هم چنین اطلاعات سنسورهای متصل به رزبری را به طور مستقیم دریافت می‌کند و به سرور ارسال می‌کند.
 
 \subsection{نرم‌افزار موبایل}
+هدف اصلی در این فاز به‌طور کلی بهبود واسط کاربری اپ موبایل و اضافه کردن نمودارهای مفید بود. در صفحه‌ی بیمار (تصویر
+\ref{patients_screen})
+ظاهر کارت نمایش‌دهنده‌ی آخرین اطلاعات بیمار تغییرات گسترده‌ای داشته تا به خوانایی و زیبایی این صفحه کمک کند. همچنین در صفحه‌ی نمودارها (تصویر 
+\ref{old_charts})
+در همین راستا به نمودارهای قبلی یک راهنما اضافه شده و همچنین دو نمودار جدید (نمایش داده شده در تصویر
+\ref{new_charts})
+اضافه شده که با استفاده از 
+\lr{scatter plot}
+به‌ترتیب، ارتباط آلودگی هوا و رطوبت نسبی (محور افقی) را با میزان اکسیژن خون (محور عمودی) می‌سنجند. همچنین سایز هر نقطه در این نمودارها نشان‌گر دمای  بدن بیمار در آن رکورد است.
+
+\begin{figure} % [H]
+	\begin{center}
+		\begin{subfigure}{.3\textwidth}
+			\includegraphics[width=.9\linewidth]{app_patients}
+			\caption{صفحه بیمار}
+			\label{patients_screen}
+		\end{subfigure}
+		\begin{subfigure}{.3\textwidth}
+			\includegraphics[width=.9\linewidth]{app_charts1}
+			\caption{نمودارهای قبلی}
+			\label{old_charts}
+		\end{subfigure}
+		\begin{subfigure}{.3\textwidth}
+			\includegraphics[width=.9\linewidth]{app_charts2}
+			\caption{نمودارهای جدید}
+			\label{new_charts}
+		\end{subfigure}
+		\caption{تصاویری از محیط نرم‌افزار موبایل}
+		\label{app_screenshots}
+	\end{center}
+\end{figure}
 
 \newpage
 \section{زمان‌بندی} \label{gantt}
