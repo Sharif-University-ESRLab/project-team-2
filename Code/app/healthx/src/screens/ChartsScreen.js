@@ -10,7 +10,7 @@ import axios from "axios";
 import { patientRecordsURL } from "../api/base";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme, themeColor } from "react-native-rapi-ui";
-import { AreaChart, Area, LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import { AreaChart, Area, LineChart, Line, ScatterChart, Scatter, CartesianGrid, XAxis, YAxis, ZAxis, Label, Tooltip, ResponsiveContainer, Legend } from "recharts";
 
 const { width: deviceWidth, height: deviceHeight } = Dimensions.get("screen");
 const chartWidthRatio = 0.8
@@ -130,9 +130,29 @@ class ChartsScreen extends Component {
 				<YAxis />
 				<CartesianGrid strokeDasharray="3 3" />
 				<Tooltip />
-				<Area type="monotone" dataKey="body_temperature" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
-				<Area type="monotone" dataKey="environment_temperature" stroke="#82ca9d" fillOpacity={1} fill="url(#colorPv)" />
+				<Area type="monotone" dataKey="body_temperature" name="Body" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
+				<Area type="monotone" dataKey="environment_temperature" name="Environment" stroke="#82ca9d" fillOpacity={1} fill="url(#colorPv)" />
+				<Legend verticalAlign="top" height={36} />
 			</AreaChart>
+		</ResponsiveContainer>
+	);
+
+	renderScatterChart = (data, x_key, x_name, color) => (
+		<ResponsiveContainer width="100%" height={260}>
+			<ScatterChart
+				margin={{ top: 20, right: 20, bottom: 10, left: 10 }}>
+				<CartesianGrid strokeDasharray="3 3" />
+				<XAxis dataKey={x_key} name={x_name}>
+					<Label value={x_name} offset={-5} position="insideBottom" />
+				</XAxis>
+				<YAxis dataKey="oxygen_saturation" name="O2 Saturation"
+					label={{ value: 'O2 Saturation', angle: -90, position: 'insideLeft' }}
+				/>
+				<ZAxis dataKey="body_temperature" range={[30, 145]} name="Body Temperature" unit="°C" />
+				<Tooltip cursor={{ strokeDasharray: '3 3' }} />
+				<Legend verticalAlign="top" height={36} />
+				<Scatter name="Body Temperature" data={data} fill={color} />
+			</ScatterChart>
 		</ResponsiveContainer>
 	);
 
@@ -173,13 +193,21 @@ class ChartsScreen extends Component {
 								<ActivityIndicator size="large" color="#0c9" />
 							) : (
 								<View>
-									<View style={[styles.card, { justifyContent: "center" }]}>
+									<View style={[styles.card, styles.chart]}>
 										<Text>Oxygen Saturation</Text>
 										{this.renderLineChart(this.state.chartsData)}
 									</View>
-									<View style={[styles.card, { justifyContent: "center" }]}>
+									<View style={[styles.card, styles.chart]}>
 										<Text>Body and Environment Temperature</Text>
 										{this.renderAreaChart(this.state.chartsData)}
+									</View>
+									<View style={[styles.card, styles.chart]}>
+										<Text>Air pollution vs. Body Temperature and Oxygen Saturaion</Text>
+										{this.renderScatterChart(this.state.chartsData, "air_pollution", "Air Pollution", "#ff5259")}
+									</View>
+									<View style={[styles.card, styles.chart]}>
+										<Text>Humidity vs. Oxygen Saturaion and Body Temperature</Text>
+										{this.renderScatterChart(this.state.chartsData, "relative_humidity", "Relative Humidity", "#53a7ba")}
 									</View>
 								</View>
 							)}
@@ -230,5 +258,9 @@ const styles = {
 		flexDirection: "row",
 		justifyContent: "space-between",
 		flex: 1,
+	},
+	chart: {
+		justifyContent: "center",
+		marginTop: 20,
 	}
 };

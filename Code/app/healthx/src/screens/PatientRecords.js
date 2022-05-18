@@ -56,56 +56,61 @@ class PatientRecords extends Component {
 	componentDidMount() {
 		this.getData();
 
-		const refreshRate = 60 * 1000;
+		const refreshRate = 10 * 1000;
 		setInterval(() => { this.getData() }, refreshRate);
 	}
 
-	renderItem = (data) => {
+	renderCard = (data) => {
 		return (
 			<Section borderRadius={20} style={styles.list}>
-				<SectionContent>
-					<View style={styles.card}>
-						<Ionicons
-							name={"fitness-outline"}
-							size={20}
-							color={
-								this.props.isDarkmode ? themeColor.white100 : themeColor.dark
-							}
-						/>
-						<View style={styles.recordRow}>
-							<Text style={styles.lightText}>Heart Rate:</Text>
-							<Text style={styles.lightText}>{data.item.heart_rate}BPM</Text>
+				<SectionContent style={{paddingBottom: 0}}>
+					<View style={[styles.recordRow]}>
+						<View style={[styles.card, { justifyContent: "center" }]}>
+							<Ionicons
+								name={"fitness-outline"}
+								size={70}
+								color={themeColor.danger600}
+							/>
+							<Text fontWeight="bold" size="xl" style={{ alignSelf: "center", color: themeColor.danger600 }}>
+								{data.item.heart_rate}BPM
+							</Text>
+						</View>
+
+						<View style={[styles.card, { justifyContent: "center" }]}>
+							<Text fontWeight="bold" size="xl" style={{ alignSelf: "center", color: themeColor.danger600 }}>
+								{data.item.body_temperature}°C
+							</Text>
+							<Ionicons
+								name={"thermometer-outline"}
+								size={70}
+								color={themeColor.danger600}
+							/>
 						</View>
 					</View>
 
-					<View style={styles.card}>
-						<Ionicons
-							name={"thermometer-outline"}
-							size={20}
-							color={
-								this.props.isDarkmode ? themeColor.white100 : themeColor.dark
-							}
-						/>
-						<View style={styles.recordRow}>
-							<Text style={styles.lightText}>Body Temperature:</Text>
-							<Text style={styles.lightText}>{data.item.body_temperature}°C</Text>
-						</View>
-					</View>
-
-					<View style={styles.card}>
+					<View style={[styles.card, { alignSelf: "center" }]}>
 						<Ionicons
 							name={"speedometer-outline"}
-							size={20}
-							color={
-								this.props.isDarkmode ? themeColor.white100 : themeColor.dark
-							}
+							size={70}
+							color={themeColor.danger500}
 						/>
-						<View style={styles.recordRow}>
-							<Text style={styles.lightText}>Blood Pressure:</Text>
-							<Text style={styles.lightText}>{data.item.systolic_blood_pressure} / {data.item.diastolic_blood_pressure}</Text>
-						</View>
+						<Text fontWeight="bold" size="xl" style={{ alignSelf: "center", color: themeColor.danger500 }}>
+							{data.item.systolic_blood_pressure} / {data.item.diastolic_blood_pressure}
+						</Text>
 					</View>
 
+					<View style={[styles.card, { alignSelf: "center" }]}>
+						<Text fontWeight="bold" size="xl" style={{ alignSelf: "center", color: themeColor.danger400 }}>
+							Oxygen Saturation: {data.item.oxygen_saturation * 100}%
+						</Text>
+						<Ionicons
+							name={"heart-circle-outline"}
+							size={70}
+							color={themeColor.danger400}
+						/>
+					</View>
+				</SectionContent>
+				<SectionContent style={{paddingTop: 0}}>
 					<View style={styles.card}>
 						<Ionicons
 							name={"pulse-outline"}
@@ -117,20 +122,6 @@ class PatientRecords extends Component {
 						<View style={styles.recordRow}>
 							<Text style={styles.lightText}>ECG:</Text>
 							<Text style={styles.lightText}>{data.item.ecg}</Text>
-						</View>
-					</View>
-
-					<View style={styles.card}>
-						<Ionicons
-							name={"heart-circle-outline"}
-							size={20}
-							color={
-								this.props.isDarkmode ? themeColor.white100 : themeColor.dark
-							}
-						/>
-						<View style={styles.recordRow}>
-							<Text style={styles.lightText}>Oxygen Saturation:</Text>
-							<Text style={styles.lightText}>{data.item.oxygen_saturation}</Text>
 						</View>
 					</View>
 
@@ -155,7 +146,7 @@ class PatientRecords extends Component {
 				</SectionContent>
 			</Section>
 		);
-	};
+	}
 
 	render() {
 		const { loading, patientData, patient } = this.state;
@@ -173,7 +164,7 @@ class PatientRecords extends Component {
 						<>
 							<FlatList
 								data={[patientData.slice().reverse()[0]]}
-								renderItem={(item) => this.renderItem(item)}
+								renderItem={(item) => this.renderCard(item)}
 								keyExtractor={(item) => item.id.toString()}
 							/>
 							<Button
