@@ -9,4 +9,5 @@ void setup() {
 void loop() {
   val = analogRead(analogPin);  // read the input pin
   Serial.println(val);          // debug value
+  delay(1000);
 }
