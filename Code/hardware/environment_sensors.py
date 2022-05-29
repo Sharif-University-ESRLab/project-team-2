@@ -22,24 +22,6 @@ def send_post_data_to_server(path, data):
     except Exception:
         print("failed to send data")
 
-def init():
-    # We first check if a libgpiod process is running. If yes, we kill it!
-    for proc in psutil.process_iter():
-        if proc.name() == 'libgpiod_pulsein' or proc.name() == 'libgpiod_pulsei':
-            proc.kill()
-
-def get_temperature_and_humidity(sensor):
-    temp = sensor.temperature
-    humidity = sensor.humidity
-    return temp, humidity
-
-def get_pollution(f):
-    t, p = f.readline().split(',')
-    print(t, p)
-    
-    # p = int(sensor.readline().decode().strip())
-    return int(p)
-
 if __name__ == "__main__":   
     dht11_sensor = adafruit_dht.DHT11(board.D23)
     pol_file = open('values/pollution', 'r')  
@@ -63,7 +45,6 @@ if __name__ == "__main__":
             continue
         except Exception as error:
             dht11_sensor.exit()
-            mq135_sensor.close()
             pol_file.close()
             raise error
 
