@@ -32,20 +32,6 @@ def send_post_data_to_server(path, data):
         print("failed to send data", e)
 
 
-def get_temperature(f):
-    t, p = f.readline().split(',')
-    print(t, p)
-    return float(p)
-
-
-def get_ecg(f):
-    t, p = f.readline().split(',')
-    print(t, p)
-    if '!' in p:
-        return None
-    return int(p)
-
-
 def init():
     # We first check if a libgpiod process is running. If yes, we kill it!
     for proc in psutil.process_iter():
@@ -53,18 +39,43 @@ def init():
             proc.kill()
 
 
+def get_temperature(f):
+    line = f.readline()
+    if not line:
+        return None
+    t, p = line.split(',')
+    print(t, p)
+    return float(p)
+
+
+def get_ecg(f):
+    line = f.readline()
+    if not line:
+        return None
+    t, p = line.split(',')
+    print(t, p)
+    if '!' in p:
+        return None
+    return int(p)
+
+
+def get_pollution(f):
+    line = f.readline()
+    if not line:
+        return None
+
+    t, p = line.split(',')
+    print(t, p)
+
+    # p = int(sensor.readline().decode().strip())
+    return int(p)
+
+
 def get_temperature_and_humidity(sensor):
     temp = sensor.temperature
     humidity = sensor.humidity
     return temp, humidity
 
-
-def get_pollution(f):
-    t, p = f.readline().split(',')
-    print(t, p)
-
-    # p = int(sensor.readline().decode().strip())
-    return int(p)
 
 
 if __name__ == "__main__":
@@ -92,7 +103,7 @@ if __name__ == "__main__":
 
             data = {
                 'oxygen_saturation': spo2 if not spo2 else round(spo2, 2),
-                'heart_rate': int(bpm),  # TODO FLOAT SERVER
+                'heart_rate': bpm if not bpm else int(bpm),  # TODO FLOAT SERVER
                 'body_temperature': temp,
                 'ecg': ecg,
                 'air_pollution': pollution,
