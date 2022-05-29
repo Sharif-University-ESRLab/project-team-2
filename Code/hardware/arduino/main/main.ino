@@ -50,23 +50,37 @@ void setup() {
   pinMode(11, OUTPUT);
 }
 
+int counter = 0; // 1 milisecond
+
 void loop() {
+  if (counter % 5000 == 0) // 5 second
+  {
 	float temp = tempSensor.getTemperature(); // read temperature for every 100ms
   Serial.print("temp,");
   Serial.println(temp ,2);
 
-  int pollution = analogRead(A0);
-  Serial.print("pollution,");
-  Serial.println(pollution);
-	
-  Serial.print("ecg,");
-  if(digitalRead(10) == 1 || digitalRead(11) == 1) {
-    Serial.println('!');
   }
-  else {
-    int ecg = analogRead(A1);
-    Serial.println(ecg);
-  }
+  
+  if (counter % 5000 == 0) // 5 second
+  {
+    int pollution = analogRead(A0);
+    Serial.print("pollution,");
+    Serial.println(pollution);
+    
+  } 
 
-	delay(100);
+  if (counter % 10 == 0) // 10 milisecond
+  {
+    Serial.print("ecg,");
+    if(digitalRead(10) == 1 || digitalRead(11) == 1) {
+      Serial.println('!');
+    }
+    else {
+      int ecg = analogRead(A1);
+      Serial.println(ecg);
+    }  
+  }
+  
+  counter += 10;
+	delay(10);
 }
