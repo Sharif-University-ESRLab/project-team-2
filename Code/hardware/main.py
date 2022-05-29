@@ -8,8 +8,8 @@ import sys
 sys.path.append(r"home/pi/Desktop/project-team-2/Code/hardware/max30102")
 
 
-# SERVER_HOST = '192.168.43.142'
-SERVER_HOST = '192.168.43.37'
+SERVER_HOST = '192.168.43.142'
+#SERVER_HOST = '192.168.43.37'
 #SERVER_HOST = '172.27.51.182'
 
 SERVER_URL = f'http://{SERVER_HOST}:8000/api/v1'

@@ -26,7 +26,7 @@ if __name__ == "__main__":
     while True:
         try:
             line = arduino.readline().decode().strip()
-            print("line:", line)
+            print("line:", line.encode())
             if not line:
                 continue
             type_, val = line.split(',')
