@@ -30,6 +30,9 @@ class Patients extends Component {
     };
   }
 
+  /**
+   * Gets users' information from the server
+   */
   getData = () => {
     this.setState({
       fromFetch: false,
@@ -56,6 +59,10 @@ class Patients extends Component {
     this.getData();
   }
 
+  /**
+   * Renders a card for the given user in the FlatList
+   * @param {Object} data user's info
+   */
   renderItem = (data) => {
     return (
       <TouchableOpacity>

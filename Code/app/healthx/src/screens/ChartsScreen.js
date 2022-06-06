@@ -29,9 +29,16 @@ const timeOptions = [
 	{ label: "Last Day", value: "D" },
 ];
 
+
+/**
+ * This screen is accessible from PatientsRecords screen
+ * and provides user with different charts to visualize
+ * the data gathered by body and environmental sensors.
+ */
 class ChartsScreen extends Component {
 	constructor(props) {
 		super(props);
+		// Init state
 		this.state = {
 			loading: true,
 			chartsData: null,
@@ -40,10 +47,20 @@ class ChartsScreen extends Component {
 		};
 	}
 
+	/**
+	 * Returns the ISO formatted date only containing yyyy-mm-dd
+	 * @param {Date} date a Date object
+	 * @returns {String} ISO formatted date
+	 */
 	getISODate = (date) => {
 		return date.toISOString().slice(0, 10);
 	}
 
+	/**
+	 * uses the specified time interval in the Picker
+	 * element on which the visualized data is based
+	 * @param {String} timeChar a character represnting a time period
+	 */
 	loadDataByTimePeriod = (timeChar) => {
 		let timeFilter = "";
 
@@ -70,6 +87,11 @@ class ChartsScreen extends Component {
 		this.getData(timeFilter);
 	}
 
+	/**
+	 * Gets a query param to be used in acquiring
+	 * related data from the server
+	 * @param {String} timeFilter a query param
+	 */
 	getData = (timeFilter) => {
 		this.setState({
 			fromFetch: false,

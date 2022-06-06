@@ -6,6 +6,10 @@ import {
 } from "react-native-rapi-ui";
 import { Ionicons } from "@expo/vector-icons";
 
+/**
+ * Navbar provides the top section on each screen
+ * and can be customized by `pageName`
+ */
 export default function ({ navigation, pageName, backOption }) {
   const { isDarkmode, setTheme } = useTheme();
   return (
