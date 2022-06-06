@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Layout, Text, Button } from "react-native-rapi-ui";
+import { Layout, Text, Button, TextInput } from "react-native-rapi-ui";
 import Navbar from "../components/Navbar";
 import {
 	View,
@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import axios from "axios";
 import { Section, SectionContent } from "react-native-rapi-ui";
-import { patientRecordsURL } from "../api/base";
+import { patientRecordsURL, recordsEndpoint } from "../api/base";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme, themeColor } from "react-native-rapi-ui";
 
@@ -28,6 +28,8 @@ class PatientRecords extends Component {
 			patientData: null,
 			patient: props.route.params.patient,
 			showOldRecords: false,
+			systolic: '',
+			diastolic: ''
 		};
 	}
 
@@ -53,6 +55,20 @@ class PatientRecords extends Component {
 			});
 	};
 
+	submitPressure = () => {
+		const { systolic, diastolic, patient } = this.state;
+		if (isNaN(systolic) || isNaN(diastolic)) return;
+
+		let data = {
+			'systolic_blood_pressure': +systolic,
+			'diastolic_blood_pressure': +diastolic,
+			'patient': patient.id
+		}
+
+		console.log(data);
+		axios.post(recordsEndpoint, data);
+	}
+
 	componentDidMount() {
 		this.getData();
 
@@ -63,7 +79,7 @@ class PatientRecords extends Component {
 	renderCard = (data) => {
 		return (
 			<Section borderRadius={20} style={styles.list}>
-				<SectionContent style={{paddingBottom: 0}}>
+				<SectionContent style={{ paddingBottom: 0 }}>
 					<View style={[styles.recordRow]}>
 						<View style={[styles.card, { justifyContent: "center" }]}>
 							<Ionicons
@@ -110,7 +126,7 @@ class PatientRecords extends Component {
 						/>
 					</View>
 				</SectionContent>
-				<SectionContent style={{paddingTop: 0}}>
+				<SectionContent style={{ paddingTop: 0 }}>
 					<View style={styles.card}>
 						<Ionicons
 							name={"pulse-outline"}
@@ -148,8 +164,106 @@ class PatientRecords extends Component {
 		);
 	}
 
+	renderOldItem = (data) => {
+		return (
+			<Section borderRadius={20} style={styles.list}>
+				<SectionContent>
+					<View style={styles.card}>
+						<Ionicons
+							name={"fitness-outline"}
+							size={20}
+							color={
+								this.props.isDarkmode ? themeColor.white100 : themeColor.dark
+							}
+						/>
+						<View style={styles.recordRow}>
+							<Text style={styles.lightText}>Heart Rate:</Text>
+							<Text style={styles.lightText}>{data.item.heart_rate}BPM</Text>
+						</View>
+					</View>
+
+					<View style={styles.card}>
+						<Ionicons
+							name={"thermometer-outline"}
+							size={20}
+							color={
+								this.props.isDarkmode ? themeColor.white100 : themeColor.dark
+							}
+						/>
+						<View style={styles.recordRow}>
+							<Text style={styles.lightText}>Body Temperature:</Text>
+							<Text style={styles.lightText}>{data.item.body_temperature}°C</Text>
+						</View>
+					</View>
+
+					<View style={styles.card}>
+						<Ionicons
+							name={"speedometer-outline"}
+							size={20}
+							color={
+								this.props.isDarkmode ? themeColor.white100 : themeColor.dark
+							}
+						/>
+						<View style={styles.recordRow}>
+							<Text style={styles.lightText}>Blood Pressure:</Text>
+							<Text style={styles.lightText}>{data.item.systolic_blood_pressure} / {data.item.diastolic_blood_pressure}</Text>
+						</View>
+					</View>
+
+					<View style={styles.card}>
+						<Ionicons
+							name={"pulse-outline"}
+							size={20}
+							color={
+								this.props.isDarkmode ? themeColor.white100 : themeColor.dark
+							}
+						/>
+						<View style={styles.recordRow}>
+							<Text style={styles.lightText}>ECG:</Text>
+							<Text style={styles.lightText}>{data.item.ecg}</Text>
+						</View>
+					</View>
+
+					<View style={styles.card}>
+						<Ionicons
+							name={"heart-circle-outline"}
+							size={20}
+							color={
+								this.props.isDarkmode ? themeColor.white100 : themeColor.dark
+							}
+						/>
+						<View style={styles.recordRow}>
+							<Text style={styles.lightText}>Oxygen Saturation:</Text>
+							<Text style={styles.lightText}>{data.item.oxygen_saturation}</Text>
+						</View>
+					</View>
+
+					<View style={styles.card}>
+						<Ionicons
+							name={"calendar-outline"}
+							size={20}
+							color={
+								this.props.isDarkmode ? themeColor.white100 : themeColor.dark
+							}
+						/>
+						<View style={styles.recordRow}>
+							<Text style={styles.lightText}>Timestamp:</Text>
+							<Text style={styles.lightText}>
+								{
+									`${new Date(data.item.timestamp).toLocaleDateString('fa-IR')} `
+									+ `${new Date(data.item.timestamp).toLocaleTimeString('fa-IR')}`
+								}
+							</Text>
+						</View>
+					</View>
+				</SectionContent>
+			</Section>
+		);
+	};
+
 	render() {
-		const { loading, patientData, patient } = this.state;
+		const { loading, patientData, patient, systolic, diastolic } = this.state;
+
 		return (
 			<Layout>
 				<Navbar
@@ -161,51 +275,90 @@ class PatientRecords extends Component {
 					{loading ? (
 						<ActivityIndicator size="large" color="#0c9" />
 					) : (
-						<>
-							<FlatList
-								data={[patientData.slice().reverse()[0]]}
-								renderItem={(item) => this.renderCard(item)}
-								keyExtractor={(item) => item.id.toString()}
-							/>
+
+						<FlatList
+							data={[patientData.slice().reverse()[0]]}
+							renderItem={(item) => this.renderCard(item)}
+							keyExtractor={(item) => item.id.toString()}
+						/>
+					)}
+					<Section style={{ marginHorizontal: 20, marginTop: 20 }}>
+						<SectionContent>
+							<Text fontWeight="regular" style={{ textAlign: "center", marginBottom: 10 }}>
+								Submit Your Blood Pressure
+							</Text>
+							<View>
+								<TextInput
+									placeholder="Systolic pressure"
+									value={systolic}
+									onChangeText={(val) => this.setState({ systolic: val })}
+									rightContent={
+										<Ionicons name="arrow-up" size={20} color={themeColor.gray300} />
+									}
+								/>
+								<TextInput
+									placeholder="Diastolic pressure"
+									value={diastolic}
+									onChangeText={(val) => this.setState({ diastolic: val })}
+									rightContent={
+										<Ionicons name="arrow-down" size={20} color={themeColor.gray300} />
+									}
+								/>
+							</View>
 							<Button
 								style={{ marginTop: 10 }}
-								text="View Charts"
-								leftContent={
-									<Ionicons
-										name="stats-chart"
-										size={20}
-										color={themeColor["warning700"]} />
-								}
-								status="warning700"
-								type="TouchableOpacity"
-								onPress={() => { this.props.navigation.navigate("ChartsScreen", { patient }) }}
-								outline
-							/>
-							<Button
-								style={{ marginTop: 10 }}
-								text={`${this.state.showOldRecords ? "Hide" : "Show"} Old Records`}
+								text="Submit"
 								rightContent={
 									<Ionicons
-										name={this.state.showOldRecords ? "chevron-up-outline" : "chevron-down-outline"}
+										name="paper-plane"
 										size={20}
-										color={themeColor["info600"]}
-									/>
+										color={themeColor["success700"]} />
 								}
-								status="info600"
+								status="success700"
 								type="TouchableOpacity"
-								onPress={() => this.setState({ showOldRecords: !this.state.showOldRecords })}
+								onPress={() => { this.submitPressure() }}
 								outline
 							/>
-							{
-								this.state.showOldRecords &&
-								<FlatList
-									data={patientData.slice().reverse().slice(1)}
-									renderItem={(item) => this.renderItem(item)}
-									keyExtractor={(item) => item.id.toString()}
-								/>
-							}
-						</>
-					)}
+						</SectionContent>
+					</Section>
+					<Button
+						style={{ marginTop: 10 }}
+						text="View Charts"
+						leftContent={
+							<Ionicons
+								name="stats-chart"
+								size={20}
+								color={themeColor["warning700"]} />
+						}
+						status="warning700"
+						type="TouchableOpacity"
+						onPress={() => { this.props.navigation.navigate("ChartsScreen", { patient }) }}
+						outline
+					/>
+					<Button
+						style={{ marginTop: 10 }}
+						text={`${this.state.showOldRecords ? "Hide" : "Show"} Old Records`}
+						rightContent={
+							<Ionicons
+								name={this.state.showOldRecords ? "chevron-up-outline" : "chevron-down-outline"}
+								size={20}
+								color={themeColor["info600"]}
+							/>
+						}
+						status="info600"
+						type="TouchableOpacity"
+						onPress={() => this.setState({ showOldRecords: !this.state.showOldRecords })}
+						outline
+					/>
+					{
+						(!loading && this.state.showOldRecords) && (
+							<FlatList
+								data={patientData.slice().reverse().slice(1)}
+								renderItem={(item) => this.renderOldItem(item)}
+								keyExtractor={(item) => item.id.toString()}
+							/>
+						)
+					}
 				</View>
 			</Layout>
 		);
