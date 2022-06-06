@@ -9,6 +9,9 @@ import ChartsScreen from "../screens/ChartsScreen";
 
 const MainStack = createNativeStackNavigator();
 
+/**
+ * This function configures routing between screens
+ */
 const Main = () => {
   return (
     <MainStack.Navigator

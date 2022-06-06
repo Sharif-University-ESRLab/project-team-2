@@ -20,6 +20,10 @@ function withThemeHook(Component) {
 	};
 }
 
+/**
+ * the main screen of the app, where the
+ * history of the patient's records are available
+ */
 class PatientRecords extends Component {
 	constructor(props) {
 		super(props);
@@ -34,6 +38,9 @@ class PatientRecords extends Component {
 		};
 	}
 
+	/**
+	 * Get data from the server
+	 */
 	getData = () => {
 		this.setState({
 			fromFetch: false,
@@ -72,6 +79,9 @@ class PatientRecords extends Component {
 
 	};
 
+	/**
+	 * Post blood pressure to server
+	 */
 	submitPressure = () => {
 		const { systolic, diastolic, patient } = this.state;
 		if (isNaN(systolic) || isNaN(diastolic)) return;
@@ -93,6 +103,10 @@ class PatientRecords extends Component {
 		setInterval(() => { this.getData() }, refreshRate);
 	}
 
+	/**
+	 * Renders the top card in the PatientsRecords screen
+	 * @param {Object} data an object containing all the records
+	 */
 	renderCard = (data) => {
 		return (
 			<Section borderRadius={20} style={styles.list}>
@@ -181,6 +195,10 @@ class PatientRecords extends Component {
 		);
 	}
 
+	/**
+	 * Renders each item in the bottom list of the screen
+	 * @param {Object} data an object containing all the records
+	 */
 	renderOldItem = (data) => {
 		let empty_items = 0
 		if (!data.item.oxygen_saturation || !data.item.body_temperature )

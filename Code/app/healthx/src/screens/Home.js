@@ -11,6 +11,10 @@ import {
 import Navbar  from "../components/Navbar";
 import { Ionicons } from "@expo/vector-icons";
 
+/**
+ * Main page, containing buttons to
+ * navigate to other screens
+ */
 export default function ({ navigation }) {
   return (
     <Layout>
