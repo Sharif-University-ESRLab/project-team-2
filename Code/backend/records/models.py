@@ -12,24 +12,24 @@ class Record(models.Model):
     # TODO Maybe in the future, we should make two different records for environment and human records
 
     # Environment
-    environment_temperature = models.DecimalField(max_digits=4, decimal_places=2, null=True)  # °C
+    environment_temperature = models.DecimalField(max_digits=4, decimal_places=2, null=True , default=None,blank=True)  # °C
     relative_humidity = models.DecimalField(max_digits=5, decimal_places=2,
                                             validators=[MaxValueValidator(100), MinValueValidator(0)],
-                                            null=True)  # Percentage
+                                            null=True, default=None,blank=True)  # Percentage
     # TODO May need some changes based on the value we get from sensor
-    air_pollution = models.DecimalField(max_digits=10, decimal_places=1, null=True)
+    air_pollution = models.DecimalField(max_digits=10, decimal_places=1, null=True, default=None,blank=True)
 
     # Human
-    body_temperature = models.DecimalField(max_digits=4, decimal_places=2, null=True)  # °C
-    systolic_blood_pressure = models.IntegerField(null=True)  # mmHg
-    diastolic_blood_pressure = models.IntegerField(null=True)  # mmHg
+    body_temperature = models.DecimalField(max_digits=4, decimal_places=2, null=True, default=None,blank=True)  # °C
+    systolic_blood_pressure = models.IntegerField(null=True, default=None,blank=True)  # mmHg
+    diastolic_blood_pressure = models.IntegerField(null=True, default=None,blank=True)  # mmHg
     oxygen_saturation = models.DecimalField(max_digits=5, decimal_places=2,
                                             validators=[MaxValueValidator(100), MinValueValidator(0)],
-                                            null=True)  # Percentage
-    heart_rate = models.IntegerField(null=True)  # BPM
+                                            null=True, default=None,blank=True)  # Percentage
+    heart_rate = models.IntegerField(null=True, default=None,blank=True)  # BPM
 
     # TODO I don't now how the output of ECG sensor will be. May need change.
-    ecg = models.FloatField(null=True)
+    ecg = models.FloatField(null=True, default=None,blank=True)
 
     # other data
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)

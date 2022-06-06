@@ -49,7 +49,7 @@ def get_latest_data(request):
         air_pollution = 0
     try:
         last_record_body_temperature: Record = Record.objects.filter(patient_id=patient_id).filter(
-            air_pressure__isnull=False).latest('timestamp')
+            body_temperature__isnull=False).latest('timestamp')
         body_temperature = last_record_body_temperature.body_temperature
     except:
         body_temperature = 37
@@ -84,6 +84,7 @@ def get_latest_data(request):
     except:
         ecg = 0
 
+    print(patient_id)
     serializer = serializers.RecordFullSerializer(Record.objects.filter(patient_id=patient_id).latest('timestamp'))
     data = {
         'patient': serializer.data['patient'],
