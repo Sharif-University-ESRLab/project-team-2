@@ -164,6 +164,103 @@ class PatientRecords extends Component {
 		);
 	}
 
+	renderOldItem = (data) => {
+		return (
+			<Section borderRadius={20} style={styles.list}>
+				<SectionContent>
+					<View style={styles.card}>
+						<Ionicons
+							name={"fitness-outline"}
+							size={20}
+							color={
+								this.props.isDarkmode ? themeColor.white100 : themeColor.dark
+							}
+						/>
+						<View style={styles.recordRow}>
+							<Text style={styles.lightText}>Heart Rate:</Text>
+							<Text style={styles.lightText}>{data.item.heart_rate}BPM</Text>
+						</View>
+					</View>
+
+					<View style={styles.card}>
+						<Ionicons
+							name={"thermometer-outline"}
+							size={20}
+							color={
+								this.props.isDarkmode ? themeColor.white100 : themeColor.dark
+							}
+						/>
+						<View style={styles.recordRow}>
+							<Text style={styles.lightText}>Body Temperature:</Text>
+							<Text style={styles.lightText}>{data.item.body_temperature}°C</Text>
+						</View>
+					</View>
+
+					<View style={styles.card}>
+						<Ionicons
+							name={"speedometer-outline"}
+							size={20}
+							color={
+								this.props.isDarkmode ? themeColor.white100 : themeColor.dark
+							}
+						/>
+						<View style={styles.recordRow}>
+							<Text style={styles.lightText}>Blood Pressure:</Text>
+							<Text style={styles.lightText}>{data.item.systolic_blood_pressure} / {data.item.diastolic_blood_pressure}</Text>
+						</View>
+					</View>
+
+					<View style={styles.card}>
+						<Ionicons
+							name={"pulse-outline"}
+							size={20}
+							color={
+								this.props.isDarkmode ? themeColor.white100 : themeColor.dark
+							}
+						/>
+						<View style={styles.recordRow}>
+							<Text style={styles.lightText}>ECG:</Text>
+							<Text style={styles.lightText}>{data.item.ecg}</Text>
+						</View>
+					</View>
+
+					<View style={styles.card}>
+						<Ionicons
+							name={"heart-circle-outline"}
+							size={20}
+							color={
+								this.props.isDarkmode ? themeColor.white100 : themeColor.dark
+							}
+						/>
+						<View style={styles.recordRow}>
+							<Text style={styles.lightText}>Oxygen Saturation:</Text>
+							<Text style={styles.lightText}>{data.item.oxygen_saturation}</Text>
+						</View>
+					</View>
+
+					<View style={styles.card}>
+						<Ionicons
+							name={"calendar-outline"}
+							size={20}
+							color={
+								this.props.isDarkmode ? themeColor.white100 : themeColor.dark
+							}
+						/>
+						<View style={styles.recordRow}>
+							<Text style={styles.lightText}>Timestamp:</Text>
+							<Text style={styles.lightText}>
+								{
+									`${new Date(data.item.timestamp).toLocaleDateString('fa-IR')} `
+									+ `${new Date(data.item.timestamp).toLocaleTimeString('fa-IR')}`
+								}
+							</Text>
+						</View>
+					</View>
+				</SectionContent>
+			</Section>
+		);
+	};
+
 	render() {
 		const { loading, patientData, patient, systolic, diastolic } = this.state;
 
@@ -187,7 +284,7 @@ class PatientRecords extends Component {
 					)}
 					<Section style={{ marginHorizontal: 20, marginTop: 20 }}>
 						<SectionContent>
-							<Text fontWeight="bold" style={{ textAlign: "center" }}>
+							<Text fontWeight="regular" style={{ textAlign: "center", marginBottom: 10 }}>
 								Submit Your Blood Pressure
 							</Text>
 							<View>
@@ -254,12 +351,13 @@ class PatientRecords extends Component {
 						outline
 					/>
 					{
-							(!loading && this.state.showOldRecords) &&
+						(!loading && this.state.showOldRecords) && (
 							<FlatList
 								data={patientData.slice().reverse().slice(1)}
-								renderItem={(item) => this.renderItem(item)}
+								renderItem={(item) => this.renderOldItem(item)}
 								keyExtractor={(item) => item.id.toString()}
 							/>
+						)
 					}
 				</View>
 			</Layout>
