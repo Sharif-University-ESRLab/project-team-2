@@ -23,9 +23,10 @@ function withThemeHook(Component) {
 }
 
 const timeOptions = [
-	{ label: "All time", value: "A" },
+	{ label: "Last Year", value: "A" },
 	{ label: "Last Week", value: "W" },
 	{ label: "Last Month", value: "M" },
+	{ label: "Last Day", value: "D" },
 ];
 
 class ChartsScreen extends Component {
@@ -56,8 +57,15 @@ class ChartsScreen extends Component {
 				date.setDate(date.getDate() - 7);
 				timeFilter = `&from=${this.getISODate(date)}`;
 				break;
-			default: // A or null
+			case "A":
+				date.setFullYear(date.getMonth() - 12);
+				timeFilter = `&from=${this.getISODate(date)}`;
 				break;
+			default: // D or null
+				date.setMonth(date.getDate() - 1);
+				timeFilter = `&from=${this.getISODate(date)}`;
+				break;
+
 		}
 		this.getData(timeFilter);
 	}
@@ -65,7 +73,7 @@ class ChartsScreen extends Component {
 	getData = (timeFilter) => {
 		this.setState({
 			fromFetch: false,
-			loading: true,
+			// loading: true,
 		});
 
 		let recordsUrl = patientRecordsURL(this.state.patient.id);
@@ -93,8 +101,17 @@ class ChartsScreen extends Component {
 			});
 	};
 
+	componentDidMount() {
+		this.getData();
+
+		const refreshRate = 5 * 1000;
+		setInterval(() => { this.getData() }, refreshRate);
+	}
+
+
 	cleanData = (data) => {
 		for (let item of data) {
+			item['time'] = new Date(item['timestamp']).toTimeString().slice(0, 9)
 			item['date'] = this.getISODate(new Date(item['timestamp']))
 		}
 		return data;
@@ -111,6 +128,21 @@ class ChartsScreen extends Component {
 			</LineChart>
 		</ResponsiveContainer>
 	);
+
+	renderECGLineChart = (data) => {
+		console.log("ECG", data)
+		return (
+		<ResponsiveContainer width="100%" height={250}>
+			<LineChart data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+				<Line type="monotone" dataKey="ecg" stroke="#8884d8" />
+				<CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+				<XAxis dataKey="time" />
+				<YAxis />
+				<Tooltip />
+			</LineChart>
+		</ResponsiveContainer>
+	);
+	}
 
 	renderAreaChart = (data) => (
 		<ResponsiveContainer width="100%" height={300}>
@@ -193,6 +225,10 @@ class ChartsScreen extends Component {
 								<ActivityIndicator size="large" color="#0c9" />
 							) : (
 								<View>
+									<View style={[styles.card, styles.chart]}>
+										<Text>ECG</Text>
+										{this.renderECGLineChart(this.state.chartsData)}
+									</View>
 									<View style={[styles.card, styles.chart]}>
 										<Text>Oxygen Saturation</Text>
 										{this.renderLineChart(this.state.chartsData)}

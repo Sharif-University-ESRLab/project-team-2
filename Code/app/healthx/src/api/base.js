@@ -1,9 +1,11 @@
-const baseURL = 'http://192.168.43.142:8000/api/v1'
+const baseURL = 'http://192.168.43.231:8000/api/v1'
 
 const patientsURL =  `${baseURL}/patients/`
 
-const recordsEndpoint = `${baseURL}/records/`
+const recordsURL = `${baseURL}/records/`
 
-const patientRecordsURL = (patientId) => recordsEndpoint + `filter/?patient=${patientId}`
+const patientlatestRecordsURL = (patientId) => recordsURL + `latest/?patient_id=${patientId}`
 
-export { baseURL, patientsURL, recordsEndpoint, patientRecordsURL}
+const patientRecordsURL = (patientId) => recordsURL + `filter/?patient=${patientId}`
+
+export { baseURL, patientsURL, recordsURL, patientRecordsURL, patientlatestRecordsURL}
