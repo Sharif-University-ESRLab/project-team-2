@@ -26,8 +26,6 @@ const timeOptions = [
 	{ label: "All time", value: "A" },
 	{ label: "Last Week", value: "W" },
 	{ label: "Last Month", value: "M" },
-	{ label: "Last Day", value: "D" },
-	{ label: "Last Hour", value: "H" },
 ];
 
 class ChartsScreen extends Component {
@@ -50,12 +48,6 @@ class ChartsScreen extends Component {
 
 		let date = new Date();
 		switch (timeChar) {
-			case "A":
-				timeFilter = "";
-			case "D":
-				date.setDate(date.getDate() - 1);
-				timeFilter = `&from=${this.getISODate(date)}`;
-				break;
 			case "M":
 				date.setMonth(date.getMonth() - 1);
 				timeFilter = `&from=${this.getISODate(date)}`;
@@ -64,9 +56,7 @@ class ChartsScreen extends Component {
 				date.setDate(date.getDate() - 7);
 				timeFilter = `&from=${this.getISODate(date)}`;
 				break;
-			default: // H or null
-				date.setDate(date.getHours() - 1);
-				timeFilter = `&from=${this.getISODate(date)}`;
+			default: // A or null
 				break;
 		}
 		this.getData(timeFilter);
@@ -122,18 +112,6 @@ class ChartsScreen extends Component {
 		</ResponsiveContainer>
 	);
 
-	renderECGLineChart = (data) => (
-		<ResponsiveContainer width="100%" height={250}>
-			<LineChart data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-				<Line type="basic" dataKey="ecg" stroke="#8884d8" />
-				<CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-				<XAxis dataKey="date" />
-				<YAxis />
-				<Tooltip />
-			</LineChart>
-		</ResponsiveContainer>
-	);
-
 	renderAreaChart = (data) => (
 		<ResponsiveContainer width="100%" height={300}>
 			<AreaChart data={data}
@@ -179,9 +157,7 @@ class ChartsScreen extends Component {
 	);
 
 	render() {
-		
 		const { loading, patient, value } = this.state;
-		this.loadDataByTimePeriod();
 		return (
 			<Layout>
 				<Navbar
@@ -217,11 +193,6 @@ class ChartsScreen extends Component {
 								<ActivityIndicator size="large" color="#0c9" />
 							) : (
 								<View>
-									
-									<View style={[styles.card, styles.chart]}>
-										<Text>ECG</Text>
-										{this.renderECGLineChart(this.state.chartsData)}
-									</View>
 									<View style={[styles.card, styles.chart]}>
 										<Text>Oxygen Saturation</Text>
 										{this.renderLineChart(this.state.chartsData)}
