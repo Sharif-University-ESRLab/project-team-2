@@ -27,8 +27,80 @@ class RecordFullViewSet(viewsets.ModelViewSet):
 def get_latest_data(request):
     if not Record.objects.all().exists():
         return Response(status=status.HTTP_404_NOT_FOUND)
-    serializer = serializers.RecordFullSerializer(Record.objects.latest('timestamp'))
-    return Response(data=serializer.data, status=status.HTTP_200_OK)
+    patient_id = request.GET.get('patient_id', None)
+    try:
+        last_record_environment_temperature: Record = Record.objects.filter(patient_id=patient_id).filter(
+            environment_temperature__isnull=False).latest('timestamp')
+        environment_temperature = last_record_environment_temperature.environment_temperature
+
+    except:
+        environment_temperature = 20
+    try:
+        last_record_relative_humidity: Record = Record.objects.filter(patient_id=patient_id).filter(
+            relative_humidity__isnull=False).latest('timestamp')
+        relative_humidity = last_record_relative_humidity.relative_humidity
+    except:
+        relative_humidity = 50
+    try:
+        last_record_air_pollution: Record = Record.objects.filter(patient_id=patient_id).filter(
+            air_pollution__isnull=False).latest('timestamp')
+        air_pollution=last_record_air_pollution.air_pollution
+    except:
+        air_pollution = 0
+    try:
+        last_record_body_temperature: Record = Record.objects.filter(patient_id=patient_id).filter(
+            air_pressure__isnull=False).latest('timestamp')
+        body_temperature = last_record_body_temperature.body_temperature
+    except:
+        body_temperature = 37
+    try:
+        last_record_systolic_blood_pressure: Record = Record.objects.filter(patient_id=patient_id).filter(
+            systolic_blood_pressure__isnull=False).latest('timestamp')
+        systolic_blood_pressure = last_record_systolic_blood_pressure.systolic_blood_pressure
+    except:
+        systolic_blood_pressure = 12
+    try:
+        last_record_diastolic_blood_pressure: Record = Record.objects.filter(patient_id=patient_id).filter(
+            diastolic_blood_pressure__isnull=False).latest('timestamp')
+        diastolic_blood_pressure = last_record_diastolic_blood_pressure.diastolic_blood_pressure
+    except:
+        diastolic_blood_pressure = 8
+    try:
+        last_record_heart_rate: Record = Record.objects.filter(patient_id=patient_id).filter(
+            heart_rate__isnull=False).latest('timestamp')
+        heart_rate = last_record_heart_rate.heart_rate
+    except:
+        heart_rate = 60
+    try:
+        last_record_oxygen_saturation: Record = Record.objects.filter(patient_id=patient_id).filter(
+            oxygen_saturation__isnull=False).latest('timestamp')
+        oxygen_saturation=last_record_oxygen_saturation.oxygen_saturation
+    except:
+        oxygen_saturation = 100
+    try:
+        last_record_ecg: Record = Record.objects.filter(patient_id=patient_id).filter(
+            air_pressure__isnull=False).latest('timestamp')
+        ecg = last_record_ecg.ecg
+    except:
+        ecg = 0
+
+    serializer = serializers.RecordFullSerializer(Record.objects.filter(patient_id=patient_id).latest('timestamp'))
+    data = {
+        'patient': serializer.data['patient'],
+        'environment_temperature': environment_temperature,
+        'relative_humidity': relative_humidity,
+        'air_pollution': air_pollution,
+        'body_temperature': body_temperature,
+        'systolic_blood_pressure': systolic_blood_pressure,
+        'diastolic_blood_pressure': diastolic_blood_pressure,
+        'heart_rate': heart_rate,
+        'oxygen_saturation': oxygen_saturation,
+        'ecg': ecg,
+        'timestamp': serializer.data['timestamp'],
+        'id': serializer.data['id']
+    }
+    print(serializer.data)
+    return Response(data=data, status=status.HTTP_200_OK)
 
 
 @swagger_auto_schema(method='get', manual_parameters=[day_param, hour_param, minute_param, second_param],
