@@ -15,20 +15,22 @@ def write_to_file(file_name, value):
         f.write(value)
         f.write("\n")
         f.flush()
-        print(f"filename: {file_name} value: {value}")
+        #print(f"filename: {file_name} value: {value}")
 
 
-def store_signals():
-    shutil.rmtree('sensor_values')
-    os.mkdir('sensor_values')
-
+def store_values():
+    try:
+        shutil.rmtree(VALUES_DIR)
+    except FileNotFoundError:
+        pass
+    os.mkdir(VALUES_DIR)
     arduino = serial.Serial('/dev/ttyUSB0')
     arduino.reset_input_buffer()
     while True:
         try:
             # read from arduino serial
             line = arduino.readline().decode().strip()
-            print("line:", line.encode())
+    #        print("line:", line.encode())
             if not line:
                 continue
 
@@ -41,4 +43,4 @@ def store_signals():
 
 
 if __name__ == "__main__":
-    store_signals()
+    store_values()
