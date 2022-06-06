@@ -5,10 +5,11 @@ import shutil
 
 write_flag = True
 
+VALUES_DIR = 'sensor_values'
+
 def write_to_file(file_name, value):
     global write_flag
     mode = 'w' if write_flag else 'a'
-    print(write_flag, mode)
     write_flag = False
     with open(file_name, mode) as f:
         f.write(value)
@@ -16,24 +17,28 @@ def write_to_file(file_name, value):
         f.flush()
         print(f"filename: {file_name} value: {value}")
 
-if __name__ == "__main__":
-#    os.rmdir('values')
-    
-    shutil.rmtree('values')
-    os.mkdir('values')
+
+def store_signals():
+    shutil.rmtree('sensor_values')
+    os.mkdir('sensor_values')
 
     arduino = serial.Serial('/dev/ttyUSB0')
+    arduino.reset_input_buffer()
     while True:
         try:
+            # read from arduino serial
             line = arduino.readline().decode().strip()
             print("line:", line.encode())
             if not line:
                 continue
+
+            # store each sensor values to seperate file
             type_, val = line.split(',')
-
             t = datetime.now().timestamp()
-
-            write_to_file(f"values/{type_}", f"{t},{val}")
+            write_to_file(f"{VALUES_DIR}/{type_}", f"{t},{val}")
         except Exception as e:
             print("error:", e)
 
+
+if __name__ == "__main__":
+    store_signals()
