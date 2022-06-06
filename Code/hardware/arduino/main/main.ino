@@ -1,30 +1,22 @@
-//////////////////////////////////////////////////////////////////////////////////////////
-//
-//    Arduino example for the MAX30205 body temperature sensor breakout board
-//
-//    Author: Ashwin Whitchurch
-//    Copyright (c) 2020 ProtoCentral
-//
-//    This software is licensed under the MIT License(http://opensource.org/licenses/MIT).
-//
-//   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
-//   NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-//   IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-//   WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-//   SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-//
-//   For information on how to use, visit https://github.com/protocentral/ProtoCentral_MAX30205
-/////////////////////////////////////////////////////////////////////////////////////////
-
 /*
 
-This program Print temperature on terminal
-
-Hardware Connections (Breakoutboard to Arduino):
+MAX30205 connections:
 Vin  - 5V (3.3V is allowed)
 GND - GND
 SDA - A4 (or SDA)
 SCL - A5 (or SCL)
+
+MQ135 connections:
+Vin - 5V
+GND - GND
+A0 - A0
+
+AD8232 connections:
+3.3V - 3.3V
+GND - GND
+OUTPUT - A1
+LO- - 11
+LO+ - 10
 
 */
 
