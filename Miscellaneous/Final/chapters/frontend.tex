@@ -1,1 +1,51 @@
 \section{طراحی و پیاده‌سازی اپلیکیشن}
+\subsection{مقدمه}
+اپلیکیشن موبایل با کمک ابزار \lr{React Native} ایجاد شده است و دارای قابلیت‌های مشاهده‌ی لیست بیماران (تصویر \ref{patients})، مشاهده آخرین وضعیت علائم حیاطی بیمار و محیط اطراف، مشاهده رکوردهای قدیمی و نهایتاً مصورسازی دادگان ثبت شده در نمودارهای متعدد با اتصال به سرور جهت کشف روابط و تحلیل داده‌ها فراهم شده است.
+
+\subsection{تصاویری از محیط نرم‌افزار}
+در شکل
+\ref{app_screenshots}
+، تصاویری از محیط برنامه که به کمک \lr{Expo} اجرا شده قابل مشاهده است.
+
+در راستای مصورسازی داده‌ها با استفاده از کتاب‌خانه‌ی \lr{Recharts} صفحه‌ای برای هر بیمار به نرم‌افزار اضافه شد که با در کنار هم قرار دادن اطلاعات سنسورها در طول زمان، امکان استخراج اطلاعات مفیدی به‌دست آید. این صفحه از طریق صفحه‌ی اطلاعات بیمار (تصویر \ref{patients_screen}) قابل دسترسی می‌باشد. نمودارهای نمایش داده شده در تصویر
+\ref{initial_charts}
+و
+\ref{initial_charts2}
+به‌ترتیب، اطلاعات مربوط به میزان اکسیژن خون، و بررسی توأم دمای بدن و محیط، ارتباط آلودگی هوا و رطوبت نسبی (محور افقی) پبا میزان اکسیژن خون (محور عمودی) را با فراهم کردن امکان انتخاب بازه‌ی زمانی برای نمایش داده‌های نمودارها از طریق یک منو مصور می‌کند.
+
+\begin{figure}[H]
+	\begin{center}
+		\begin{subfigure}{.24\textwidth}
+			\includegraphics[width=.95\linewidth]{figs/app_patients}
+			\caption{لیست بیماران ثبت شده}
+			\label{patients}
+		\end{subfigure}
+		\begin{subfigure}{.24\textwidth}
+			\includegraphics[width=.95\linewidth]{figs/app_records}
+			\caption{صفحه‌ی بیمار}
+			\label{patients_screen}
+		\end{subfigure}
+		\begin{subfigure}{.24\textwidth}
+			\includegraphics[width=.95\linewidth]{figs/app_charts1}
+			\caption{برخی از نمودارها}
+			\label{initial_charts}
+		\end{subfigure}
+		\begin{subfigure}{.24\textwidth}
+			\includegraphics[width=.95\linewidth]{figs/app_charts2}
+			\caption{برخی دیگر از نمودارها}
+			\label{initial_charts2}
+		\end{subfigure}
+		\caption{تصاویری از محیط اپ موبایل}
+		\label{app_screenshots}
+	\end{center}
+\end{figure}
+
+\subsection{توضیحاتی در ارتباط با کد برنامه}
+همانطور که بالاتر ذکر شد، نرم‌افزار با کمک \lr{React Native} ایجاد شده که امکان نمایش واسط کاربری طراحی شده روی تمامی پلتفرم‌ها را محقق می‌سازد. برای طراحی صفحات اپلیکیشن از قالب \lr{Rapi} و برای رسم نمودارها از کتابخانه‌ی \lr{Recharts} بهره گرفته شد.
+کد برنامه و نحوه‌ی نصب و راه‌اندازی آن در 
+\href{https://github.com/Sharif-University-ESRLab/project-team-2/tree/main/Code/app}{این مسیر}
+قرار گرفته است. این کد با کمک کامنت‌ها و جاواداک\LTRfootnote{\lr{Javadoc}} مستند شده است.
+
+
+
+
