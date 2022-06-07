@@ -1,0 +1,111 @@
+\section{طراحی و پیاده‌سازی سخت‌افزار}
+
+اصلی‌ترین قسمت این پروژه، طراحی و پیاده‌سازی قسمت‌های سخت‌افزاری آن است. در زیر لیستی از قطعات سخت‌افزاری مورد استفاده آمده است و پس‌ از آن توضیحاتی در مورد هر یک از سنسور‌ها و نحوه کارکرد و راه‌اندازی آن ذکر شده است.
+
+
+\begin{itemize}
+	\item برد \lr{Raspberry Pi 4}
+	\item برد \lr{Arduino UNO}
+	\item صفحه نمایش لمسی ۷ اینچ مخصوص \lr{Raspberry Pi}
+	\item سنسور آلودگی هوا \lr{MQ135}
+	\item سنسور دما و رطوبت هوا \lr{DHT11}
+	\item سنسور ضربان قلب و اکسیژن‌ خون \lr{Max30102}
+	\item سنسور دمای بدن \lr{Max30205}
+	\item سنسور نوار قلب \lr{AD8232}
+	\item فشار سنج و گوشی پزشکی
+\end{itemize}
+
+
+\subsection{سنسورهای محیطی}
+
+د, سنسور محیطی اصلی در این پروژه وجود دارند. سنسور \lr{MQ135} که وظیفه اندازه‌گیری آلودگی هوا را داشته و سنسور \lr{DHT11} که وظیفه اندازه‌گیری دما و رطوبت را دارد. سنسور آلودگی‌هوا به آردوینو متصل شده و سنسور اندازه‌گیری دما و رطوبت هوا مستقیما به رزبری‌پای متصل می‌شود.
+
+
+\subsubsection{سنسور دما و رطوبت‌هوا}
+
+سنسور مورد استفاده برای این بخش، \lr{DHT11} است که از قابلیت انتقال داده به صورت دیجیتال پشتیبانی کرده و برای همین به راحتی مطابق شکل \ref{fig:2} به رزبری‌پای متصل می‌شود.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\textwidth]{figs/dht11.jpg}
+	
+	\caption{اتصال سنسور DHT11}
+	\label{fig:2}
+\end{figure}
+
+
+کد اصلی مربوط به این قسمت در زیر آمده است:
+
+\begin{latin}
+\begin{lstlisting}[language=python]
+	print("hello")
+\end{lstlisting}
+\end{latin}
+
+\subsubsection{سنسور آلودگی‌هوا}
+
+با توجه به این که  سنسور \lr{MQ135} خروجی اصلی خود را به صورت آنالوگ تحویل داده و حتی رابط I2C هم ندارد، آن را به برد آردوینو متصل کرده و از طریق اتصال رزبری‌پای به آردوینو با پورت USB، کد مربوط به آن را از طریق رزبری به برد آردوینو انتقال داده و داده‌های لازم را دریافت می‌کنیم.
+
+نحوه اتصال این سنسور در کنار سنسور قبلی در شکل \ref{fig:3} قرار دارد.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\textwidth]{figs/dhtmq2.jpg}
+	
+	\caption{اتصال سنسور MQ135}
+	\label{fig:3}
+\end{figure}
+
+کد اصلی مربوط به این قسمت در زیر آمده است:
+
+\begin{latin}
+	\begin{lstlisting}[language=python]
+		print("hello")
+	\end{lstlisting}
+\end{latin}
+
+
+\subsection{سنسورهای بدن}
+
+سه سنسور اصلی برای علائم مربوط به بدن انسان در این پروژه وجود دارند. سنسور دمای بدن \lr{Max30205}، سنسور  ضربان قلب و اکسیژن خون \lr{Max30102} و سنسور نوار قلب یعنی \lr{AD8232}. سنسور \lr{Max30102} مستقیما به رزبری‌پای متصل می‌شود ولی دو سنسور دیگر از طریق آردوینو با رزبری‌پای ارتباط برقرار می‌کنند.
+
+
+\subsubsection{سنسور دمای بدن}
+
+...
+
+کد اصلی
+
+
+
+\begin{latin}
+	\begin{lstlisting}[language=python]
+		print("hello")
+	\end{lstlisting}
+\end{latin}
+
+
+
+\subsubsection{سنسور ضربان قلب و اکسیژن خون}
+
+...
+
+کد اصلی مربوط به این قسمت در زیر آمده است:
+
+\begin{latin}
+	\begin{lstlisting}[language=python]
+		print("hello")
+	\end{lstlisting}
+\end{latin}
+
+\subsubsection{سنسور نوار قلب}
+
+...
+
+کد اصلی مربوط به این قسمت در زیر آمده است:
+
+\begin{latin}
+	\begin{lstlisting}[language=python]
+		print("hello")
+	\end{lstlisting}
+\end{latin}
