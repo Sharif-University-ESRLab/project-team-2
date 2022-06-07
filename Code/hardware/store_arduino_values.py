@@ -36,6 +36,8 @@ def store_values():
 
             # store each sensor values to seperate file
             type_, val = line.split(',')
+            if not val:
+                continue
             t = datetime.now().timestamp()
             write_to_file(f"{VALUES_DIR}/{type_}", f"{t},{val}")
         except Exception as e:
