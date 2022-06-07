@@ -1,9 +1,17 @@
-const baseURL = 'http://192.168.43.142:8000/api/v1'
+/**
+ * This file contains constants such as URLs
+ * which will be used from various parts of the code
+ */
 
-const patientsURL =  `${baseURL}/patients/`
+const baseURL = 'http://192.168.43.231:8000/api/v1'
 
-const recordsEndpoint = `${baseURL}/records/`
+const patientsURL = `${baseURL}/patients/`
 
-const patientRecordsURL = (patientId) => recordsEndpoint + `filter/?patient=${patientId}`
+const recordsURL = `${baseURL}/records/`
 
-export { baseURL, patientsURL, recordsEndpoint, patientRecordsURL}
+const patientlatestRecordsURL = (patientId) => recordsURL + `latest/?patient_id=${patientId}`
+
+const patientRecordsURL = (patientId) => recordsURL + `filter/?patient=${patientId}`
+
+
+export { baseURL, patientsURL, recordsURL, patientRecordsURL, patientlatestRecordsURL }
