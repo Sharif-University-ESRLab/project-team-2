@@ -11,12 +11,14 @@ body_sensors_fields = ['body_temperature', 'systolic_blood_pressure', 'diastolic
 other_fields = ['patient', 'timestamp']
 
 
+# This serializer serializes only the needed data of a record
 class RecordDefaultSerializer(DynamicFieldsSerializerMixin, serializers.ModelSerializer):
     class Meta:
         model = Record
         fields = id_field + environment_sensors_fields + body_sensors_fields + other_fields
 
 
+# This serializer serializes all information about a record
 class RecordFullSerializer(serializers.ModelSerializer):
     patient = PatientSerializer()
 

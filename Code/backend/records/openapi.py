@@ -2,6 +2,8 @@ from drf_yasg import openapi
 
 from records.serializers import RecordFullSerializer, RecordDefaultSerializer
 
+# This is used to generate the OpenAPI specification for the API.
+
 day_param = openapi.Parameter('day', openapi.IN_QUERY, description="", type=openapi.TYPE_INTEGER)
 hour_param = openapi.Parameter('hour', openapi.IN_QUERY, description="", type=openapi.TYPE_INTEGER)
 minute_param = openapi.Parameter('minute', openapi.IN_QUERY, description="", type=openapi.TYPE_INTEGER)
