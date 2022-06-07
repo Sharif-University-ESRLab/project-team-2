@@ -9,6 +9,7 @@ PATIENT_ID = 1 # default
 
 VALUES_DIR = 'sensor_values'
 
+ARDUINO_PORT = '/dev/ttyUSB0'
 
 def dprint(*args):
     """

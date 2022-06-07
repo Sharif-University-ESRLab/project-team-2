@@ -2,11 +2,15 @@ from datetime import datetime
 import os
 import serial
 import shutil
-from utils import dprint, VALUES_DIR
+from utils import dprint, VALUES_DIR, ARDUINO_PORT
 
 write_flag = True
 
 def write_to_file(file_name, value):
+    """
+    Write a value to file
+    """
+    
     global write_flag
     mode = 'w' if write_flag else 'a'
     write_flag = False
@@ -19,15 +23,19 @@ def write_to_file(file_name, value):
         dprint(f"filename: {file_name} value: {value}")
 
 
-def store_signals():
+def store_values():
     """
     Read sensor values from arduino and store each in seperate file
     """
 
-    shutil.rmtree('sensor_values')
-    os.mkdir('sensor_values')
+    try:
+        shutil.rmtree(VALUES_DIR)
+    except FileNotFoundError:
+        pass
 
-    arduino = serial.Serial('/dev/ttyUSB0')
+    os.mkdir(VALUES_DIR)
+
+    arduino = serial.Serial(ARDUINO_PORT)
     arduino.reset_input_buffer()
     while True:
         try:
@@ -51,4 +59,4 @@ def store_signals():
 
 
 if __name__ == "__main__":
-    store_signals()
+    store_values()

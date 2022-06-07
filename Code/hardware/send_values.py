@@ -33,19 +33,19 @@ def send_post_data_to_server(path, data):
 
 def get_temperature(f):
     """
-    Read body temperature value from file
+    Read body temperature value from it's file
     """
     line = f.readline()
     if not line:
         return None
     t, p = line.split(',')
-
-    return float(p)
+    
+    return float(p) + 1.5
 
 
 def get_ecg(f):
     """
-    Read ECG value from file
+    Read ECG value from it's file
     """
     line = f.readline()
     if not line:
@@ -60,7 +60,7 @@ def get_ecg(f):
 
 def get_pollution(f):
     """
-    Read air pollution value from file
+    Read air pollution value from it's file
     """
     line = f.readline()
     if not line:
@@ -127,9 +127,9 @@ def send_values():
             # read sensor values
             bpm = hrm.bpm
             spo2 = hrm.spo2
+            temperature, humidity = get_temperature_and_humidity(dht11_sensor)
             temp = get_temperature(temp_file)
             ecg = get_ecg(ecg_file)
-            temperature, humidity = get_temperature_and_humidity(dht11_sensor)
             pollution = get_pollution(pollution_file)
 
             # print values
@@ -139,7 +139,7 @@ def send_values():
             # send values to server
             data = {
                 'oxygen_saturation': spo2 if not spo2 else round(spo2, 2),
-                'heart_rate': bpm if not bpm else int(bpm),  # TODO FLOAT SERVER
+                'heart_rate': bpm if not bpm else int(bpm), 
                 'body_temperature': temp,
                 'ecg': ecg,
                 'air_pollution': pollution,
