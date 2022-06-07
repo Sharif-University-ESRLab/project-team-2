@@ -1,5 +1,6 @@
 from datetime import timedelta
 
+from django.core.exceptions import ObjectDoesNotExist
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import viewsets, status
 from rest_framework.decorators import api_view
@@ -11,11 +12,13 @@ from records.openapi import day_param, hour_param, minute_param, second_param, l
     latest_time_data_response, patient_param, to_param, from_param, sensors_param, filter_data_response
 
 
+# Handling All CRUD operations for Patient using Django Rest Framework and RecordDefaultSerializer
 class RecordViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.RecordDefaultSerializer
     queryset = Record.objects.all()
 
 
+# Handling All CRUD operations for Patient using Django Rest Framework and RecordFullSerializer
 class RecordFullViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.RecordFullSerializer
     queryset = Record.objects.all()
@@ -25,6 +28,11 @@ class RecordFullViewSet(viewsets.ModelViewSet):
 @swagger_auto_schema(method='get', responses={200: latest_data_response})
 @api_view(['GET'])
 def get_latest_data(request):
+    """
+    @param patient_id: patient id
+    @return latest data of patient.
+    This function uses the latest data for each field separately. If data for one field is not available, it will return default value.
+    """
     if not Record.objects.all().exists():
         return Response(status=status.HTTP_404_NOT_FOUND)
     patient_id = request.GET.get('patient_id', None)
@@ -33,59 +41,61 @@ def get_latest_data(request):
             environment_temperature__isnull=False).latest('timestamp')
         environment_temperature = last_record_environment_temperature.environment_temperature
 
-    except:
+    except ObjectDoesNotExist:
         environment_temperature = 20
     try:
         last_record_relative_humidity: Record = Record.objects.filter(patient_id=patient_id).filter(
             relative_humidity__isnull=False).latest('timestamp')
         relative_humidity = last_record_relative_humidity.relative_humidity
-    except:
+    except ObjectDoesNotExist:
         relative_humidity = 50
     try:
         last_record_air_pollution: Record = Record.objects.filter(patient_id=patient_id).filter(
             air_pollution__isnull=False).latest('timestamp')
-        air_pollution=last_record_air_pollution.air_pollution
-    except:
+        air_pollution = last_record_air_pollution.air_pollution
+    except ObjectDoesNotExist:
         air_pollution = 0
     try:
         last_record_body_temperature: Record = Record.objects.filter(patient_id=patient_id).filter(
             body_temperature__isnull=False).latest('timestamp')
         body_temperature = last_record_body_temperature.body_temperature
-    except:
+    except ObjectDoesNotExist:
         body_temperature = 37
     try:
         last_record_systolic_blood_pressure: Record = Record.objects.filter(patient_id=patient_id).filter(
             systolic_blood_pressure__isnull=False).latest('timestamp')
         systolic_blood_pressure = last_record_systolic_blood_pressure.systolic_blood_pressure
-    except:
+    except ObjectDoesNotExist:
         systolic_blood_pressure = 12
     try:
         last_record_diastolic_blood_pressure: Record = Record.objects.filter(patient_id=patient_id).filter(
             diastolic_blood_pressure__isnull=False).latest('timestamp')
         diastolic_blood_pressure = last_record_diastolic_blood_pressure.diastolic_blood_pressure
-    except:
+    except ObjectDoesNotExist:
         diastolic_blood_pressure = 8
     try:
         last_record_heart_rate: Record = Record.objects.filter(patient_id=patient_id).filter(
             heart_rate__isnull=False).latest('timestamp')
         heart_rate = last_record_heart_rate.heart_rate
-    except:
+    except ObjectDoesNotExist:
         heart_rate = 60
     try:
         last_record_oxygen_saturation: Record = Record.objects.filter(patient_id=patient_id).filter(
             oxygen_saturation__isnull=False).latest('timestamp')
-        oxygen_saturation=last_record_oxygen_saturation.oxygen_saturation
-    except:
+        oxygen_saturation = last_record_oxygen_saturation.oxygen_saturation
+    except ObjectDoesNotExist:
         oxygen_saturation = 100
     try:
         last_record_ecg: Record = Record.objects.filter(patient_id=patient_id).filter(
             air_pressure__isnull=False).latest('timestamp')
         ecg = last_record_ecg.ecg
-    except:
+    except ObjectDoesNotExist:
         ecg = 0
 
     print(patient_id)
     serializer = serializers.RecordFullSerializer(Record.objects.filter(patient_id=patient_id).latest('timestamp'))
+
+    # JSON data that is sent to the Frontend.
     data = {
         'patient': serializer.data['patient'],
         'environment_temperature': environment_temperature,
@@ -109,6 +119,14 @@ def get_latest_data(request):
 @api_view(['GET'])
 def get_latest_time_data(request):
     """
+    @params:
+        day: day from now
+        hour: hour from now
+        minute: minute from now
+        second: second from now
+    @return:
+        latest time data based on the time parameters
+
     Get the latest data specified by query params. By default, it finds last 1-minute data.
     It finds data based on latest (by timestamp) entry and not by datatime.now().
     """
@@ -133,11 +151,13 @@ def get_latest_time_data(request):
 @api_view(['GET'])
 def get_by_filter(request):
     """
+    @params:
     Available Filters:
     - Patient: Patient ID (Default: All)
     - From: From DateTime
     - To: To DateTime
     - Sensors: A comma separated list of sensors (Default: All sensors)
+    @ returns: A list of records based of specified filters.
     """
     sensors = request.GET.get('sensors', None)
     if sensors:

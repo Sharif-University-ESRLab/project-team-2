@@ -1,3 +1,6 @@
+
+# Dynamic Field Mixins for Django REST Framework allowing for serializers to act on fields specified at runtime.
+# Source: https://stackoverflow.com/questions/23643204/django-rest-framework-dynamically-return-subset-of-fields
 class DynamicFieldsSerializerMixin(object):
 
     def __init__(self, *args, **kwargs):
