@@ -5,25 +5,24 @@ import adafruit_dht
 import psutil
 import requests
 import sys
+from utils import PATIENT_ID, SERVER_URL, VALUES_DIR, dprint
+
 sys.path.append(r"home/pi/Desktop/project-team-2/Code/hardware/max30102")
-
-VALUES_DIR = 'sensor_values'
-
-SERVER_HOST = '192.168.43.142'
-#SERVER_HOST = '172.27.51.182'
-
-SERVER_URL = f'http://{SERVER_HOST}:8000/api/v1'
-
-PATIENT_ID = 1
 
 
 def send_post_data_to_server(path, data):
+    """
+    Send sensor values to server
+    """
+
+    global PATIENT_ID
+
     url = f"{SERVER_URL}/{path}/"
 
     data['patient'] = PATIENT_ID
     try:
         r = requests.post(url, data=data)
-        print(r.status_code)
+        dprint(r.status_code)
         if r.status_code // 100 == 2:
             print("Data sent to server successfully.")
         else:
@@ -33,6 +32,9 @@ def send_post_data_to_server(path, data):
 
 
 def get_temperature(f):
+    """
+    Read body temperature value from file
+    """
     line = f.readline()
     if not line:
         return None
@@ -42,6 +44,9 @@ def get_temperature(f):
 
 
 def get_ecg(f):
+    """
+    Read ECG value from file
+    """
     line = f.readline()
     if not line:
         return None
@@ -54,6 +59,9 @@ def get_ecg(f):
 
 
 def get_pollution(f):
+    """
+    Read air pollution value from file
+    """
     line = f.readline()
     if not line:
         return None
@@ -64,12 +72,19 @@ def get_pollution(f):
 
 
 def get_temperature_and_humidity(sensor):
+    """
+    Read temperature and humidity values from dht11 sensor
+    """
     temp = sensor.temperature
     humidity = sensor.humidity
     return temp, humidity
 
 
 def init():
+    """
+    Set up patien id and delete unwanted processes
+    """
+
     # Get patient id
     global PATIENT_ID
     with open('patient_id.txt') as f:
@@ -77,13 +92,18 @@ def init():
         if line and line.isalnum:
             PATIENT_ID = int(line)
     
-    # Check if any proccess from previous runs are still alive
+    # Check if any process from previous runs are still alive
     for proc in psutil.process_iter():
         if proc.name() == 'libgpiod_pulsein' or proc.name() == 'libgpiod_pulsei':
             proc.kill()
 
 
 def send_values():
+    """
+    Read arduino values from files and send them to server 
+    along with raspberry sensor values
+    """
+
     init()
 
     # start heart rate sensor
@@ -129,7 +149,7 @@ def send_values():
             send_post_data_to_server('records', data)
 
         except RuntimeError as error:
-            print(error.args[0])
+            dprint(error.args[0])
             time.sleep(2.0)
             continue
         except Exception as error:
