@@ -47,7 +47,7 @@ int counter = 0; // 1 milisecond
 void loop() {
   if (counter % 5000 == 0) // 5 second
   {
-	float temp = tempSensor.getTemperature(); // read temperature for every 100ms
+	float temp = tempSensor.getTemperature(); 
   Serial.print("temp,");
   Serial.println(temp ,2);
 

@@ -14,7 +14,7 @@ python manage.py runserver 0.0.0.0:8000
 
 Start project:
 
-```
+```bash
 cd healthx
 expo start
 ```
@@ -23,9 +23,8 @@ expo start
 
 [React Native Documents](https://reactnative.dev/docs/integration-with-existing-apps)
 
-
 ### Toubleshoot
 
-```
+```bash
 export NODE_OPTIONS=--openssl-legacy-provider
 ```

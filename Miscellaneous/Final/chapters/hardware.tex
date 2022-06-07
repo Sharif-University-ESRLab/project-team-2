@@ -34,11 +34,18 @@
 \end{figure}
 
 
-کد اصلی مربوط به این قسمت در زیر آمده است:
+برای خواندن مقادیر از کتاب‌خانه‌ی \lr{Adafruit-Blinka}
+\footnote{\lr{https://pypi.org/project/Adafruit-Blinka/}}
+استفاده شده است. این کتاب‌خانه با مشخص کردن پین متصل به سنسور، به راحتی امکان خواندن دما و رطوبت هوا را به ما می‌دهد.
+
+کد اصلی مربوط به این قسمت در زیر آورده شده است:
 
 \begin{latin}
 \begin{lstlisting}[language=python]
-	print("hello")
+dht11_sensor = adafruit_dht.DHT11(board.D23)
+temp = dht11_sensor.temperature
+humidity = dht11_sensor.humidity
+
 \end{lstlisting}
 \end{latin}
 
@@ -48,21 +55,42 @@
 
 نحوه اتصال این سنسور در کنار سنسور قبلی در شکل \ref{fig:3} قرار دارد.
 
-\begin{figure}[h]
+\begin{figure}[ht!]
 	\centering
-	\includegraphics[width=0.5\textwidth]{figs/dhtmq2.jpg}
+	\includegraphics[width=0.3\textwidth]{figs/dhtmq2.jpg}
 	
 	\caption{اتصال سنسور MQ135}
 	\label{fig:3}
 \end{figure}
 
-کد اصلی مربوط به این قسمت در زیر آمده است:
 
+در کد آردویینو، مقادیر مربوط به این سنسور هر ۵ ثانیه خوانده می‌شود:
 \begin{latin}
 	\begin{lstlisting}[language=python]
-		print("hello")
+#include <Wire.h>
+
+void setup() {
+	Serial.begin(9600);
+	Wire.begin();
+}
+int counter = 0; // 1 milisecond
+
+void loop() {	
+	if (counter % 5000 == 0) // 5 second
+	{
+		int pollution = analogRead(A0);
+		Serial.print("pollution,");
+		Serial.println(pollution);
+	} 
+	counter += 10;
+	delay(10);
+}
 	\end{lstlisting}
 \end{latin}
+
+سپس در کد پایتون روی رزبری، این مقادیر روی یک فایل ریخته می‌شود و پس از آن  مقادیر باقی سنسورها به سرور ارسال می‌گردد.
+
+
 
 
 \subsection{سنسورهای بدن}
@@ -71,6 +99,8 @@
 
 
 \subsubsection{سنسور دمای بدن}
+
+
 
 برای سنجش دمای بدن از سنسور \lr{Max30205} استفاده شده است. با تماس انگشت به آن، بعد از مدتی دمای سنسور با دمای انگشت همدما شده و دمای بدن را نشان خواهد داد. در صورت عدم تماس هم می‌توان از آن برای مشاهده دمای محیط استفاده کرد.
 
@@ -83,19 +113,46 @@
 	\caption{اتصال سنسور Max30205}
 	\label{fig:4}
 \end{figure}
-کد اصلی مربوط به این قسمت در زیر آمده است:
 
 
+برای خواندن مقادیر این سنسور از کتاب‌خانه‌ی\lr{Protocentra\_MAX30205}
+\footnote{\lr{https://github.com/Protocentral/Protocentral\_MAX30205}}
+ استفاده شده که امکان خواندن دمای بدن را از طریق آردویینو می‌دهد.
 
 \begin{latin}
 	\begin{lstlisting}[language=python]
-		print("hello")
-	\end{lstlisting}
+#include <Wire.h>
+#include "Protocentral_MAX30205.h"
+MAX30205 tempSensor;
+
+void setup() {
+	Serial.begin(9600);
+	Wire.begin();
+	
+	while(!tempSensor.scanAvailableSensors()){
+		Serial.println("Couldn't find the sensor." );
+		delay(3000);
+	}
+}
+int counter = 0; // 1 milisecond
+
+void loop() {	
+	if (counter % 5000 == 0) // 5 second
+	{
+		float temp = tempSensor.getTemperature(); 
+		Serial.print("temp,");
+		Serial.println(temp ,2);
+	}
+	counter += 10;
+	delay(10);
+}
+
+\end{lstlisting}
 \end{latin}
 
 
-
 \subsubsection{سنسور ضربان قلب و اکسیژن خون}
+
 
 برای این بخش از سنسور \lr{Max30102} استفاده شده است. این سنسور با کمک دو چراغ کوچک قرمز و مادون قرمز، ضربان قلب و درصد اشباع اکسیژن در خون (\lr{SpO2}) را اندازه‌گیری می‌کند. این سنسور بدون مشکل از طریق \lr{I2C} به رزبری‌پای متصل می‌شود. نحوه اتصال این سنسور را در شکل \ref{fig:5} مشاهده می‌کنید.
 
@@ -107,15 +164,36 @@
 	\label{fig:5}
 \end{figure}
 
-کد اصلی مربوط به این قسمت در زیر آمده است:
+
+برای راه‌اندازی این سنسور از کدهای مخزن ‌متن‌باز \lr{doug-burrell/max30102}
+\footnote{\lr{https://github.com/doug-burrell/max30102}}
+با اندکی تغییرات
+ استفاده شده است. این مخزن با خواندن مقادیر سنسورهای قرمز/مادون‌قرمز و پردازش آن‌ها، مقادیر ضربان قلب و اکسیژن خون را به طور دقیق محاسبه می‌کند. کدهای مربوط به این مخزن در فایل‌های \lr{heartrate\_monitor.py}
+ و
+ \lr{max30102.py}
+ و 
+ \lr{hrcalc.py}
+ قرار دارند.
+از امکانات این کتاب‌خانه به صورت زیر در کد رزبری استفاده شده است:
 
 \begin{latin}
 	\begin{lstlisting}[language=python]
-		print("hello")
-	\end{lstlisting}
+from heartrate_monitor import HeartRateMonitor
+
+hrm = HeartRateMonitor(print_raw=False, print_result=False)
+hrm.start_sensor()
+
+bpm = hrm.bpm
+spo2 = hrm.spo2
+
+\end{lstlisting}
 \end{latin}
 
+
+	
+
 \subsubsection{سنسور نوار قلب}
+
 
 از سنسور \lr{AD8232} برای بدست‌ آوردن \lr{ECG} (نوار قلب) استفاده می‌شود. همراه این سنسور بسته \lr{Lead} سه تایی اتصال به بدن وجود دارد. به این \lr{Lead} ها باید پد‌های مخصوص متصل شده و به بدن متصل شوند. برای استفاده از سنسور،‌ آن را به آردوینو متصل می‌کنیم. Lead های‌ آن هم باید مطابق شکل \ref{fig:6} به بدن بیمار متصل بشوند.
 
@@ -126,6 +204,8 @@
 	\caption{نحوه اتصال Lead‌ های سنسور نوار قلب به بدن}
 	\label{fig:6}
 \end{figure}
+
+
 
 همچنین نحوه اتصال این سنسور به همراه دو سنسور دیگر بدن در شکل \ref{fig:7} قرار دارد.
 
@@ -138,13 +218,41 @@
 	\label{fig:7}
 \end{figure}
 
-کد اصلی مربوط به این قسمت در زیر آمده است:
+
+کدهای آردویینو مربوط به این سنسور در زیر آمده است. هر ۱۰ میلی‌ثانیه مقادیر مربوط به این سنسور از طریق آردویینو خوانده می‌شود.
 
 \begin{latin}
 	\begin{lstlisting}[language=python]
-		print("hello")
+#include <Wire.h>
+void setup() {
+	Serial.begin(9600);
+	Wire.begin();
+	pinMode(10, INPUT);
+	pinMode(11, OUTPUT);
+}
+int counter = 0; // 1 milisecond
+void loop() {
+	if (counter % 10 == 0) // 10 milisecond
+	{
+		Serial.print("ecg,");
+		if(digitalRead(10) == 1 || digitalRead(11) == 1) {
+		Serial.println('!');
+		}
+		else {
+		int ecg = analogRead(A1);
+		Serial.println(ecg);
+		}  
+	}
+	counter += 10;
+	delay(10);
+}
+
 	\end{lstlisting}
 \end{latin}
+
+
+
+
 
 \subsubsection{انداز‌ه‌گیری فشار خون }
 
@@ -154,7 +262,7 @@
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.5\textwidth]{figs/cuff.jpg}
+	\includegraphics[width=0.6\textwidth]{figs/cuff.jpg}
 	
 	\caption{فشارسنج}
 	\label{fig:12}
@@ -169,7 +277,7 @@
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.5\textwidth]{figs/package.png}
+	\includegraphics[width=0.6\textwidth]{figs/package.png}
 	
 	\caption{بسته‌بندی طراحی شده در نرم‌افزار \lr{Tinkercad}}
 	\label{fig:9}
@@ -180,8 +288,9 @@
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.5\textwidth]{figs/all.jpg}
+	\includegraphics[width=1.0\textwidth]{figs/all.jpg}
 	
 	\caption{محصول به همراه تمامی سنسور‌ها }
 	\label{fig:10}
 \end{figure}
+
