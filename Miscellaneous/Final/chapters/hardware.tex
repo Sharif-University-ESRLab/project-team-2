@@ -33,12 +33,17 @@
 	\label{fig:2}
 \end{figure}
 
+برای خواندن مقادیر از کتاب‌خانه‌ی \lr{Adafruit-Blinka}
+\footnote{\lr{https://pypi.org/project/Adafruit-Blinka/}}
+استفاده شده است. این کتاب‌خانه با مشخص کردن پین متصل به سنسور، به راحتی امکان خواندن دما و رطوبت هوا را به ما می‌دهد.
 
-کد اصلی مربوط به این قسمت در زیر آمده است:
+کد اصلی مربوط به این قسمت در زیر آورده شده است:
 
 \begin{latin}
 \begin{lstlisting}[language=python]
-	print("hello")
+dht11_sensor = adafruit_dht.DHT11(board.D23)
+temp = dht11_sensor.temperature
+humidity = dht11_sensor.humidity
 \end{lstlisting}
 \end{latin}
 
@@ -58,12 +63,19 @@
 
 کد اصلی مربوط به این قسمت در زیر آمده است:
 
+در کد آردویینو، مقادیر مربوط به این سنسور هر ۵ ثانیه خوانده می‌شود:
 \begin{latin}
 	\begin{lstlisting}[language=python]
-		print("hello")
+if (counter % 5000 == 0) // 5 second
+{
+	int pollution = analogRead(A0);
+	Serial.print("pollution,");
+	Serial.println(pollution);
+} 
 	\end{lstlisting}
 \end{latin}
 
+سپس در کد پایتون روی رزبری، این مقادیر روی یک فایل ریخته می‌شود و پس از آن به همراه مقادیر باقی سنسورها به سرور ارسال می‌گردد.
 
 \subsection{سنسورهای بدن}
 
@@ -78,9 +90,32 @@
 
 
 
+برای خواندن مقادیر این سنسور از کتاب‌خانه‌ی\lr{Protocentra\_MAX30205}
+\footnote{\lr{https://github.com/Protocentral/Protocentral\_MAX30205}}
+ استفاده شده که امکان خواندن دمای بدن را از طریق آردویینو می‌دهد.
+
 \begin{latin}
 	\begin{lstlisting}[language=python]
-		print("hello")
+#include "Protocentral_MAX30205.h"
+MAX30205 tempSensor;
+
+void setup() {
+	while(!tempSensor.scanAvailableSensors()){
+		Serial.println("Couldn't find the temperature sensor, 
+							please connect the sensor." );
+		delay(3000);
+	}
+}
+void loop() {	
+	if (counter % 5000 == 0) // 5 second
+	{
+		float temp = tempSensor.getTemperature(); 
+		Serial.print("temp,");
+		Serial.println(temp ,2);
+	}
+	counter += 10;
+	delay(10);
+}
 	\end{lstlisting}
 \end{latin}
 
@@ -90,11 +125,27 @@
 
 ...
 
-کد اصلی مربوط به این قسمت در زیر آمده است:
+برای راه‌اندازی این سنسور از کدهای مخزن ‌متن‌باز \lr{doug-burrell/max30102}
+\footnote{\lr{https://github.com/doug-burrell/max30102}}
+با اندکی تغییرات
+ استفاده شده است. این مخزن با خواندن مقادیر سنسورهای قرمز/مادون‌قرمز و پردازش آن‌ها، مقادیر ضربان قلب و اکسیژن خون را به طور دقیق محاسبه می‌کند. کدهای مربوط به این مخزن در فایل‌های \lr{heartrate\_monitor.py}
+ و
+ \lr{max30102.py}
+ و 
+ \lr{hrcalc.py}
+ قرار دارند.
+از امکانات این کتاب‌خانه به صورت زیر در کد رزبری استفاده شده است:
 
 \begin{latin}
 	\begin{lstlisting}[language=python]
-		print("hello")
+from heartrate_monitor import HeartRateMonitor
+
+hrm = HeartRateMonitor(print_raw=False, print_result=False)
+hrm.start_sensor()
+
+bpm = hrm.bpm
+spo2 = hrm.spo2
+
 	\end{lstlisting}
 \end{latin}
 
@@ -102,10 +153,37 @@
 
 ...
 
-کد اصلی مربوط به این قسمت در زیر آمده است:
+کد اصلی مربوط به این قسمت در زیر آمده است. هر ۱۰ میلی‌ثانیه مقادیر مربوط به این سنسور از طریق آردویینو خوانده می‌شود:
 
 \begin{latin}
 	\begin{lstlisting}[language=python]
-		print("hello")
+
+void setup() {
+	Serial.begin(9600);
+	Wire.begin();
+
+	pinMode(10, INPUT);
+	pinMode(11, OUTPUT);
+}
+
+int counter = 0; // 1 milisecond
+
+void loop() {
+	if (counter % 10 == 0) // 10 milisecond
+	{
+		Serial.print("ecg,");
+		if(digitalRead(10) == 1 || digitalRead(11) == 1) {
+		Serial.println('!');
+		}
+		else {
+		int ecg = analogRead(A1);
+		Serial.println(ecg);
+		}  
+	}
+		
+	counter += 10;
+	delay(10);
+}
+
 	\end{lstlisting}
 \end{latin}

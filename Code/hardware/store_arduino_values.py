@@ -10,7 +10,7 @@ def write_to_file(file_name, value):
     """
     Write a value to file
     """
-    
+
     global write_flag
     mode = 'w' if write_flag else 'a'
     write_flag = False
