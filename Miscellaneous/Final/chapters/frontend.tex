@@ -13,32 +13,45 @@
 \ref{initial_charts2}
 به‌ترتیب، اطلاعات مربوط به میزان اکسیژن خون، و بررسی توأم دمای بدن و محیط، ارتباط آلودگی هوا و رطوبت نسبی (محور افقی) پبا میزان اکسیژن خون (محور عمودی) را با فراهم کردن امکان انتخاب بازه‌ی زمانی برای نمایش داده‌های نمودارها از طریق یک منو مصور می‌کند.
 
-\begin{figure}[H]
-	\begin{center}
-		\begin{subfigure}{.24\textwidth}
-			\includegraphics[width=.95\linewidth]{figs/app_patients}
-			\caption{لیست بیماران ثبت شده}
-			\label{patients}
-		\end{subfigure}
-		\begin{subfigure}{.24\textwidth}
-			\includegraphics[width=.95\linewidth]{figs/app_records}
-			\caption{صفحه‌ی بیمار}
-			\label{patients_screen}
-		\end{subfigure}
-		\begin{subfigure}{.24\textwidth}
-			\includegraphics[width=.95\linewidth]{figs/app_charts1}
-			\caption{برخی از نمودارها}
-			\label{initial_charts}
-		\end{subfigure}
-		\begin{subfigure}{.24\textwidth}
-			\includegraphics[width=.95\linewidth]{figs/app_charts2}
-			\caption{برخی دیگر از نمودارها}
-			\label{initial_charts2}
-		\end{subfigure}
-		\caption{تصاویری از محیط اپ موبایل}
-		\label{app_screenshots}
-	\end{center}
-\end{figure}
+
+\begin{figure*}[h]
+	\centering
+	\begin{subfigure}[b]{0.475\textwidth}
+		\centering
+		\includegraphics[width=0.5\textwidth]{figs/apppatients.jpg}
+		\caption[لیست بیماران ثبت شده]%
+		{{\small لیست بیماران ثبت شده}}    
+		\label{patients}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.475\textwidth}  
+		\centering 
+		\includegraphics[width=0.5\textwidth]{figs/apprecords.jpg}
+		\caption[صفحه‌ی بیمار]%
+		{{\small صفحه‌ی بیمار}}    
+		\label{patients_screen}
+	\end{subfigure}
+	\vskip\baselineskip
+	\begin{subfigure}[b]{0.475\textwidth}   
+		\centering 
+		\includegraphics[width=0.5\textwidth]{figs/appcharts1.png}
+		\caption[برخی از نمودارها]%
+		{{\small برخی از نمودارها}}    
+		\label{initial_charts}	
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.475\textwidth}   
+		\centering 
+		\includegraphics[width=0.5\textwidth]{figs/appcharts2.png}
+		\caption[برخی دیگر از نمودارها]%
+		{{\small برخی دیگر از نمودارها}}    
+		\label{initial_charts2}
+	\end{subfigure}
+	\caption[ تصاویری از محیط اپ موبایل]
+	{\small تصاویری از محیط اپ موبایل} 
+	\label{app_screenshots}
+\end{figure*}
+
 
 \subsection{توضیحاتی در ارتباط با کد برنامه}
 همانطور که بالاتر ذکر شد، نرم‌افزار با کمک \lr{React Native} ایجاد شده که امکان نمایش واسط کاربری طراحی شده روی تمامی پلتفرم‌ها را محقق می‌سازد. برای طراحی صفحات اپلیکیشن از قالب \lr{Rapi} و برای رسم نمودارها از کتابخانه‌ی \lr{Recharts} بهره گرفته شد.
