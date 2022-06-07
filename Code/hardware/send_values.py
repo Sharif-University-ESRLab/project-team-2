@@ -10,6 +10,7 @@ sys.path.append(r"home/pi/Desktop/project-team-2/Code/hardware/max30102")
 VALUES_DIR = 'sensor_values'
 
 SERVER_HOST = '192.168.43.142'
+SERVER_HOST = '192.168.43.231'
 #SERVER_HOST = '172.27.51.182'
 
 SERVER_URL = f'http://{SERVER_HOST}:8000/api/v1'
@@ -37,8 +38,8 @@ def get_temperature(f):
     if not line:
         return None
     t, p = line.split(',')
-
-    return float(p)
+    
+    return float(p) + 1.5
 
 
 def get_ecg(f):
