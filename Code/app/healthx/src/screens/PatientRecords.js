@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import axios from "axios";
 import { Section, SectionContent } from "react-native-rapi-ui";
-import { patientRecordsURL, recordsEndpoint } from "../api/base";
+import { patientlatestRecordsURL, recordsURL, patientRecordsURL } from "../api/base";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme, themeColor } from "react-native-rapi-ui";
 
@@ -20,12 +20,17 @@ function withThemeHook(Component) {
 	};
 }
 
+/**
+ * the main screen of the app, where the
+ * history of the patient's records are available
+ */
 class PatientRecords extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			loading: true,
 			patientData: null,
+			latestData: null,
 			patient: props.route.params.patient,
 			showOldRecords: false,
 			systolic: '',
@@ -33,10 +38,27 @@ class PatientRecords extends Component {
 		};
 	}
 
+	/**
+	 * Get data from the server
+	 */
 	getData = () => {
 		this.setState({
 			fromFetch: false,
 			loading: true,
+		});
+		
+		axios
+		.get(patientlatestRecordsURL(this.state.patient.id))
+		.then((response) => {
+			console.log("getting data from axios", response.data);
+			setTimeout(() => {
+				this.setState({
+					latestData: response.data,
+				});
+			}, 200);
+		})
+		.catch((error) => {
+			console.log(error);
 		});
 
 		axios
@@ -53,8 +75,13 @@ class PatientRecords extends Component {
 			.catch((error) => {
 				console.log(error);
 			});
+
+
 	};
 
+	/**
+	 * Post blood pressure to server
+	 */
 	submitPressure = () => {
 		const { systolic, diastolic, patient } = this.state;
 		if (isNaN(systolic) || isNaN(diastolic)) return;
@@ -66,7 +93,7 @@ class PatientRecords extends Component {
 		}
 
 		console.log(data);
-		axios.post(recordsEndpoint, data);
+		axios.post(recordsURL, data);
 	}
 
 	componentDidMount() {
@@ -76,6 +103,10 @@ class PatientRecords extends Component {
 		setInterval(() => { this.getData() }, refreshRate);
 	}
 
+	/**
+	 * Renders the top card in the PatientsRecords screen
+	 * @param {Object} data an object containing all the records
+	 */
 	renderCard = (data) => {
 		return (
 			<Section borderRadius={20} style={styles.list}>
@@ -117,7 +148,7 @@ class PatientRecords extends Component {
 
 					<View style={[styles.card, { alignSelf: "center" }]}>
 						<Text fontWeight="bold" size="xl" style={{ alignSelf: "center", color: themeColor.danger400 }}>
-							Oxygen Saturation: {data.item.oxygen_saturation * 100}%
+							Oxygen Saturation: {data.item.oxygen_saturation}%
 						</Text>
 						<Ionicons
 							name={"heart-circle-outline"}
@@ -164,7 +195,24 @@ class PatientRecords extends Component {
 		);
 	}
 
+	/**
+	 * Renders each item in the bottom list of the screen
+	 * @param {Object} data an object containing all the records
+	 */
 	renderOldItem = (data) => {
+		let empty_items = 0
+		if (!data.item.oxygen_saturation || !data.item.body_temperature )
+			empty_items += 1
+		if (!data.item.heart_rate)
+			empty_items += 1
+		if (!data.item.systolic_blood_pressure )
+			empty_items += 1
+
+		console.log(empty_items)
+			
+		if (empty_items > 2)
+				return (<></>)
+
 		return (
 			<Section borderRadius={20} style={styles.list}>
 				<SectionContent>
@@ -262,12 +310,12 @@ class PatientRecords extends Component {
 	};
 
 	render() {
-		const { loading, patientData, patient, systolic, diastolic } = this.state;
+		const { loading, patientData, latestData, patient, systolic, diastolic } = this.state;
 
 		return (
 			<Layout>
 				<Navbar
-					pageName={patient.first_name + " " + patient.last_name}
+					pageName={patient.first_name + " " + patient.last_name + "  ID: " + patient.id}
 					backOption={true}
 					navigation={this.props.navigation}
 				/>
@@ -277,7 +325,7 @@ class PatientRecords extends Component {
 					) : (
 
 						<FlatList
-							data={[patientData.slice().reverse()[0]]}
+							data={[latestData]}
 							renderItem={(item) => this.renderCard(item)}
 							keyExtractor={(item) => item.id.toString()}
 						/>

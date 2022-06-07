@@ -23,14 +23,22 @@ function withThemeHook(Component) {
 }
 
 const timeOptions = [
-	{ label: "All time", value: "A" },
+	{ label: "Last Year", value: "A" },
 	{ label: "Last Week", value: "W" },
 	{ label: "Last Month", value: "M" },
+	{ label: "Last Day", value: "D" },
 ];
 
+
+/**
+ * This screen is accessible from PatientsRecords screen
+ * and provides user with different charts to visualize
+ * the data gathered by body and environmental sensors.
+ */
 class ChartsScreen extends Component {
 	constructor(props) {
 		super(props);
+		// Init state
 		this.state = {
 			loading: true,
 			chartsData: null,
@@ -39,10 +47,20 @@ class ChartsScreen extends Component {
 		};
 	}
 
+	/**
+	 * Returns the ISO formatted date only containing yyyy-mm-dd
+	 * @param {Date} date a Date object
+	 * @returns {String} ISO formatted date
+	 */
 	getISODate = (date) => {
 		return date.toISOString().slice(0, 10);
 	}
 
+	/**
+	 * uses the specified time interval in the Picker
+	 * element on which the visualized data is based
+	 * @param {String} timeChar a character represnting a time period
+	 */
 	loadDataByTimePeriod = (timeChar) => {
 		let timeFilter = "";
 
@@ -56,16 +74,28 @@ class ChartsScreen extends Component {
 				date.setDate(date.getDate() - 7);
 				timeFilter = `&from=${this.getISODate(date)}`;
 				break;
-			default: // A or null
+			case "A":
+				date.setFullYear(date.getMonth() - 12);
+				timeFilter = `&from=${this.getISODate(date)}`;
 				break;
+			default: // D or null
+				date.setMonth(date.getDate() - 1);
+				timeFilter = `&from=${this.getISODate(date)}`;
+				break;
+
 		}
 		this.getData(timeFilter);
 	}
 
+	/**
+	 * Gets a query param to be used in acquiring
+	 * related data from the server
+	 * @param {String} timeFilter a query param
+	 */
 	getData = (timeFilter) => {
 		this.setState({
 			fromFetch: false,
-			loading: true,
+			// loading: true,
 		});
 
 		let recordsUrl = patientRecordsURL(this.state.patient.id);
@@ -93,8 +123,17 @@ class ChartsScreen extends Component {
 			});
 	};
 
+	componentDidMount() {
+		this.getData();
+
+		const refreshRate = 5 * 1000;
+		setInterval(() => { this.getData() }, refreshRate);
+	}
+
+
 	cleanData = (data) => {
 		for (let item of data) {
+			item['time'] = new Date(item['timestamp']).toTimeString().slice(0, 9)
 			item['date'] = this.getISODate(new Date(item['timestamp']))
 		}
 		return data;
@@ -111,6 +150,21 @@ class ChartsScreen extends Component {
 			</LineChart>
 		</ResponsiveContainer>
 	);
+
+	renderECGLineChart = (data) => {
+		console.log("ECG", data)
+		return (
+		<ResponsiveContainer width="100%" height={250}>
+			<LineChart data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+				<Line type="monotone" dataKey="ecg" stroke="#8884d8" />
+				<CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+				<XAxis dataKey="time" />
+				<YAxis />
+				<Tooltip />
+			</LineChart>
+		</ResponsiveContainer>
+	);
+	}
 
 	renderAreaChart = (data) => (
 		<ResponsiveContainer width="100%" height={300}>
@@ -193,6 +247,10 @@ class ChartsScreen extends Component {
 								<ActivityIndicator size="large" color="#0c9" />
 							) : (
 								<View>
+									<View style={[styles.card, styles.chart]}>
+										<Text>ECG</Text>
+										{this.renderECGLineChart(this.state.chartsData)}
+									</View>
 									<View style={[styles.card, styles.chart]}>
 										<Text>Oxygen Saturation</Text>
 										{this.renderLineChart(this.state.chartsData)}

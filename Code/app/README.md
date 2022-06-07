@@ -22,3 +22,10 @@ expo start
 ### Documents
 
 [React Native Documents](https://reactnative.dev/docs/integration-with-existing-apps)
+
+
+### Toubleshoot
+
+```
+export NODE_OPTIONS=--openssl-legacy-provider
+```
