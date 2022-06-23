@@ -87,7 +87,7 @@ def get_latest_data(request):
         oxygen_saturation = 100
     try:
         last_record_ecg: Record = Record.objects.filter(patient_id=patient_id).filter(
-            air_pressure__isnull=False).latest('timestamp')
+            ecg__isnull=False).latest('timestamp')
         ecg = last_record_ecg.ecg
     except ObjectDoesNotExist:
         ecg = 0
