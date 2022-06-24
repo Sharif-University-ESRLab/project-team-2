@@ -1,13 +1,15 @@
-from heartrate_monitor import HeartRateMonitor
 import time
 import board
 import adafruit_dht
 import psutil
 import requests
 import sys
-from utils import PATIENT_ID, SERVER_URL, VALUES_DIR, dprint
+
+from heartrate.heartrate_monitor import HeartRateMonitor
+from utils.utils import SERVER_URL, VALUES_DIR, dprint
 
 sys.path.append(r"home/pi/Desktop/project-team-2/Code/hardware/max30102")
+sys.path.append(r"home/pi/Desktop/project-team-2/Code/hardware/heartrate/max30102")
 
 
 def send_post_data_to_server(path, data):
@@ -87,7 +89,7 @@ def init():
 
     # Get patient id
     global PATIENT_ID
-    with open('patient_id.txt') as f:
+    with open('../patient_id.txt') as f:
         line = f.readline()
         if line and line.isalnum:
             PATIENT_ID = int(line)
@@ -101,7 +103,7 @@ def init():
 def send_values():
     """
     Read arduino values from files and send them to server 
-    along with raspberry sensor values
+    along with heartrate sensor values
     """
 
     init()

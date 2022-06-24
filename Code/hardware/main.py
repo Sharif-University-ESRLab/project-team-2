@@ -1,7 +1,6 @@
-from send_values import send_values
-from store_arduino_values import store_values
+from transmisson.send_values import send_values
+from transmisson.store_arduino_values import store_values
 import threading
-from time import sleep
 
 from time import sleep
 
@@ -24,7 +23,7 @@ def run():
     print("sending values...")
     
     # This thread will read arduino values from files and
-    # send them to server along with raspberry sensor values
+    # send them to server along with heartrate sensor values
     send_values()
 
 if __name__ == "__main__":

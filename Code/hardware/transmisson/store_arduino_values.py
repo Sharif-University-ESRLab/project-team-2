@@ -2,7 +2,7 @@ from datetime import datetime
 import os
 import serial
 import shutil
-from utils import dprint, VALUES_DIR, ARDUINO_PORT
+from utils.utils import dprint, VALUES_DIR, ARDUINO_PORT
 
 write_flag = True
 
