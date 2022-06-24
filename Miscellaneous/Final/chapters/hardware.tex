@@ -311,7 +311,7 @@ void loop() {
 \end{figure}
 
 
-دو پین \lr{GND} و \lr{3.3V} برای تغذیه مدار استفاده می‌شوند.  سه پین \lr{RA,LA,RL} برای گرفتن خروجی \lr{Lead}های متصل به بدن به صورت جداگانه استفاده می‌شوند که در این پروژه از آن‌ها استفاده‌ای نشده است. در عوض از جک \lr{3.5} میلی‌متری برای اتصال \lr{Lead}ها استفاده شده است. پین \lr{OUT} خروجی آنالوگ مدار است که با استفاده از آپ‌امپ، تقویت و کنترل شده است. پین‌های \lr{LOD-}
+دو پین \lr{GND} و \lr{3.3V} برای تغذیه مدار استفاده می‌شوند.  سه پین \lr{RA,LA,RL} برای گرفتن خروجی \lr{Lead}های متصل به بدن به صورت جداگانه استفاده می‌شوند. در این پروژه از آن‌ها استفاده‌ای نشده است. در عوض از جک \lr{3.5} میلی‌متری برای اتصال \lr{Lead}ها استفاده شده است. پین \lr{OUT} خروجی آنالوگ مدار است که با استفاده از آپ‌امپ، تقویت و کنترل شده است. پین‌های \lr{LOD-}
 و
 \lr{LOD+}
 به معنی \lr{Leads of Detection} هستند. پین \lr{LOD-} زمانی که سنسور نتواند اتصال درست الکترود منفی به بدن را تشخیص بدهد به حالت \lr{HIGH} می‌رود. پین \lr{LOD+} زمانی که سنسور نتواند حضور الکترود مثبت را تشخیص بدهد به حالت \lr{HIGH} می‌رود. در صورتی که هر دو \lr{LOW} باشند، یعنی \lr{Lead}ها به درستی متصل شده‌اند.
@@ -323,13 +323,107 @@ void loop() {
 
 
 
-\begin{figure}[h]
+\begin{figure}[ht!]
 	\centering
-	\includegraphics[width=0.6\textwidth]{figs/cuff.jpg}
+	\includegraphics[width=0.4\textwidth]{figs/cuff.jpg}
 	
 	\caption{فشارسنج}
 	\label{fig:12}
 \end{figure}
+
+\subsection{کدهای سخت‌افزار}
+
+در قسمت‌های بالا، برای هر سنسور کدهای مهم آن توضیح داده شده است. در این قسمت به طور خلاصه به ساختار فایل‌هایی که برای کدهای سخت‌افزار وجود دارند پرداخته می‌شود.
+
+
+
+\definecolor{folderbg}{RGB}{124,166,198}
+\definecolor{folderborder}{RGB}{110,144,169}
+
+\def\Size{4pt}
+\tikzset{
+	folder/.pic={
+		\filldraw[draw=folderborder,top color=folderbg!50,bottom color=folderbg]
+		(-1.05*\Size,0.2\Size+5pt) rectangle ++(.75*\Size,-0.2\Size-5pt);  
+		\filldraw[draw=folderborder,top color=folderbg!50,bottom color=folderbg]
+		(-1.15*\Size,-\Size) rectangle (1.15*\Size,\Size);
+	}
+}
+\begin{figure}[ht!]
+	
+\begin{latin}
+	
+	\begin{forest}
+		for tree={
+			font=\ttfamily,
+			grow'=0,
+			child anchor=west,
+			parent anchor=south,
+			anchor=west,
+			calign=first,
+			inner xsep=7pt,
+			edge path={
+				\noexpand\path [draw, \forestoption{edge}]
+				(!u.south west) +(7.5pt,0) |- (.child anchor) pic {folder} \forestoption{edge label};
+			},
+			% style for your file node 
+			file/.style={edge path={\noexpand\path [draw, \forestoption{edge}]
+					(!u.south west) +(7.5pt,0) |- (.child anchor) \forestoption{edge label};},
+				inner xsep=2pt,font=\small\ttfamily
+			},
+			before typesetting nodes={
+				if n=1
+				{insert before={[,phantom]}}
+				{}
+			},
+			fit=band,
+			before computing xy={l=15pt},
+		}  
+		[Hardware
+		[arduino
+		[main
+		[main.ino ,file]]
+		]
+		[heartrate
+		[heartrate\_monitor.py,file
+		]
+		[hrcalc.py , file]
+		[max30102.py,file]
+		]
+		[transmission
+		[send\_values.py,file]
+		[store\_arduino\_values.py,file]
+		]
+		[utils
+		[utils.py , file]
+		]
+		[main.py , file]
+		[patient\_id.txt , file]
+		[requirements.txt , file]
+		[README.md,file]
+		]
+	\end{forest}
+
+\end{latin}
+	\caption{ساختار پوشه‌بندی و فایل‌های مربوط به سخت‌افزار}
+\label{fig:hardware}
+\end{figure}
+
+کد موجود در پوشه \verb+arduino+، باید از طریق نرم‌افزار آردوینو به روی آردوینو منتقل شود. این کد برای سنسورهایی که به آردوینو متصل هستند استفاده شده و داده‌های آنان را دریافت می‌کنند.
+
+کدهای موجود در پوشه \verb+heartrate+ کدهای پایتونی هستند که مربوط به اندازه‌گیری ضربان قلب و اکسیژن خون می‌شوند. در فایل \verb+max30102+ اطلاعات لازم برای ارتباط برقرار کردن با ماژول قرار گرفته و مستقیما از کدهای مخزن متن‌باز \lr{doug-burrell/max30102} با اندکی تغییرات گرفته شده است. فایل \verb+hrcalc+ برای انجام یکسری محاسبات براساس داده‌های دریافتی و تبدیل آن‌ها به ضربان قلب است. +\verb+heartrate_monitor+ فایل نهایی است که داده‌ها را با استفاده از دو فایل دیگر جمع‌آوری می‌کند.
+
+کدهای موجود در پوشه \verb+transmission+ برای دریافت و ارسال فایل‌ها هستند. کدهای موجود در \verb+store_arduino_values+ از طریق پورت \lr{USB} با آردوینو ارتباط برقرار کرده و اطلاعات دریافتی از سمت‌ آن‌را روی فایل می‌نویسد. فایل \verb+send_values+ اطلاعاتی که مستقیما از طریق رزبری قابل دریافت هستند را دریافت کرده و همچنین از اطلاعات ذخیره شده توسط \verb+store_arduino_values+ استفاده می‌کند تا تمامی اطلاعات جمع‌آوری شده و به سرور ارسال بشوند.
+
+کد موجود در پوشه \verb+utils+ شامل یکسری داده‌های سراسری مورد استفاده برنامه نظیر آدرس سرور، محل ذخیره‌سازی فایل‌ها، فعال بودن حالت \lr{DEBUG} و... است.
+
+فایل \verb+patient_id.txt+ تنها شامل شماره آی‌دی بیمار خواهد بود. از آن برای ارسال اطلاعات به سرور استفاده می‌شود.
+
+فایل \verb+main.py+ کد اصلی برای اجرای برنامه است که کارهای لازم برای اجرای کل برنامه را در خود دارد و از بقیه فایل‌ها استفاده می‌کند و در نهایت این فایل باید اجرا بشود.
+ 
+فایل \verb+requirements.txt+ شامل لیست پکیج‌های مورد نیاز پایتونی برای اجرای برنامه است.
+
+فایل \verb+README.md+ شامل اطلاعاتی در مورد نحوه اجرا کردن برنامه است.
 
 
 
