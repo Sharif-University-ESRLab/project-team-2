@@ -68,7 +68,7 @@ A URL will then be shown which directs you to your Expo dashboard from which you
 More instructions can be found [here](https://docs.expo.dev/build-reference/apk/).
 
 ## Installation
-You can install the application using the `.apk` file which is created following the instructions above. Its name is `HWLab 002` and the icon looks just like the one on top of the page!
+You can install the application using the `.apk` file, which is created following the instructions above. Its name is `HWLab 002`, and the icon looks just like the one on top of the page!
 
 ## Documents
 
