@@ -9,7 +9,7 @@ This README only includes essential info needed to run the code on Hardware. For
 - The variable `ARDUINO_PORT` in `utils\utils.py` must be set to the name of the USB port on Raspberry to which Arduino is connected.
 
 
-### Install the packages:
+### Install the packages
 - Create a python virtual environment:
 ```sh
 python -m venv venv
@@ -20,7 +20,7 @@ python -m venv venv
 python -m pip install -r requirements.txt
 ```
 
-### Other perquisites
+### Other prerequisites
 
 - Set server IP in `utils.py`.
 - You must Store the patient ID in `patient_id.txt`. This file will have only one line with a number with it. This number will be used as a Patient ID.
