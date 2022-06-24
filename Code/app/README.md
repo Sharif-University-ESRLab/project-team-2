@@ -39,7 +39,7 @@ cd healthx
 expo start
 ```
 
-### Toubleshoot
+### Troubleshoot
 
 ```bash
 export NODE_OPTIONS=--openssl-legacy-provider
