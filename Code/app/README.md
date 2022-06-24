@@ -63,7 +63,7 @@ Run the command below to start building the project:
 eas build -p android --profile preview
 ```
 
-A URL will then be shown which directs you to your Expo dashboard from which you can observe the process. Upon completion, you can directly download and install the `.apk` file on your device.
+A URL will then be shown, which directs you to your Expo dashboard from which you can observe the process. Upon completion, you can directly download and install the `.apk` file on your device.
 
 More instructions can be found [here](https://docs.expo.dev/build-reference/apk/).
 
