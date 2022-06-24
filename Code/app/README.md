@@ -1,5 +1,5 @@
 # HealthX
-The source code for the project is located in the [healthx](./healthx) folder. Here is the table of contents for ths document:
+The source code for the project is located in the [healthx](./healthx) folder. Here is the table of contents for this document:
   
   - [Development](#development)
   - [EAS Build](#build)
