@@ -65,7 +65,6 @@ def get_pollution(f):
     Read air pollution value from it's file
     """
     line = f.readline()
-    print("polll", line)
     if not line:
         return None
 
@@ -117,13 +116,13 @@ def send_values():
     dht11_sensor = adafruit_dht.DHT11(board.D23)
     
     # open body temperature file 
-    temp_file = open(f'{VALUES_DIR}/temp', 'r')
+    temp_file = open(f'{VALUES_DIR}/temp', 'r+')
 
     # open ecg file
-    ecg_file = open(f'{VALUES_DIR}/ecg', 'r')
+    ecg_file = open(f'{VALUES_DIR}/ecg', 'r+')
 
     # open pollution file
-    pollution_file = open(f'{VALUES_DIR}/pollution', 'r')
+    pollution_file = open(f'{VALUES_DIR}/pollution', 'r+')
 
     while True:
         try:
@@ -166,7 +165,7 @@ def send_values():
             pollution_file.close()
             raise error
 
-        time.sleep(1.0)
+        time.sleep(0.01)
 
 
 if __name__ == "__main__":
