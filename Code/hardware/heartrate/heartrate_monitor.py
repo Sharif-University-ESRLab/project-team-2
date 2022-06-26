@@ -1,6 +1,6 @@
 
-from max30102 import MAX30102
-import hrcalc
+from .max30102 import MAX30102
+from .hrcalc import calc_hr_and_spo2
 import threading
 import time
 import numpy as np
@@ -46,7 +46,7 @@ class HeartRateMonitor(object):
                     red_data.pop(0)
 
                 if len(ir_data) == 100:
-                    bpm, valid_bpm, spo2, valid_spo2 = hrcalc.calc_hr_and_spo2(ir_data, red_data)
+                    bpm, valid_bpm, spo2, valid_spo2 = calc_hr_and_spo2(ir_data, red_data)
                     if valid_bpm:
                         bpms.append(bpm)
                         while len(bpms) > 4:

@@ -7,7 +7,7 @@ SERVER_URL = f'http://{SERVER_HOST}:8000/api/v1'
 
 PATIENT_ID = 1 # default
 
-VALUES_DIR = 'sensor_values'
+VALUES_DIR = '/home/pi/Desktop/project-team-2/Code/hardware/sensor_values'
 
 ARDUINO_PORT = '/dev/ttyUSB0'
 

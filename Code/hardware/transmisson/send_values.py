@@ -65,6 +65,7 @@ def get_pollution(f):
     Read air pollution value from it's file
     """
     line = f.readline()
+    print("polll", line)
     if not line:
         return None
 
@@ -89,7 +90,7 @@ def init():
 
     # Get patient id
     global PATIENT_ID
-    with open('../patient_id.txt') as f:
+    with open('patient_id.txt') as f:
         line = f.readline()
         if line and line.isalnum:
             PATIENT_ID = int(line)
@@ -136,7 +137,7 @@ def send_values():
 
             # print values
             print(f"Temperature: {temperature}*C \tHumidity: {humidity} \tPollution: {pollution}")
-            print(f"bpm: {bpm} \tspo2: {spo2} \ttemp: {temp} \tecg: {ecg}")
+            print(f"bpm: {bpm} \tspo2: {spo2} \tbody temperature: {temp} \tecg: {ecg}")
 
             # send values to server
             data = {
