@@ -3,6 +3,7 @@ import { Layout, Text, Button, TextInput } from "react-native-rapi-ui";
 import Navbar from "../components/Navbar";
 import {
 	View,
+	ScrollView,
 	FlatList,
 	ActivityIndicator,
 	Dimensions,
@@ -34,7 +35,8 @@ class PatientRecords extends Component {
 			patient: props.route.params.patient,
 			showOldRecords: false,
 			systolic: '',
-			diastolic: ''
+			diastolic: '',
+			reference: null,
 		};
 	}
 
@@ -44,7 +46,7 @@ class PatientRecords extends Component {
 	getData = () => {
 		this.setState({
 			fromFetch: false,
-			loading: true,
+			// loading: true,
 		});
 		
 		axios
@@ -310,7 +312,7 @@ class PatientRecords extends Component {
 	};
 
 	render() {
-		const { loading, patientData, latestData, patient, systolic, diastolic } = this.state;
+		const { loading, patientData, latestData, patient, systolic, diastolic, reference } = this.state;
 
 		return (
 			<Layout>
@@ -319,16 +321,30 @@ class PatientRecords extends Component {
 					backOption={true}
 					navigation={this.props.navigation}
 				/>
-				<View style={styles.parentContainer}>
+				<ScrollView style={styles.parentContainer} ref={ref => {reference = ref}}>
 					{loading ? (
 						<ActivityIndicator size="large" color="#0c9" />
 					) : (
-
-						<FlatList
-							data={[latestData]}
-							renderItem={(item) => this.renderCard(item)}
-							keyExtractor={(item) => item.id.toString()}
-						/>
+						<>
+							<Button
+								style={{ marginTop: 10, transform: [{ scale: deviceHeight < 600 ? 1 : 0 }]}}
+								text="Scroll Down"
+								rightContent={
+									<Ionicons
+										name="paper-plane"
+										size={20}
+										color={themeColor["success700"]} />
+								}
+								status="success700"
+								type="TouchableOpacity"
+								onPress={() => { reference.scrollToEnd({ animated: true }) }}>
+							</Button>
+							<FlatList
+								data={[latestData]}
+								renderItem={(item) => this.renderCard(item)}
+								keyExtractor={(item) => item.id.toString()}
+							/>
+						</>
 					)}
 					<Section style={{ marginHorizontal: 20, marginTop: 20 }}>
 						<SectionContent>
@@ -407,7 +423,7 @@ class PatientRecords extends Component {
 							/>
 						)
 					}
-				</View>
+				</ScrollView>
 			</Layout>
 		);
 	}
